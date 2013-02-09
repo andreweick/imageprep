@@ -9,13 +9,12 @@ require 'fileutils'
 # Widths that we need the images created at for picturefill
 widths = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
 
-@year = 2013
-
 Dir.glob('test/**/*.jpg').each do |file|
-  puts "Directory: #{File.basename(file)} ..."
+  puts "File: #{file}"
 
   widths.each do |width|
     image = MiniMagick::Image.open(file)
+abort
     
     image.resize("#{width}")
     image.quality("75")
