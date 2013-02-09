@@ -1,0 +1,28 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'bundler/setup'
+
+require 'mini_magick'
+require 'fileutils'
+
+# Widths that we need the images created at for picturefill
+widths = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
+
+Dir.glob('test/**/*.jpg').each do |file|
+  puts "Directory: #{File.basename(file)} ..."
+
+  widths.each do |width|
+    image = MiniMagick::Image.open(file)
+    
+    image.resize("#{width}")
+    image.quality("75")
+    newfile = file.sub('/original/', "/generated/2012/#{width}/")
+    
+    FileUtils.mkpath(File.dirname(newfile))
+
+    puts "processed #{width} writing #{file.sub('/original/', "/generated/2012/#{width}/")}"
+    image.write(file.sub('/original/',"/generated/2012/#{width}/"))
+    
+  end
+end
