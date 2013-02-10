@@ -15,9 +15,14 @@ optparse = OptionParser.new do|opts|
     options[:verbose] = true
   end
 
-  options[:quick] = false
-  opts.on('-q', '--quick', 'Perform the task quickly') do
-    options[:quick] = true
+  options[:quiet] = false
+  opts.on('-q', '--quietly', 'Perform the task quietly') do
+    options[:quiet] = true
+  end
+
+  options[:outDir] = nil
+  opts.on('-o', '--outDir directory', 'Output directory') do|output_directory|
+    options[:outDir] = output_directory
   end
 
   options[:logfile] = nil
@@ -38,9 +43,19 @@ end
 # the options. What's left is the list of files to resize.
 optparse.parse!
 
+mandatory = [:outDir]
+missing = mandatory.select{ |param| options[param].nil? }
+if not missing.empty?
+  puts "Missing options: #{missing.join(', ')}"
+  puts optparse
+  exit
+end                                                              #
+
+
 puts "Being verbose" if options[:verbose]
-puts "Being quick" if options[:quick]
+puts "Being quietly" if options[:quiet]
 puts "Logging to file #{options[:logfile]}" if options[:logfile]
+puts "Output directory #{options[:outDir]}" if options[:outDir]
 
 ARGV.each do|f|
   puts "Image #{f}"
