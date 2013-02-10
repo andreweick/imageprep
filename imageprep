@@ -14,16 +14,22 @@ Dir.glob('test/**/*.jpg').each do |file|
 
   widths.each do |width|
     image = MiniMagick::Image.open(file)
-abort
     
     image.resize("#{width}")
     image.quality("75")
-    newfile = file.sub('/original/', "/generated/2012/#{width}/")
-    
+
+    # regex to get the new file name -- note the double backslash in the capture groups.  This
+    # is because I wanted to use the double quotes so that I get variable replacement with the hash notation.
+    newfile = file.gsub(/original\/(.*)\/(.*)/m, "generated/\\1/#{width}/\\2")
+puts "newfile: #{newfile}"
+abort    
     FileUtils.mkpath(File.dirname(newfile))
 
-    puts "processed #{width} writing #{file.sub('/original/', "/generated/2012/#{width}/")}"
-    image.write(file.sub('/original/',"/generated/2012/#{width}/"))
+    puts "processed #{width} writing #{file.sub('/original/', "/generated/#{width}/")}"
+    image.write(file.sub('/original/',"/generated/#{width}/"))
     
   end
 end
+
+
+result = searchText.gsub(/original\/(.*)\/(.*)/m, "generated/$1/width/$2")
