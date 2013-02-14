@@ -44,29 +44,28 @@ module ImagePrep
           puts opts
           exit
         end
+
+        # Parse the command-line. Remember there are two forms
+        # of the parse method. The 'parse' method simply parses
+        # ARGV, while the 'parse!' method parses ARGV and removes
+        # any options found there, as well as any parameters for
+        # the options. What's left is the list of files to resize.
+        begin
+          argv = ["-h"] if argv.empty?
+          opts.parse!(argv)
+        rescue OptionParser::ParseError => e
+          STDERR.puts e.message, "\n", opts
+          exit(-1)
+        end
+
+        # mandatory = [:outDir]
+        # missing = mandatory.select{ |param| options[param].nil? }
+        # if not missing.empty?
+        #   puts "Missing options: #{missing.join(', ')}"
+        #   puts optparse
+        #   exit
+        # end
       end
-
-      # Parse the command-line. Remember there are two forms
-      # of the parse method. The 'parse' method simply parses
-      # ARGV, while the 'parse!' method parses ARGV and removes
-      # any options found there, as well as any parameters for
-      # the options. What's left is the list of files to resize.
-      begin
-        argv = ["-h"] if argv.empty?
-        opts.parse!(argv)
-      rescue OptionParser::ParseError => e
-        STDERR.puts e.message, "\n", opts
-        exit(-1)
-      end
-
-      # mandatory = [:outDir]
-      # missing = mandatory.select{ |param| options[param].nil? }
-      # if not missing.empty?
-      #   puts "Missing options: #{missing.join(', ')}"
-      #   puts optparse
-      #   exit
-      # end
-
     end
   end
 end
