@@ -56,14 +56,6 @@ module ImagePrep
           STDERR.puts e.message, "\n", opts
           exit(-1)
         end
-
-        mandatory = [:outDir]
-        missing = mandatory.select{ |param| options[param].nil? }
-        if not missing.empty?
-          puts "Missing options: #{missing.join(', ')}"
-          puts optparse
-          exit
-        end
       end
     end
   end

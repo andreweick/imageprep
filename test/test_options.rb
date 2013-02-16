@@ -8,8 +8,35 @@ require 'test/unit'
 require_relative '../lib/imageprep/options'
 
 class TestOptions < Test::Unit::TestCase
-  def test_simple
+  def test_outputdirectory
     opts = ImagePrep::Options.new(["-o", "/tmp", "image1", "image2"])
     assert_equal ["image1", "image2"], opts.images_to_load
+    assert_equal "/tmp", opts.outDir
+    assert_equal false, opts.quiet
+  	assert_equal false, opts.verbose
+  	assert_equal nil, opts.logfile
+  end
+
+  def test_quiet
+  	opts = ImagePrep::Options.new(["-q", "image1"])
+  	assert_equal true, opts.quiet
+  	assert_equal false, opts.verbose
+    assert_equal ["image1"], opts.images_to_load
+  	assert_equal nil, opts.logfile
+  end
+
+  def test_verbose
+  	opts = ImagePrep::Options.new(["-v", "image1"])
+  	assert_equal true, opts.verbose
+    assert_equal ["image1"], opts.images_to_load
+  	assert_equal nil, opts.logfile
+  end
+
+  def test_logfile
+  	opts = ImagePrep::Options.new(["-l", "logfileName", "image1"])
+  	assert_equal false, opts.quiet
+  	assert_equal false, opts.verbose
+    assert_equal ["image1"], opts.images_to_load
+  	assert_equal "logfileName", opts.logfile
   end
 end
