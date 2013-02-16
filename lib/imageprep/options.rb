@@ -16,7 +16,6 @@ module ImagePrep
 
     private
     def parse(argv)
-
       optparse = OptionParser.new do|opts|
         opts.banner = "Usage: imageprep.rb [options] file1 file2 ..."
 
@@ -58,13 +57,13 @@ module ImagePrep
           exit(-1)
         end
 
-        # mandatory = [:outDir]
-        # missing = mandatory.select{ |param| options[param].nil? }
-        # if not missing.empty?
-        #   puts "Missing options: #{missing.join(', ')}"
-        #   puts optparse
-        #   exit
-        # end
+        mandatory = [:outDir]
+        missing = mandatory.select{ |param| options[param].nil? }
+        if not missing.empty?
+          puts "Missing options: #{missing.join(', ')}"
+          puts optparse
+          exit
+        end
       end
     end
   end
