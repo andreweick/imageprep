@@ -23,8 +23,8 @@ class TestOptions < Test::Unit::TestCase
 
   def test_resize
   	Dir.mktmpdir {|dir|
-	  	is = ImagePrep::ImageSize.new("#{dir}", [TestImages[:landscape]])
-	  	emitedImages - is.
+	  	is = ImagePrep::ImageSize.new("#{dir}")
+	  	emitedImages = is.emitSizedImages([TestImages[:landscape]])
 	  	puts emitedImages.values.inspect
 	  	assert_equal true,false
   	}

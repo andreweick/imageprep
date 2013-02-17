@@ -11,41 +11,39 @@ module ImagePrep
     # Constant Widths define the sizes that we need the images created at for picturefill
     Widths = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
 
-    def initialize(outDir, imageList)
+    def initialize(outDir)
       today = Time.new
       @outDirOrignal = File.join(outDir, "original", "#{today.year}", today.strftime('%Y-%m-%d'))
       @outDirGenerated = File.join(outDir, "generated", "#{today.year}", today.strftime('%Y-%m-%d'))
-
-      imageList.each do |imageName|
-        emitSizedImages(imageName)
-      end
     end
 
-    def emitSizedImages(imageFileName)
-      emitedImages = Hash.new
+    def emitSizedImages(imageList)
+      @emitedImages = Hash.new
 
-      # Save source image
-      dest = File.join(@outDirOrignal, File.basename(imageFileName))
-      FileUtils.mkpath File.dirname(dest)
-      FileUtils.cp imageFileName, dest
-      
-      emitedImages[0] = dest
-
-      Widths.each do |width|
-        image = MiniMagick::Image.open(imageFileName)
+      imageList.each do |imageFileName|
+        # Save source image
+        dest = File.join(@outDirOrignal, File.basename(imageFileName))
+        FileUtils.mkpath File.dirname(dest)
+        FileUtils.cp imageFileName, dest
         
-        # I need to pass these two methods strings, so I convert the number to a string
-        image.resize("#{width}")
-        image.quality("75")
+        @emitedImages[0] = dest
 
-        sizedImageName = File.join(@outDirGenerated, "#{width}", File.basename(imageFileName))
-        FileUtils.mkpath(File.dirname(sizedImageName))
+        Widths.each do |width|
+          image = MiniMagick::Image.open(imageFileName)
+          
+          # I need to pass these two methods strings, so I convert the number to a string
+          image.resize("#{width}")
+          image.quality("75")
 
-        image.write(sizedImageName)
-        emitedImages[width] = sizedImageName
+          sizedImageName = File.join(@outDirGenerated, "#{width}", File.basename(imageFileName))
+          FileUtils.mkpath(File.dirname(sizedImageName))
+
+          image.write(sizedImageName)
+          @emitedImages[width] = sizedImageName
+        end
       end
 
-      return emitedImages
+      return @emitedImages
     end
 
     def doWork()
