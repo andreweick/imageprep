@@ -25,8 +25,9 @@ class TestOptions < Test::Unit::TestCase
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new("#{dir}")
 	  	emitedImages = is.emitSizedImages([TestImages[:landscape]])
-	  	puts emitedImages.values.inspect
-	  	assert_equal true,false
-  	}
+	  	emitedImages.each { |width, filename| 
+	  		assert_equal File::exists?(filename), true
+	  	}
+  	} #delete temporary directory
   end
 end
