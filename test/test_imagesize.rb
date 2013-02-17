@@ -4,11 +4,29 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'test/unit'
+require 'tmpdir'
 
 require_relative '../lib/imageprep/imagesize'
 
 class TestOptions < Test::Unit::TestCase
-  def test_names
-  	test = ImagePrep::ImageSize.new("./test/output/", ["/data/original/2013/2013-01-01/landscape-big-enough-2895x1930.jpg"])
+	# Image constant names
+	TestImages = { 	:landscape => "./test/data/landscape-big-enough-2895x1930.jpg",
+									:portrait	=> "./test/data/portrait-big-enough-3840x5760.jpg",
+									:notbigenough	=> "./test/data/not-big-enough-1333x2000.jpg"
+								}
+
+	def test_imagesExists
+		TestImages.each do |nature, filename|
+			assert_equal File::exists?(filename), true
+		end
+  end
+
+  def test_resize
+  	Dir.mktmpdir {|dir|
+	  	is = ImagePrep::ImageSize.new("#{dir}", [TestImages[:landscape]])
+	  	emitedImages - is.
+	  	puts emitedImages.values.inspect
+	  	assert_equal true,false
+  	}
   end
 end
