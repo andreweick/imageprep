@@ -24,6 +24,7 @@ module ImagePrep
 		EXIF_FOCAL_LENGTH = "EXIF:FocalLength"
 		EXIF_ISO = "EXIF:ISOSpeedRatings"
 		EXIF_CAMERA = "EXIF:Model"
+
 		IPTC_KEYWORD = "%[IPTC:2:25]"
 		IPTC_COPYRIGHT = "%[IPTC:2:116]"
 		IPTC_CAPTION = "%[IPTC:2:120]"
@@ -36,16 +37,16 @@ module ImagePrep
 		def initialize(imageFileName)
 			image = MiniMagick::Image.open(imageFileName)
 			@dateOriginal = DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S')
-			@keywords = image[IPTC_KEYWORD]     
-			@copyright = image[IPTC_COPYRIGHT] || "(c) Andrew Eick"
+			@keywords = image[IPTC_KEYWORD].split(/;/)		# Aperture semicolon delimits keywords.     
+			@copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{dateOriginal.year} Andrew Eick, all rights reserved."
 			@headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
 			@caption = image[IPTC_CAPTION]
 			@city = image[IPTC_CITY]
 			@state = image[IPTC_STATE]
 			@country = image[IPTC_COUNTRY]
-			@exposureTime = image[EXIF_CAMERA]
-			@focalLength = image[EXIF_FOCAL_LENGTH]
-			@iso = image[EXIF_ISO]
+			@exposureTime = image[EXIF_EXPOSURE_TIME]
+			@focalLength = eval(image[EXIF_FOCAL_LENGTH])			# This is stored as 40/1
+			@iso = eval(image[EXIF_ISO])
 			@camera = image[EXIF_CAMERA]
 		end
 	end
