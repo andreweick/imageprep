@@ -16,7 +16,6 @@ module ImagePrep
 
     private
     def parse(argv)
-      puts "parsing..."
       optparse = OptionParser.new do|opts|
         opts.banner = "Usage: imageprep.rb [options] file1 file2 ..."
 

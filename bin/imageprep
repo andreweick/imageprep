@@ -7,7 +7,6 @@ require_relative '../lib/imageprep/imagesize'
 require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
-puts "opts #{opts}"
-exit
+
 is = ImagePrep::ImageSize.new(opts.outDir)
 is.emitSizedImages(opts.images_to_load)
