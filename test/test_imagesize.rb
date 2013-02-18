@@ -10,11 +10,14 @@ require_relative '../lib/imageprep/imagesize'
 
 class TestOptions < Test::Unit::TestCase
 	# Image constant names
-	TestImages = { 	:landscape => "./test/data/landscape-big-enough-2895x1930.jpg",
-									:portrait	=> "./test/data/portrait-big-enough-3840x5760.jpg",
-									:notbigenough	=> "./test/data/not-big-enough-1333x2000.jpg"
-								}
+	TestImages = { 	
+		landscape: 			"./test/data/landscape-big-enough-2895x1930.jpg",
+		portrait: 			"./test/data/portrait-big-enough-3840x5760.jpg",
+		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg"
+	}
 
+  # To see what is in all the EXIF data for an image: 
+  # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
 	def test_imagesExists
 		TestImages.each do |nature, filename|
 			assert_equal File::exists?(filename), true
@@ -26,7 +29,11 @@ class TestOptions < Test::Unit::TestCase
 	  	is = ImagePrep::ImageSize.new("#{dir}")
 	  	emitedImages = is.emitSizedImages([TestImages[:landscape]])
 	  	emitedImages.each { |width, filename| 
-	  		assert_equal File::exists?(filename), true
+	  		assert_equal(File::exists?(filename), true)
+	  	}
+
+	  	emitedImages.each { |width, filename| 
+	  		assert_equal true,false 
 	  	}
   	} #delete temporary directory
   end
