@@ -7,11 +7,10 @@ require 'mini_magick'
 require 'fileutils'
 require 'date'
 
+require_relative 'metadata'
+
 module ImagePrep
-  class ImageSize
-    # To see what is in all the EXIF data for an image: 
-    # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
-    
+  class ImageSize    
     # Constant Widths define the sizes that we need the images created at for picturefill
     Widths = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
 
@@ -25,12 +24,12 @@ module ImagePrep
       imageList.each do |imageFileName|
         puts "Processing #{imageFileName}"
         
+        meta = ImagePrep::MetaData.new(imageFileName)
         # Save source image 
         imageOriginal = MiniMagick::Image.open(imageFileName)
-        dto = DateTime.strptime(imageOriginal["EXIF:DateTimeOriginal"], '%Y:%m:%d %H:%M:%S')
 
-        @outDirOrignal = File.join(@outDir, "original", "#{dto.year}", dto.strftime('%Y-%m-%d'))
-        @outDirGenerated = File.join(@outDir, "generated", "#{dto.year}", dto.strftime('%Y-%m-%d'))
+        @outDirOrignal = File.join(@outDir, "original", "#{meta.dateTimeOriginal.year}", meta.dateTimeOriginal.strftime('%Y-%m-%d'))
+        @outDirGenerated = File.join(@outDir, "generated", "#{meta.dateTimeOriginal.year}", meta.dateTimeOriginal.strftime('%Y-%m-%d'))
 
         dest = File.join(@outDirOrignal, File.basename(imageFileName))
         FileUtils.mkpath File.dirname(dest)

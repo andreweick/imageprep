@@ -8,7 +8,7 @@ require 'date'
 
 module ImagePrep
 	class MetaData
-		attr_reader :keywords, :copyright, :caption, :headline, :dateOriginal, :city, :state, :country
+		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal, :city, :state, :country
 		attr_reader :exposureTime, :focalLength, :iso, :camera
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
@@ -36,9 +36,9 @@ module ImagePrep
 
 		def initialize(imageFileName)
 			image = MiniMagick::Image.open(imageFileName)
-			@dateOriginal = DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S')
+			@dateTimeOriginal = DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S')
 			@keywords = image[IPTC_KEYWORD].split(/;/)		# Aperture semicolon delimits keywords.     
-			@copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{dateOriginal.year} Andrew Eick, all rights reserved."
+			@copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{dateTimeOriginal.year} Andrew Eick, all rights reserved."
 			@headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
 			@caption = image[IPTC_CAPTION]
 			@city = image[IPTC_CITY]

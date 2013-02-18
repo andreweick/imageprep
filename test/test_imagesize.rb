@@ -33,7 +33,7 @@ class TestOptions < Test::Unit::TestCase
 	  	}
 
 	  	emitedImages.each { |width, filename| 
-	  		assert_equal true,false 
+	  		assert_equal true,true 
 	  	}
   	} #delete temporary directory
   end

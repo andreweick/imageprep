@@ -25,9 +25,9 @@ class TestOptions < Test::Unit::TestCase
   def test_landscape
   	meta = ImagePrep::MetaData.new(TestImages[:landscape])
   	dto = Date.new(2013,1,15)
-  	assert_equal(dto.year, meta.dateOriginal.year)
-  	assert_equal(dto.month, meta.dateOriginal.month)
-  	assert_equal(dto.day, meta.dateOriginal.day)
+  	assert_equal(dto.year, meta.dateTimeOriginal.year)
+  	assert_equal(dto.month, meta.dateTimeOriginal.month)
+  	assert_equal(dto.day, meta.dateTimeOriginal.day)
 
   	assert_equal(meta.exposureTime, "1/125")
   	assert_equal(meta.focalLength, 40)
@@ -46,9 +46,9 @@ class TestOptions < Test::Unit::TestCase
   def test_notbigenough
   	meta = ImagePrep::MetaData.new(TestImages[:notbigenough])
   	dto = Date.new(2006,12,29)
-  	assert_equal(dto.year, meta.dateOriginal.year)
-  	assert_equal(dto.month, meta.dateOriginal.month)
-  	assert_equal(dto.day, meta.dateOriginal.day)
+  	assert_equal(dto.year, meta.dateTimeOriginal.year)
+  	assert_equal(dto.month, meta.dateTimeOriginal.month)
+  	assert_equal(dto.day, meta.dateTimeOriginal.day)
 
   	assert_equal(meta.exposureTime, "1/30")
   	assert_equal(meta.focalLength, 52)
@@ -67,9 +67,9 @@ class TestOptions < Test::Unit::TestCase
   def test_portrait
   	meta = ImagePrep::MetaData.new(TestImages[:portrait])
   	dto = Date.new(2013,1,11)
-  	assert_equal(dto.year, meta.dateOriginal.year)
-  	assert_equal(dto.month, meta.dateOriginal.month)
-  	assert_equal(dto.day, meta.dateOriginal.day)
+  	assert_equal(dto.year, meta.dateTimeOriginal.year)
+  	assert_equal(dto.month, meta.dateTimeOriginal.month)
+  	assert_equal(dto.day, meta.dateTimeOriginal.day)
 
   	assert_equal(meta.exposureTime, "1/200")
   	assert_equal(meta.focalLength, 40)
