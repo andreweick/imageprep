@@ -11,8 +11,10 @@ require_relative 'metadata'
 
 module ImagePrep
   class ImageSize    
-    # Constant Widths define the sizes that we need the images created at for picturefill
-    Widths = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
+    # Constant Widths define the sizes that we need the images created at for 
+    # picturefill [retina](http://duncandavidson.com/blog/2012/08/retina_ready/)
+    
+    WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
 
     def initialize(outDir)
        @outDir = outDir
@@ -37,7 +39,7 @@ module ImagePrep
         
         @emitedImages[0] = dest
 
-        Widths.each do |width|
+        WIDTHS.each do |width|
           # Need to keep reloading image because we are resizing it
           image = MiniMagick::Image.open(imageFileName)
           
