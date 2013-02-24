@@ -7,6 +7,7 @@ require 'mini_magick'
 require 'fileutils'
 require 'date'
 
+require_relative 'imagedata'
 require_relative 'metadata'
 
 module ImagePrep

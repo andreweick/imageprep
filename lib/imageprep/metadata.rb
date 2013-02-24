@@ -49,11 +49,5 @@ module ImagePrep
 			@iso = eval(image[EXIF_ISO])
 			@camera = image[EXIF_CAMERA]
 		end
-
-		def outDirOriginal(outDir)
-		end
-
-		def outDirGenerated(outDir)
-		end
 	end
 end
