@@ -42,7 +42,7 @@ module ImagePrep
       FileUtils.mkpath File.dirname(dest)
       FileUtils.cp(@metadata.imageFileName, dest)
       
-      @emitedImages[0] = dest
+      @emitedImages[@metadata.width] = dest
 
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it

@@ -6,6 +6,8 @@ require 'bundler/setup'
 require 'test/unit'
 require 'tmpdir'
 
+require 'mini_magick'
+
 require_relative '../lib/imageprep/imagesize'
 
 class TestOptions < Test::Unit::TestCase
@@ -24,12 +26,35 @@ class TestOptions < Test::Unit::TestCase
 		end
   end
 
-  def test_resize
+  def test_resize_landscape
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:landscape],"#{dir}")
 	  	is.emitedImages.each { |width, filename| 
-	  		assert_equal(File::exists?(filename), true)
+	  		image = MiniMagick::Image.open(filename)
+				assert_equal width, image[:width]
 	  	}
   	} #delete temporary directory
   end
+
+  def test_resize_portrait
+  	Dir.mktmpdir {|dir|
+	  	is = ImagePrep::ImageSize.new(TestImages[:portrait],"#{dir}")
+	  	is.emitedImages.each { |width, filename| 
+	  		image = MiniMagick::Image.open(filename)
+				assert_equal width, image[:width]
+	  	}
+  	} #delete temporary directory
+  end
+
+  def test_resize_not_big_enough
+  	Dir.mktmpdir {|dir|
+	  	is = ImagePrep::ImageSize.new(TestImages[:notbigenough],"#{dir}")
+	  	is.emitedImages.each { |width, filename| 
+	  		image = MiniMagick::Image.open(filename)
+				assert_equal width, image[:width]
+	  	}
+  	} #delete temporary directory
+  end
+
+
 end
