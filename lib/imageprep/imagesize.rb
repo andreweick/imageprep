@@ -6,6 +6,7 @@ require 'bundler/setup'
 require 'mini_magick'
 require 'fileutils'
 require 'date'
+require 'erb'
 
 require_relative 'metadata'
 
@@ -56,7 +57,14 @@ module ImagePrep
         image.write(sizedImageName)
         @emitedImages[width] = sizedImageName
       end
-   end
+    end
+
+    def to_octopress
+      "imageName: #{@metadata.imageName}\n" +
+      "dateTimeOriginal: #{@metadata.dateTimeOriginal}\n" +
+      "headline: #{@metadata.headline}\n" +
+      "caption: #{@metadata.caption}\n" 
+    end
 
     # def doWork()
     #   FileUtils.mkpath(File.join(@outDir,"/original/"))  
