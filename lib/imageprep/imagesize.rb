@@ -25,7 +25,7 @@ module ImagePrep
       emitSizedImages
     end
 
-    def emitSizedImages()
+    def emitSizedImages
       @emitedImages = Hash.new
 
       puts "Processing #{metadata.imageFileName}"

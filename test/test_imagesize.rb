@@ -30,6 +30,7 @@ class TestOptions < Test::Unit::TestCase
 	  	is.emitedImages.each { |width, filename| 
 	  		assert_equal(File::exists?(filename), true)
 	  	}
+	  	puts "Serialized:\n" + is.to_yaml
   	} #delete temporary directory
   end
 end
