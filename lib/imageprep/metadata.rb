@@ -10,6 +10,7 @@ module ImagePrep
 	class MetaData
 		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal, :city, :state, :country
 		attr_reader :exposureTime, :focalLength, :iso, :camera
+		attr_reader :heigth, :width
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
 		
@@ -34,6 +35,9 @@ module ImagePrep
     IPTC_STATE = "%[IPTC:2:95]"
     IPTC_COUNTRY = "%[IPTC:2:101]"
 
+    WIDTH = "%w"
+    HEIGTH = "%h"
+
 		def initialize(imageFileName)
 			image = MiniMagick::Image.open(imageFileName)
 			@dateTimeOriginal = DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S')
@@ -48,6 +52,9 @@ module ImagePrep
 			@focalLength = eval(image[EXIF_FOCAL_LENGTH])			# This is stored as 40/1
 			@iso = eval(image[EXIF_ISO])
 			@camera = image[EXIF_CAMERA]
+			
+			@heigth = image[HEIGTH].to_i											# This is returend as a string
+			@width = image[WIDTH].to_i												# This is returned as a string
 		end
 	end
 end

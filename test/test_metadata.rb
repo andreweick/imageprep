@@ -41,6 +41,9 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("McLean", meta.city)
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
+
+    assert_equal(2895, meta.width)
+    assert_equal(1930, meta.heigth)
   end
 
   def test_notbigenough
@@ -62,6 +65,9 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(nil, meta.city)
   	assert_equal(nil, meta.state)
   	assert_equal(nil, meta.country)
+
+    assert_equal(1333, meta.width)
+    assert_equal(2000, meta.heigth)
   end
 
   def test_portrait
@@ -83,6 +89,10 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("McLean", meta.city)
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
+
+    assert_equal(3840, meta.width)
+    assert_equal(5760, meta.heigth)
+
   end
 
 end
