@@ -8,11 +8,13 @@ require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
 
-is = ImagePrep::ImageSize.new(opts.outDir)
-is.emitSizedImages(opts.images_to_load)
+images = Hash.new
+opts.images_to_load.each { |imageFileName|
+	puts "Processing #{imageFileName}"
+	is = ImagePrep::ImageSize.new(imageFileName, opts.outDir)
+	images.store(imageFileName, is)
+}
 
-
-      # imageList.each do |imageFileName|
-      #   puts "Processing #{imageFileName}"
-        
-      #   meta = ImagePrep::MetaData.new(imageFileName)
+images.each { |image|  
+	puts "processed image: #{image}"
+}
