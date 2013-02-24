@@ -16,6 +16,7 @@ module ImagePrep
     # picturefill [retina](http://duncandavidson.com/blog/2012/08/retina_ready/)
     
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
+    JPEG_COMPESSION_QUALITY = "75"    # Need to pass as a string
 
     attr_reader :sourceDir, :sizedDir, :metadata, :emitedImages
 
@@ -49,7 +50,7 @@ module ImagePrep
         
         # I need to pass these two methods strings, so I convert the number to a string
         image.resize("#{width}")
-        image.quality("75")
+        image.quality(JPEG_COMPESSION_QUALITY)
 
         sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.imageFileName))
         FileUtils.mkpath(File.dirname(sizedImageName))
