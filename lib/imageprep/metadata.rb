@@ -11,7 +11,7 @@ module ImagePrep
 	class MetaData
 		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal, :city, :state, :country
 		attr_reader :exposureTime, :focalLength, :iso, :camera
-		attr_reader :heigth, :width, :imageName
+		attr_reader :heigth, :width, :imageName, :imageFileName
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
 		
@@ -58,6 +58,7 @@ module ImagePrep
 			@width = image[WIDTH].to_i												# This is returned as a string
 
 			@imageName = File.basename(imageFileName)
+			@imageFileName = imageFileName
 		end
 	end
 end
