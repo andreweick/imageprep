@@ -26,14 +26,9 @@ class TestOptions < Test::Unit::TestCase
 
   def test_resize
   	Dir.mktmpdir {|dir|
-	  	is = ImagePrep::ImageSize.new("#{dir}")
-	  	emitedImages = is.emitSizedImages([TestImages[:landscape]])
-	  	emitedImages.each { |width, filename| 
+	  	is = ImagePrep::ImageSize.new(TestImages[:landscape],"#{dir}")
+	  	is.emitedImages.each { |width, filename| 
 	  		assert_equal(File::exists?(filename), true)
-	  	}
-
-	  	emitedImages.each { |width, filename| 
-	  		assert_equal true,true 
 	  	}
   	} #delete temporary directory
   end

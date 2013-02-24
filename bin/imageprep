@@ -10,3 +10,9 @@ opts = ImagePrep::Options.new(ARGV)
 
 is = ImagePrep::ImageSize.new(opts.outDir)
 is.emitSizedImages(opts.images_to_load)
+
+
+      # imageList.each do |imageFileName|
+      #   puts "Processing #{imageFileName}"
+        
+      #   meta = ImagePrep::MetaData.new(imageFileName)

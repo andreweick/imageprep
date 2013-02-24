@@ -7,7 +7,6 @@ require 'mini_magick'
 require 'fileutils'
 require 'date'
 
-require_relative 'imagedata'
 require_relative 'metadata'
 
 module ImagePrep
@@ -17,47 +16,47 @@ module ImagePrep
     
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
 
-    def initialize(outDir)
-       @outDir = outDir
+    attr_reader :sourceDir, :sizedDir, :metadata, :emitedImages
+
+    def initialize(imageFileName, sizedDir)
+      @metadata = ImagePrep::MetaData.new(imageFileName)
+      @sizedDir = sizedDir
+
+      emitSizedImages
     end
 
-    def emitSizedImages(imageList)
+    def emitSizedImages()
       @emitedImages = Hash.new
 
-      imageList.each do |imageFileName|
-        puts "Processing #{imageFileName}"
+      puts "Processing #{metadata.imageFileName}"
+      
+      # Save source image 
+      imageOriginal = MiniMagick::Image.open(@metadata.imageFileName)
+
+      @sizedDirOrignal = File.join(@sizedDir, "original", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
+      @sizedDirGenerated = File.join(@sizedDir, "generated", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
+
+      dest = File.join(@sizedDirOrignal, File.basename(@metadata.imageFileName))
+      FileUtils.mkpath File.dirname(dest)
+      FileUtils.cp(@metadata.imageFileName, dest)
+      
+      @emitedImages[0] = dest
+
+      WIDTHS.each do |width|
+        # Need to keep reloading image because we are resizing it
+        image = MiniMagick::Image.open(@metadata.imageFileName)
         
-        meta = ImagePrep::MetaData.new(imageFileName)
-        # Save source image 
-        imageOriginal = MiniMagick::Image.open(imageFileName)
+        # I need to pass these two methods strings, so I convert the number to a string
+        image.resize("#{width}")
+        image.quality("75")
 
-        @outDirOrignal = File.join(@outDir, "original", "#{meta.dateTimeOriginal.year}", meta.dateTimeOriginal.strftime('%Y-%m-%d'))
-        @outDirGenerated = File.join(@outDir, "generated", "#{meta.dateTimeOriginal.year}", meta.dateTimeOriginal.strftime('%Y-%m-%d'))
+        sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.imageFileName))
+        FileUtils.mkpath(File.dirname(sizedImageName))
 
-        dest = File.join(@outDirOrignal, File.basename(imageFileName))
-        FileUtils.mkpath File.dirname(dest)
-        FileUtils.cp(imageFileName, dest)
-        
-        @emitedImages[0] = dest
-
-        WIDTHS.each do |width|
-          # Need to keep reloading image because we are resizing it
-          image = MiniMagick::Image.open(imageFileName)
-          
-          # I need to pass these two methods strings, so I convert the number to a string
-          image.resize("#{width}")
-          image.quality("75")
-
-          sizedImageName = File.join(@outDirGenerated, "#{width}", File.basename(imageFileName))
-          FileUtils.mkpath File.dirname(sizedImageName)
-
-          image.write(sizedImageName)
-          @emitedImages[width] = sizedImageName
-        end
+        image.write(sizedImageName)
+        @emitedImages[width] = sizedImageName
       end
-
-      return @emitedImages
-    end
+   end
 
     # def doWork()
     #   FileUtils.mkpath(File.join(@outDir,"/original/"))  
