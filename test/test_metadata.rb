@@ -45,8 +45,8 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.heigth)
-    assert_equal(TestImages[:landscape], meta.imageFileName)
-    assert_equal(File.basename(TestImages[:landscape]), meta.imageName)
+    assert_equal(TestImages[:landscape], meta.fileName)
+    assert_equal(File.basename(TestImages[:landscape]), meta.name)
   end
 
   def test_notbigenough
@@ -71,8 +71,8 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.heigth)
-    assert_equal(TestImages[:notbigenough], meta.imageFileName)
-    assert_equal(File.basename(TestImages[:notbigenough]), meta.imageName)
+    assert_equal(TestImages[:notbigenough], meta.fileName)
+    assert_equal(File.basename(TestImages[:notbigenough]), meta.name)
   end
 
   def test_portrait
@@ -97,8 +97,8 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.heigth)
-    assert_equal(TestImages[:portrait], meta.imageFileName)
-    assert_equal(File.basename(TestImages[:portrait]), meta.imageName)
+    assert_equal(TestImages[:portrait], meta.fileName)
+    assert_equal(File.basename(TestImages[:portrait]), meta.name)
   end
 
 end

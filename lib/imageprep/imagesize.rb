@@ -30,29 +30,29 @@ module ImagePrep
     def emitSizedImages
       @emitedImages = Hash.new
 
-      puts "Processing #{metadata.imageFileName}"
+      puts "Processing #{metadata.fileName}"
       
       # Save source image 
-      imageOriginal = MiniMagick::Image.open(@metadata.imageFileName)
+      imageOriginal = MiniMagick::Image.open(@metadata.fileName)
 
       @sizedDirOrignal = File.join(@sizedDir, "original", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
       @sizedDirGenerated = File.join(@sizedDir, "generated", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
 
-      dest = File.join(@sizedDirOrignal, File.basename(@metadata.imageFileName))
+      dest = File.join(@sizedDirOrignal, File.basename(@metadata.fileName))
       FileUtils.mkpath File.dirname(dest)
-      FileUtils.cp(@metadata.imageFileName, dest)
+      FileUtils.cp(@metadata.fileName, dest)
       
       @emitedImages[@metadata.width] = dest
 
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
-        image = MiniMagick::Image.open(@metadata.imageFileName)
+        image = MiniMagick::Image.open(@metadata.fileName)
         
         # I need to pass these two methods strings, so I convert the number to a string
         image.resize("#{width}")
         image.quality(JPEG_COMPESSION_QUALITY)
 
-        sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.imageFileName))
+        sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.fileName))
         FileUtils.mkpath(File.dirname(sizedImageName))
 
         image.write(sizedImageName)
