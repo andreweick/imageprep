@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+# encoding: utf-8
 
 require 'rubygems'
 require 'bundler/setup'
@@ -76,6 +77,28 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def test_portrait
+    portraitOctopressYaml = <<-OCTO
+name: portrait-big-enough-3840x5760.jpg
+fileName: ./test/data/portrait-big-enough-3840x5760.jpg
+heigth: 5760
+width: 3840
+dateTimeOriginal: 2013-01-11T18:04:00+00:00
+keywords:
+- Libby Eick
+- aedc
+- libby
+- studio
+copyright: © 2013 Andrew Eick, all rights reserved.
+headline: Libby reading a book
+caption: Libby reading her book
+city: McLean
+state: VA
+country: USA
+exposureTime: 1/200
+focalLength: 40
+iso: 100
+camera: Canon EOS 5D Mark III
+OCTO
   	meta = ImagePrep::MetaData.new(TestImages[:portrait])
   	dto = Date.new(2013,1,11)
   	assert_equal(dto.year, meta.dateTimeOriginal.year)
@@ -99,6 +122,9 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(5760, meta.heigth)
     assert_equal(TestImages[:portrait], meta.fileName)
     assert_equal(File.basename(TestImages[:portrait]), meta.name)
+    puts "Andy: #{meta.to_octopress}\n"
+    # puts "Andy2: #{portraitOctopressYaml}"
+    # assert_equal(portraitOctopressYaml, meta.to_octopress)
   end
 
 end

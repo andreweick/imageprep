@@ -62,25 +62,29 @@ module ImagePrep
 		end
 
 		def to_octopress
-			puts "name: #{name}\n"
-			puts "fileName: #{fileName}\n"
-			puts "heigth: #{heigth}\n"
-			puts "width: #{width}\n"
-			puts "dateTimeOriginal: #{dateTimeOriginal}\n"
-			
-			puts "keywords:\n"
-			keywords.each { |word| puts "- #{word}\n" }
-			
-			puts "copyright: #{copyright}\n"
-			puts "headline: #{headline}\n"
-			puts "caption: #{caption}\n"
-			puts "city: #{city}\n"
-			puts "state: #{state}\n"
-			puts "country: #{country}\n"
-			puts "exposureTime: #{exposureTime}\n"
-			puts "focalLength: #{focalLength}\n"
-			puts "iso: #{iso}\n"
-			puts "camera: #{camera}\n"
+			<<-OCTOYAML
+name: #{name}
+fileName: #{fileName}
+heigth: #{heigth}
+width: #{width}
+dateTimeOriginal: #{dateTimeOriginal}
+keyword:
+#{ keywords.each { |word| 
+<<-INNERYAML
+- #{word} TEST
+INNERYAML
+}}
+copyright: #{copyright}
+headline: #{headline}
+caption: #{caption}
+city: #{city}
+state: #{state}
+country: #{country}
+exposureTime: #{exposureTime}
+focalLength: #{focalLength}
+iso: #{iso}
+camera: #{camera}
+OCTOYAML
 		end
 	end
 end
