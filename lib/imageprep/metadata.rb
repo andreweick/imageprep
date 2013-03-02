@@ -60,5 +60,27 @@ module ImagePrep
 			@name = File.basename(imageFileName)
 			@fileName = imageFileName
 		end
+
+		def to_octopress
+			puts "name: #{name}\n"
+			puts "fileName: #{fileName}\n"
+			puts "heigth: #{heigth}\n"
+			puts "width: #{width}\n"
+			puts "dateTimeOriginal: #{dateTimeOriginal}\n"
+			
+			puts "keywords:\n"
+			keywords.each { |word| puts "- #{word}\n" }
+			
+			puts "copyright: #{copyright}\n"
+			puts "headline: #{headline}\n"
+			puts "caption: #{caption}\n"
+			puts "city: #{city}\n"
+			puts "state: #{state}\n"
+			puts "country: #{country}\n"
+			puts "exposureTime: #{exposureTime}\n"
+			puts "focalLength: #{focalLength}\n"
+			puts "iso: #{iso}\n"
+			puts "camera: #{camera}\n"
+		end
 	end
 end

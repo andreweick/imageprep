@@ -61,7 +61,7 @@ module ImagePrep
     end
 
     def to_octopress
-      "imageName: #{@metadata.imageName}\n" +
+      "name: #{@metadata.name}\n" +
       "dateTimeOriginal: #{@metadata.dateTimeOriginal}\n" +
       "headline: #{@metadata.headline}\n" +
       "caption: #{@metadata.caption}\n" 

@@ -34,6 +34,7 @@ class TestOptions < Test::Unit::TestCase
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal width, image[:width]
 	  	}
+	  	puts "is.to_o: #{is.to_octopress}"
   	} #delete temporary directory
   end
 
