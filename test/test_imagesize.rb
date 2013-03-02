@@ -5,6 +5,7 @@ require 'bundler/setup'
 
 require 'test/unit'
 require 'tmpdir'
+require 'json'
 
 require 'mini_magick'
 
