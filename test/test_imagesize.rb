@@ -23,7 +23,7 @@ class TestOptions < Test::Unit::TestCase
   # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
 	def test_imagesExists
 		TestImages.each do |nature, filename|
-			assert_equal File::exists?(filename), true
+			assert_equal(File::exists?(filename), true)
 		end
   end
 
@@ -32,9 +32,8 @@ class TestOptions < Test::Unit::TestCase
 	  	is = ImagePrep::ImageSize.new(TestImages[:landscape],"#{dir}")
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
-				assert_equal width, image[:width]
+				assert_equal(width, image[:width])
 	  	}
-	  	puts "is.to_o: #{is.to_octopress}"
   	} #delete temporary directory
   end
 
@@ -43,7 +42,7 @@ class TestOptions < Test::Unit::TestCase
 	  	is = ImagePrep::ImageSize.new(TestImages[:portrait],"#{dir}")
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
-				assert_equal width, image[:width]
+				assert_equal(width, image[:width])
 	  	}
   	} #delete temporary directory
   end
@@ -53,10 +52,9 @@ class TestOptions < Test::Unit::TestCase
 	  	is = ImagePrep::ImageSize.new(TestImages[:notbigenough],"#{dir}")
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
-				assert_equal width, image[:width]
+				assert_equal(width, image[:width])
 	  	}
   	} #delete temporary directory
   end
-
 
 end

@@ -30,8 +30,6 @@ module ImagePrep
     def emitSizedImages
       @emitedImages = Hash.new
 
-      puts "Processing #{metadata.fileName}"
-      
       # Save source image 
       imageOriginal = MiniMagick::Image.open(@metadata.fileName)
 

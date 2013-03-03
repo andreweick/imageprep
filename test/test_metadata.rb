@@ -126,7 +126,7 @@ iso: 100
 camera: Canon EOS 5D Mark III
 PORTRAIT_METADATA_YAML
 
-  notbigenoughYaml = <<-NOTBIGENOUGH_YAML
+    notbigenoughYaml = <<-NOTBIGENOUGH_YAML
 name: not-big-enough-1333x2000.jpg
 fileName: ./test/data/not-big-enough-1333x2000.jpg
 heigth: 2000
@@ -146,7 +146,7 @@ iso: 800
 camera: Canon EOS 5D
 NOTBIGENOUGH_YAML
 
-  landscapeYaml = <<-LANDSCAPE_YAML
+    landscapeYaml = <<-LANDSCAPE_YAML
 name: landscape-big-enough-2895x1930.jpg
 fileName: ./test/data/landscape-big-enough-2895x1930.jpg
 heigth: 1930
