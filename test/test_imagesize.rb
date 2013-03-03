@@ -53,6 +53,7 @@ class TestOptions < Test::Unit::TestCase
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
+				is.to_octopress
 	  	}
   	} #delete temporary directory
   end

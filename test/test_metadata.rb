@@ -103,71 +103,71 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def test_yaml
-    portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML
-name: portrait-big-enough-3840x5760.jpg
-fileName: ./test/data/portrait-big-enough-3840x5760.jpg
-heigth: 5760
-width: 3840
-dateTimeOriginal: 2013-01-11T18:04:00+00:00
-keywords:
-- Libby Eick
-- aedc
-- libby
-- studio
-copyright: © 2013 Andrew Eick, all rights reserved.
-headline: Libby reading a book
-caption: Libby reading her book
-city: McLean
-state: VA
-country: USA
-exposureTime: 1/200
-focalLength: 40
-iso: 100
-camera: Canon EOS 5D Mark III
-PORTRAIT_METADATA_YAML
+    # the gsub statement is to [format the HEREDOC statement](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
+    portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
+      name: portrait-big-enough-3840x5760.jpg
+      fileName: ./test/data/portrait-big-enough-3840x5760.jpg
+      heigth: 5760
+      width: 3840
+      dateTimeOriginal: 2013-01-11T18:04:00+00:00
+      keywords:
+      - Libby Eick
+      - aedc
+      - libby
+      - studio
+      copyright: © 2013 Andrew Eick, all rights reserved.
+      headline: Libby reading a book
+      caption: Libby reading her book
+      city: McLean
+      state: VA
+      country: USA
+      exposureTime: 1/200
+      focalLength: 40
+      iso: 100
+      camera: Canon EOS 5D Mark III
+    PORTRAIT_METADATA_YAML
 
-    notbigenoughYaml = <<-NOTBIGENOUGH_YAML
-name: not-big-enough-1333x2000.jpg
-fileName: ./test/data/not-big-enough-1333x2000.jpg
-heigth: 2000
-width: 1333
-dateTimeOriginal: 2006-12-29T18:38:08+00:00
-keywords:
-- christmas libby present
-copyright: © 2006 Andrew Eick, all rights reserved.
-headline: Libby opens a present
-caption: 
-city: 
-state: 
-country: 
-exposureTime: 1/30
-focalLength: 52
-iso: 800
-camera: Canon EOS 5D
-NOTBIGENOUGH_YAML
+    notbigenoughYaml = <<-NOTBIGENOUGH_YAML.gsub(/^ {6}/, '')
+      name: not-big-enough-1333x2000.jpg
+      fileName: ./test/data/not-big-enough-1333x2000.jpg
+      heigth: 2000
+      width: 1333
+      dateTimeOriginal: 2006-12-29T18:38:08+00:00
+      keywords:
+      - christmas libby present
+      copyright: © 2006 Andrew Eick, all rights reserved.
+      headline: Libby opens a present
+      caption: 
+      city: 
+      state: 
+      country: 
+      exposureTime: 1/30
+      focalLength: 52
+      iso: 800
+      camera: Canon EOS 5D
+    NOTBIGENOUGH_YAML
 
-    landscapeYaml = <<-LANDSCAPE_YAML
-name: landscape-big-enough-2895x1930.jpg
-fileName: ./test/data/landscape-big-enough-2895x1930.jpg
-heigth: 1930
-width: 2895
-dateTimeOriginal: 2013-01-15T20:01:55+00:00
-keywords:
-- Libby Eick
-- libby
-- studio
-copyright: © 2013 Andrew Eick, all rights reserved.
-headline: Lazy Saturday
-caption: 
-city: McLean
-state: VA
-country: USA
-exposureTime: 1/125
-focalLength: 40
-iso: 100
-camera: Canon EOS 5D Mark III
-LANDSCAPE_YAML
-
+    landscapeYaml = <<-LANDSCAPE_YAML.gsub(/^ {6}/, '')
+      name: landscape-big-enough-2895x1930.jpg
+      fileName: ./test/data/landscape-big-enough-2895x1930.jpg
+      heigth: 1930
+      width: 2895
+      dateTimeOriginal: 2013-01-15T20:01:55+00:00
+      keywords:
+      - Libby Eick
+      - libby
+      - studio
+      copyright: © 2013 Andrew Eick, all rights reserved.
+      headline: Lazy Saturday
+      caption: 
+      city: McLean
+      state: VA
+      country: USA
+      exposureTime: 1/125
+      focalLength: 40
+      iso: 100
+      camera: Canon EOS 5D Mark III
+    LANDSCAPE_YAML
 
     meta = ImagePrep::MetaData.new(TestImages[:portrait])
     assert_equal(portraitOctopressYaml, meta.to_octopress)

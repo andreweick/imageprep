@@ -65,25 +65,26 @@ module ImagePrep
 		def to_octopress
 			# Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
 			# if I don't put it on the same line then the spacing is wrong in the string
-			s = ERB.new(<<-OCTOYAML).result(binding)
-name: #{name}
-fileName: #{fileName}
-heigth: #{heigth}
-width: #{width}
-dateTimeOriginal: #{dateTimeOriginal}
-keywords:<% keywords.each do |word| %>
-- <%= word %><% end %>
-copyright: #{copyright}
-headline: #{headline}
-caption: #{caption}
-city: #{city}
-state: #{state}
-country: #{country}
-exposureTime: #{exposureTime}
-focalLength: #{focalLength}
-iso: #{iso}
-camera: #{camera}
-OCTOYAML
+			# The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
+			s = ERB.new(<<-OCTOYAML.gsub(/^\t{4}/, '')).result(binding)
+				name: #{name}
+				fileName: #{fileName}
+				heigth: #{heigth}
+				width: #{width}
+				dateTimeOriginal: #{dateTimeOriginal}
+				keywords:<% keywords.each do |word| %>
+				- <%= word %><% end %>
+				copyright: #{copyright}
+				headline: #{headline}
+				caption: #{caption}
+				city: #{city}
+				state: #{state}
+				country: #{country}
+				exposureTime: #{exposureTime}
+				focalLength: #{focalLength}
+				iso: #{iso}
+				camera: #{camera}
+			OCTOYAML
 		end
 	end
 end

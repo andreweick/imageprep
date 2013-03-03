@@ -60,7 +60,8 @@ module ImagePrep
 
     def to_octopress
       s = ERB.new(<<-OCTOYAML).result(binding)
-sourceDir: #{sourceDir}
+sizedDir: #{sizedDir}
+<%= @metadata.to_octopress %>
 OCTOYAML
     end
 
