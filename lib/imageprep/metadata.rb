@@ -6,6 +6,7 @@ require 'bundler/setup'
 require 'mini_magick'
 require 'date'
 require 'fileutils'
+require 'erb'
 
 module ImagePrep
 	class MetaData
@@ -62,18 +63,16 @@ module ImagePrep
 		end
 
 		def to_octopress
-			<<-OCTOYAML
+			# Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
+			# if I don't put it on the same line then the spacing is wrong in the string
+			s = ERB.new(<<-OCTOYAML).result(binding)
 name: #{name}
 fileName: #{fileName}
 heigth: #{heigth}
 width: #{width}
 dateTimeOriginal: #{dateTimeOriginal}
-keyword:
-#{ keywords.each { |word| 
-<<-INNERYAML
-- #{word} TEST
-INNERYAML
-}}
+keywords:<% keywords.each do |word| %>
+- <%= word %><% end %>
 copyright: #{copyright}
 headline: #{headline}
 caption: #{caption}
