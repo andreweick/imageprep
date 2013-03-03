@@ -59,7 +59,9 @@ module ImagePrep
     end
 
     def to_octopress
-      puts "sourceDir: #{@sourceDir}\n"
+      s = ERB.new(<<-OCTOYAML).result(binding)
+sourceDir: #{sourceDir}
+OCTOYAML
     end
 
     # def doWork()
