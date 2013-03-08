@@ -37,10 +37,16 @@ module ImagePrep
       @sizedDirGenerated = File.join(@sizedDir, "generated", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
 
       dest = File.join(@sizedDirOrignal, File.basename(@metadata.fileName))
-      FileUtils.mkpath File.dirname(dest)
+      FileUtils.mkpath(File.dirname(dest))
       FileUtils.cp(@metadata.fileName, dest)
-      
+
       @emitedImages[@metadata.width] = dest
+
+      # Make a metadata filename
+      destYamlName = File.join(@sizedDirOrignal,File.basename(@metadata.fileName,".*") + ".yaml")
+      File.open(destYamlName, 'w'){ |file|
+        file.write(to_octopress)
+      }
 
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
