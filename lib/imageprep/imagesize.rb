@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'rubygems'
 require 'bundler/setup'
@@ -23,8 +23,6 @@ module ImagePrep
     def initialize(imageFileName, sizedDir)
       @metadata = ImagePrep::MetaData.new(imageFileName)
       @sizedDir = sizedDir
-
-      emitSizedImages
     end
 
     def emitSizedImages

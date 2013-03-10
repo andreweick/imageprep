@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'rubygems'
 require 'bundler/setup'
@@ -31,6 +31,7 @@ class TestOptions < Test::Unit::TestCase
   def test_resize_landscape
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:landscape],"#{dir}")
+	  	is.emitSizedImages
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
@@ -41,6 +42,7 @@ class TestOptions < Test::Unit::TestCase
   def test_resize_portrait
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:portrait],"#{dir}")
+	  	is.emitSizedImages
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
@@ -51,6 +53,7 @@ class TestOptions < Test::Unit::TestCase
   def test_resize_not_big_enough
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:notbigenough],"#{dir}")
+	  	is.emitSizedImages
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
@@ -61,6 +64,7 @@ class TestOptions < Test::Unit::TestCase
   def test_resize_needstrip
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:needstrip],"#{dir}")
+	  	is.emitSizedImages
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
