@@ -10,9 +10,10 @@ require 'erb'
 
 module ImagePrep
 	class MetaData
-		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal, :city, :state, :country
+		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal
+		attr_reader :city, :state, :country, :countryISO
 		attr_reader :exposureTime, :focalLength, :iso, :camera
-		attr_reader :heigth, :width, :name, :fileName
+		attr_reader :heigth, :width, :name, :fileName, :nameStripSpace, :nameNoExtension
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
 		
@@ -36,6 +37,7 @@ module ImagePrep
 		IPTC_CITY = "%[IPTC:2:90]"
     IPTC_STATE = "%[IPTC:2:95]"
     IPTC_COUNTRY = "%[IPTC:2:101]"
+    IPTC_COUNTRY_ISO = "%[IPTC:2:100]"
 
     WIDTH = "%w"
     HEIGTH = "%h"
@@ -50,6 +52,7 @@ module ImagePrep
 			@city = image[IPTC_CITY]
 			@state = image[IPTC_STATE]
 			@country = image[IPTC_COUNTRY]
+			@countryISO = image[IPTC_COUNTRY_ISO]
 			@exposureTime = image[EXIF_EXPOSURE_TIME]
 			@focalLength = eval(image[EXIF_FOCAL_LENGTH])			# This is stored as 40/1
 			@iso = eval(image[EXIF_ISO])
@@ -59,6 +62,8 @@ module ImagePrep
 			@width = image[WIDTH].to_i												# This is returned as a string
 
 			@name = File.basename(imageFileName)
+			@nameNoExtension = File.basename(imageFileName, ".*")
+			@nameStripSpace = @name.gsub(' ','_')
 			@fileName = imageFileName
 		end
 
@@ -80,6 +85,7 @@ module ImagePrep
 				city: #{city}
 				state: #{state}
 				country: #{country}
+				countryISO: #{countryISO}
 				exposureTime: #{exposureTime}
 				focalLength: #{focalLength}
 				iso: #{iso}

@@ -50,7 +50,6 @@ class TestOptions < Test::Unit::TestCase
   def test_resize_not_big_enough
   	Dir.mktmpdir {|dir|
 	  	is = ImagePrep::ImageSize.new(TestImages[:notbigenough],"#{dir}")
-	  	puts is.to_octopress
 	  	is.emitedImages.each { |width, filename| 
 	  		image = MiniMagick::Image.open(filename)
 				assert_equal(width, image[:width])
