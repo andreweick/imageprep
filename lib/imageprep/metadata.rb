@@ -13,7 +13,8 @@ module ImagePrep
 		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal
 		attr_reader :city, :state, :country, :countryISO
 		attr_reader :exposureTime, :focalLength, :iso, :camera
-		attr_reader :heigth, :width, :name, :fileName, :nameStripSpace, :nameNoExtension
+		attr_reader :heigth, :width, :name, :fileName, :nameStripSpace
+		attr_reader :nameNoExtension, :nameNoExtensionStripSpace
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
 		
@@ -64,7 +65,16 @@ module ImagePrep
 			@name = File.basename(imageFileName)
 			@nameNoExtension = File.basename(imageFileName, ".*")
 			@nameStripSpace = @name.gsub(' ','_')
+			@nameNoExtensionStripSpace = @nameStripSpace.gsub(' ', '_')
 			@fileName = imageFileName
+		end
+
+		def stripExtension(fname)
+			File.basename(fname,".*")
+		end
+
+		def stripSpace(fname)
+			fname.gsub(' ', '_')
 		end
 
 		def to_octopress

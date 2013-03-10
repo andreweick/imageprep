@@ -36,14 +36,14 @@ module ImagePrep
       @sizedDirOrignal = File.join(@sizedDir, "original", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
       @sizedDirGenerated = File.join(@sizedDir, "generated", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
 
-      dest = File.join(@sizedDirOrignal, @metadata.name)
+      dest = File.join(@sizedDirOrignal, @metadata.nameStripSpace)
       FileUtils.mkpath(File.dirname(dest))
       FileUtils.cp(@metadata.fileName, dest)
 
       @emitedImages[@metadata.width] = dest
 
       # Make a metadata filename
-      destYamlName = File.join(@sizedDirOrignal,File.basename(@metadata.fileName,".*") + ".yaml")
+      destYamlName = File.join(@sizedDirOrignal,@metadata.nameNoExtensionStripSpace + ".yaml")
       File.open(destYamlName, 'w'){ |file|
         file.write(to_octopress)
       }
@@ -56,7 +56,7 @@ module ImagePrep
         image.resize("#{width}")
         image.quality(JPEG_COMPESSION_QUALITY)
 
-        sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.fileName))
+        sizedImageName = File.join(@sizedDirGenerated, "#{width}", File.basename(@metadata.nameStripSpace))
         FileUtils.mkpath(File.dirname(sizedImageName))
 
         image.write(sizedImageName)

@@ -16,7 +16,8 @@ class TestOptions < Test::Unit::TestCase
 	TestImages = { 	
 		landscape: 			"./test/data/landscape-big-enough-2895x1930.jpg",
 		portrait: 			"./test/data/portrait-big-enough-3840x5760.jpg",
-		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg"
+		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg",
+	  needstrip:      "./test/data/2013-01-19 at 10-54-54.jpg" 
 	}
 
   # To see what is in all the EXIF data for an image: 
@@ -56,4 +57,15 @@ class TestOptions < Test::Unit::TestCase
 	  	}
   	} #delete temporary directory
   end
+
+  def test_resize_needstrip
+  	Dir.mktmpdir {|dir|
+	  	is = ImagePrep::ImageSize.new(TestImages[:needstrip],"#{dir}")
+	  	is.emitedImages.each { |width, filename| 
+	  		image = MiniMagick::Image.open(filename)
+				assert_equal(width, image[:width])
+	  	}
+  	} #delete temporary directory
+  end
+
 end

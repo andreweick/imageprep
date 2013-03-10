@@ -14,7 +14,3 @@ opts.images_to_load.each { |imageFileName|
 	is = ImagePrep::ImageSize.new(imageFileName, opts.outDir)
 	images.store(imageFileName, is)
 }
-
-images.each { |image|  
-	puts "processed image: #{image}"
-}
