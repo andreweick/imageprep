@@ -12,5 +12,6 @@ images = Hash.new
 opts.images_to_load.each { |imageFileName|
 	puts "Processing #{imageFileName}"
 	is = ImagePrep::ImageSize.new(imageFileName, opts.outDir)
+	is.emitSizedImages
 	images.store(imageFileName, is)
 }
