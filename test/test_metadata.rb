@@ -45,7 +45,7 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
     assert_equal("landscape-big-enough-2895x1930.jpg", meta.name)
-    assert_equal("landscape-big-enough-2895x1930", meta.nameNoExtension)
+    assert_equal("landscape-big-enough-2895x1930", meta.stripExtension)
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.heigth)
@@ -73,7 +73,8 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(nil, meta.state)
   	assert_equal(nil, meta.country)
     assert_equal("not-big-enough-1333x2000.jpg", meta.name)
-    assert_equal("not-big-enough-1333x2000", meta.nameNoExtension)
+    assert_equal("not-big-enough-1333x2000", meta.stripExtension)
+    assert_equal("not-big-enough-1333x2000", meta.stripSpaceExtension)
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.heigth)
@@ -101,7 +102,8 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
     assert_equal("portrait-big-enough-3840x5760.jpg", meta.name)
-    assert_equal("portrait-big-enough-3840x5760", meta.nameNoExtension)
+    assert_equal("portrait-big-enough-3840x5760", meta.stripExtension)
+    assert_equal("portrait-big-enough-3840x5760", meta.stripSpaceExtension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.heigth)
@@ -130,8 +132,9 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("United States of America", meta.country)
     assert_equal("USA", meta.countryISO)
     assert_equal("2013-01-19 at 10-54-54.jpg", meta.name)
-    assert_equal("2013-01-19 at 10-54-54", meta.nameNoExtension)
-    assert_equal("2013-01-19_at_10-54-54.jpg", meta.nameStripSpace)
+    assert_equal("2013-01-19 at 10-54-54", meta.stripExtension)
+    assert_equal("2013-01-19_at_10-54-54.jpg", meta.stripSpace)
+    assert_equal("2013-01-19_at_10-54-54", meta.stripSpaceExtension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.heigth)
