@@ -15,7 +15,8 @@ class TestOptions < Test::Unit::TestCase
 	TestImages = { 	
 		landscape: 			"./test/data/landscape-big-enough-2895x1930.jpg",
 		portrait: 			"./test/data/portrait-big-enough-3840x5760.jpg",
-		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg"
+		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg",
+    needstrip:      "./test/data/2013-01-19 at 10-54-54.jpg" 
 	}
 
 	def test_imagesExists
@@ -43,6 +44,8 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("McLean", meta.city)
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
+    assert_equal("landscape-big-enough-2895x1930.jpg", meta.name)
+    assert_equal("landscape-big-enough-2895x1930", meta.nameNoExtension)
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.heigth)
@@ -69,6 +72,8 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(nil, meta.city)
   	assert_equal(nil, meta.state)
   	assert_equal(nil, meta.country)
+    assert_equal("not-big-enough-1333x2000.jpg", meta.name)
+    assert_equal("not-big-enough-1333x2000", meta.nameNoExtension)
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.heigth)
@@ -95,11 +100,43 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal("McLean", meta.city)
   	assert_equal("VA", meta.state)
   	assert_equal("USA", meta.country)
+    assert_equal("portrait-big-enough-3840x5760.jpg", meta.name)
+    assert_equal("portrait-big-enough-3840x5760", meta.nameNoExtension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.heigth)
     assert_equal(TestImages[:portrait], meta.fileName)
     assert_equal(File.basename(TestImages[:portrait]), meta.name)
+  end
+
+  def test_strip
+    meta = ImagePrep::MetaData.new(TestImages[:needstrip])
+  
+    dto = DateTime.new(2013,1,19) 
+    assert_equal(dto.year, meta.dateTimeOriginal.year)
+    assert_equal(dto.month, meta.dateTimeOriginal.month)
+    assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal(meta.exposureTime, "1/125")
+    assert_equal(meta.focalLength, 30)
+    assert_equal(100, meta.iso)
+    assert_equal("Canon EOS 5D Mark III", meta.camera)
+
+    assert_equal(["Jasmine Eick", "black background", "jasmine", "studio"], meta.keywords)
+    assert_equal("\u00A9 2013 Andrew Eick, all rights reserved.", meta.copyright)  # '\u00A9' is copyright symbol (c)
+    assert_equal("Jasmine showing her new shirt", meta.caption)
+    assert_equal("Jasmine trying to pose", meta.headline)
+    assert_equal("McLean", meta.city)
+    assert_equal("VA", meta.state)
+    assert_equal("United States of America", meta.country)
+    assert_equal("USA", meta.countryISO)
+    assert_equal("2013-01-19 at 10-54-54.jpg", meta.name)
+    assert_equal("2013-01-19 at 10-54-54", meta.nameNoExtension)
+    assert_equal("2013-01-19_at_10-54-54.jpg", meta.nameStripSpace)
+
+    assert_equal(3840, meta.width)
+    assert_equal(5760, meta.heigth)
+    assert_equal(TestImages[:needstrip], meta.fileName)
+    assert_equal(File.basename(TestImages[:needstrip]), meta.name)
   end
 
   def test_yaml
@@ -121,6 +158,7 @@ class TestOptions < Test::Unit::TestCase
       city: McLean
       state: VA
       country: USA
+      countryISO: 
       exposureTime: 1/200
       focalLength: 40
       iso: 100
@@ -141,6 +179,7 @@ class TestOptions < Test::Unit::TestCase
       city: 
       state: 
       country: 
+      countryISO: 
       exposureTime: 1/30
       focalLength: 52
       iso: 800
@@ -163,6 +202,7 @@ class TestOptions < Test::Unit::TestCase
       city: McLean
       state: VA
       country: USA
+      countryISO: 
       exposureTime: 1/125
       focalLength: 40
       iso: 100

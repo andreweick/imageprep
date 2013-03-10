@@ -36,7 +36,7 @@ module ImagePrep
       @sizedDirOrignal = File.join(@sizedDir, "original", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
       @sizedDirGenerated = File.join(@sizedDir, "generated", "#{@metadata.dateTimeOriginal.year}", @metadata.dateTimeOriginal.strftime('%Y-%m-%d'))
 
-      dest = File.join(@sizedDirOrignal, File.basename(@metadata.fileName))
+      dest = File.join(@sizedDirOrignal, @metadata.name)
       FileUtils.mkpath(File.dirname(dest))
       FileUtils.cp(@metadata.fileName, dest)
 
