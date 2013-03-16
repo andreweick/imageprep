@@ -3,15 +3,15 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require_relative '../lib/imageprep/imagesize'
+require_relative '../lib/imageprep/imagemanips'
 require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
 
-images = Hash.new
 opts.images_to_load.each { |imageFileName|
 	puts "Processing #{imageFileName}"
-	is = ImagePrep::ImageSize.new(imageFileName, opts.outDir)
-	is.emitSizedImages
-	images.store(imageFileName, is)
+	im = ImagePrep::ImageManips.new(imageFileName, opts.outDir)
+	im.copyOriginal
+	im.generateYamlMeta
+	im.generateSized
 }
