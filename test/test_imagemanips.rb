@@ -37,25 +37,12 @@ class TestOptions < Test::Unit::TestCase
 
   def test_copy_source
   	Dir.mktmpdir {|tmploc|
-  		im = ImagePrep::ImageManips.new(TestImages[:landscape], tmploc)
-		  cfn = File.join(tmploc,"original",TestResultImages[:landscape] + ".jpg")  		
-  		assert_equal(im.copyOriginal, cfn)
-  		assert_equal(File::exists?(cfn), true)
-
-  		im = ImagePrep::ImageManips.new(TestImages[:portrait], tmploc,)
-  		cfn = File.join(tmploc,"original", TestResultImages[:portrait] + ".jpg")
-  		assert_equal(im.copyOriginal, cfn)
-  		assert_equal(File::exists?(cfn), true)
-
-  		im = ImagePrep::ImageManips.new(TestImages[:notbigenough], tmploc)
-  		cfn = File.join(tmploc,"original", TestResultImages[:notbigenough] + ".jpg")
-  		assert_equal(im.copyOriginal, cfn)
-  		assert_equal(File::exists?(cfn), true)
-
-  		im = ImagePrep::ImageManips.new(TestImages[:needstrip], tmploc)
-  		cfn = File.join(tmploc,"original", TestResultImages[:needstrip] + ".jpg")
-  		assert_equal(im.copyOriginal, cfn)
-  		assert_equal(File::exists?(cfn), true)
+  		TestImages.each { |image_type, image_name|
+	  		im = ImagePrep::ImageManips.new(image_name, tmploc)
+			  cfn = File.join(tmploc,"original", TestResultImages[image_type] + ".jpg")  
+	  		assert_equal(im.copyOriginal, cfn)
+	  		assert_equal(File::exists?(cfn), true)
+			}
   	}
   end
 
