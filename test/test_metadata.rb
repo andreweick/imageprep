@@ -150,7 +150,7 @@ class TestOptions < Test::Unit::TestCase
       heigth: 5760
       width: 3840
       dateTimeOriginal: 2013-01-11T18:04:00+00:00
-      keywords:
+      categories:
       - Libby Eick
       - aedc
       - libby
@@ -174,7 +174,7 @@ class TestOptions < Test::Unit::TestCase
       heigth: 2000
       width: 1333
       dateTimeOriginal: 2006-12-29T18:38:08+00:00
-      keywords:
+      categories:
       - christmas libby present
       copyright: © 2006 Andrew Eick, all rights reserved.
       headline: Libby opens a present
@@ -195,7 +195,7 @@ class TestOptions < Test::Unit::TestCase
       heigth: 1930
       width: 2895
       dateTimeOriginal: 2013-01-15T20:01:55+00:00
-      keywords:
+      categories:
       - Libby Eick
       - libby
       - studio

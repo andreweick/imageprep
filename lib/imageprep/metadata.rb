@@ -87,7 +87,7 @@ module ImagePrep
 				heigth: #{heigth}
 				width: #{width}
 				dateTimeOriginal: #{dateTimeOriginal}
-				keywords:<% keywords.each do |word| %>
+				categories:<% keywords.each do |word| %>
 				- <%= word %><% end %>
 				copyright: #{copyright}
 				headline: #{headline}
