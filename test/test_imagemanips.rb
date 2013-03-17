@@ -26,7 +26,7 @@ class TestOptions < Test::Unit::TestCase
 		portrait: 			"/2013/2013-01-11/portrait-big-enough-3840x5760",
 		notbigenough: 	"/2006/2006-12-29/not-big-enough-1333x2000",
 	  needstrip:      "/2013/2013-01-19/2013-01-19-at-10-54-54",
-	  scan: 			  	"./test/data/2013 02 11 20 24 33 jasmine 1.jpg" 
+	  scan: 			  	"/2013/2013-02-11/2013-02-11-20-24-33-jasmine-1.jpg" 
 	}
 
   # To see what is in all the EXIF data for an image: 
