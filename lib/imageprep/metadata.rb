@@ -70,11 +70,11 @@ module ImagePrep
 		end
 
 		def stripSpace
-			name.gsub(' ', '_')
+			name.gsub(' ', '-')
 		end
 
 		def stripSpaceExtension
-			File.basename(name,".*").gsub(' ', '_')
+			File.basename(name,".*").gsub(' ', '-')
 		end
 
 		def to_octopress

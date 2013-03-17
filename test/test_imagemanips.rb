@@ -24,7 +24,7 @@ class TestOptions < Test::Unit::TestCase
 		landscape: 			"/2013/2013-01-15/landscape-big-enough-2895x1930",
 		portrait: 			"/2013/2013-01-11/portrait-big-enough-3840x5760",
 		notbigenough: 	"/2006/2006-12-29/not-big-enough-1333x2000",
-	  needstrip:      "/2013/2013-01-19/2013-01-19_at_10-54-54"
+	  needstrip:      "/2013/2013-01-19/2013-01-19-at-10-54-54"
 	}
 
   # To see what is in all the EXIF data for an image: 

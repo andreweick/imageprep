@@ -133,8 +133,8 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("USA", meta.countryISO)
     assert_equal("2013-01-19 at 10-54-54.jpg", meta.name)
     assert_equal("2013-01-19 at 10-54-54", meta.stripExtension)
-    assert_equal("2013-01-19_at_10-54-54.jpg", meta.stripSpace)
-    assert_equal("2013-01-19_at_10-54-54", meta.stripSpaceExtension)
+    assert_equal("2013-01-19-at-10-54-54.jpg", meta.stripSpace)
+    assert_equal("2013-01-19-at-10-54-54", meta.stripSpaceExtension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.heigth)
