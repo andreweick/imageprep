@@ -35,12 +35,17 @@ module ImagePrep
     end
 
     def generatedDir
+      @generatedDir || 
       File.join(
                   @destRoot, 
                   "generated", 
                   "#{@metadata.dateTimeOriginal.year}", 
                   @metadata.dateTimeOriginal.strftime('%Y-%m-%d')
                 )
+    end
+
+    def generatedDir=( new_value )
+      @generatedDir = new_value
     end
 
     def copyOriginal
