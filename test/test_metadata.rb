@@ -143,6 +143,20 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(File.basename(TestImages[:needstrip]), meta.name)
   end
 
+  def test_scan
+    meta = ImagePrep::MetaData.new(TestImages[:scan])
+
+    dto = DateTime.new(2013,03,17)
+    assert_equal(dto.year, meta.dateTimeOriginal.year)
+    assert_equal(dto.month, meta.dateTimeOriginal.month)
+    assert_equal(dto.day, meta.dateTimeOriginal.day)
+
+    assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
+    assert_equal("2013 02 11 20 24 33 jasmine 1", meta.stripExtension)
+    assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.stripSpace)
+    assert_equal("2013-02-11-20-24-33-jasmine-1", meta.stripSpaceExtension)
+  end
+
   def test_yaml
     # the gsub statement is to [format the HEREDOC statement](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
     portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
