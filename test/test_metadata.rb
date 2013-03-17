@@ -49,7 +49,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("landscape-big-enough-2895x1930", meta.stripExtension)
 
     assert_equal(2895, meta.width)
-    assert_equal(1930, meta.heigth)
+    assert_equal(1930, meta.height)
     assert_equal(TestImages[:landscape], meta.fileName)
     assert_equal(File.basename(TestImages[:landscape]), meta.name)
   end
@@ -78,7 +78,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("not-big-enough-1333x2000", meta.stripSpaceExtension)
 
     assert_equal(1333, meta.width)
-    assert_equal(2000, meta.heigth)
+    assert_equal(2000, meta.height)
     assert_equal(TestImages[:notbigenough], meta.fileName)
     assert_equal(File.basename(TestImages[:notbigenough]), meta.name)
   end
@@ -107,7 +107,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("portrait-big-enough-3840x5760", meta.stripSpaceExtension)
 
     assert_equal(3840, meta.width)
-    assert_equal(5760, meta.heigth)
+    assert_equal(5760, meta.height)
     assert_equal(TestImages[:portrait], meta.fileName)
     assert_equal(File.basename(TestImages[:portrait]), meta.name)
   end
@@ -138,7 +138,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("2013-01-19-at-10-54-54", meta.stripSpaceExtension)
 
     assert_equal(3840, meta.width)
-    assert_equal(5760, meta.heigth)
+    assert_equal(5760, meta.height)
     assert_equal(TestImages[:needstrip], meta.fileName)
     assert_equal(File.basename(TestImages[:needstrip]), meta.name)
   end
@@ -150,6 +150,13 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.year, meta.dateTimeOriginal.year)
     assert_equal(dto.month, meta.dateTimeOriginal.month)
     assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal("", meta.exposureTime)
+    assert_equal(nil, meta.focalLength)
+    assert_equal(nil, meta.iso)
+    assert_equal("", meta.camera)
+    assert_equal(nil, meta.keywords)
+    assert_equal(2199, meta.width)
+    assert_equal(1699, meta.height)
 
     assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
     assert_equal("2013 02 11 20 24 33 jasmine 1", meta.stripExtension)
@@ -162,7 +169,7 @@ class TestOptions < Test::Unit::TestCase
     portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
       name: portrait-big-enough-3840x5760.jpg
       fileName: ./test/data/portrait-big-enough-3840x5760.jpg
-      heigth: 5760
+      height: 5760
       width: 3840
       dateTimeOriginal: 2013-01-11T18:04:00+00:00
       categories:
@@ -186,7 +193,7 @@ class TestOptions < Test::Unit::TestCase
     notbigenoughYaml = <<-NOTBIGENOUGH_YAML.gsub(/^ {6}/, '')
       name: not-big-enough-1333x2000.jpg
       fileName: ./test/data/not-big-enough-1333x2000.jpg
-      heigth: 2000
+      height: 2000
       width: 1333
       dateTimeOriginal: 2006-12-29T18:38:08+00:00
       categories:
@@ -207,7 +214,7 @@ class TestOptions < Test::Unit::TestCase
     landscapeYaml = <<-LANDSCAPE_YAML.gsub(/^ {6}/, '')
       name: landscape-big-enough-2895x1930.jpg
       fileName: ./test/data/landscape-big-enough-2895x1930.jpg
-      heigth: 1930
+      height: 1930
       width: 2895
       dateTimeOriginal: 2013-01-15T20:01:55+00:00
       categories:

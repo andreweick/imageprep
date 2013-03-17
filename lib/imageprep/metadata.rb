@@ -13,7 +13,7 @@ module ImagePrep
 		attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal
 		attr_reader :city, :state, :country, :countryISO
 		attr_reader :exposureTime, :focalLength, :iso, :camera
-		attr_reader :heigth, :width, :name, :fileName
+		attr_reader :height, :width, :name, :fileName
 
 		#[IPTC code chart](http://www.imagemagick.org/script/escape.php)
 		
@@ -40,7 +40,7 @@ module ImagePrep
     IPTC_COUNTRY_ISO = "%[IPTC:2:100]"
 
     WIDTH = "%w"
-    HEIGTH = "%h"
+    HEIGHT = "%h"
 
 		def initialize(imageFileName)
 			image = MiniMagick::Image.open(imageFileName)
@@ -58,7 +58,7 @@ module ImagePrep
 			@iso = eval(image[EXIF_ISO])
 			@camera = image[EXIF_CAMERA]
 			
-			@heigth = image[HEIGTH].to_i											# This is returend as a string
+			@height = image[HEIGHT].to_i											# This is returend as a string
 			@width = image[WIDTH].to_i												# This is returned as a string
 
 			@name = File.basename(imageFileName)
@@ -84,7 +84,7 @@ module ImagePrep
 			s = ERB.new(<<-OCTOYAML.gsub(/^\t{4}/, '')).result(binding)
 				name: #{name}
 				fileName: #{fileName}
-				heigth: #{heigth}
+				height: #{height}
 				width: #{width}
 				dateTimeOriginal: #{dateTimeOriginal}
 				categories:<% keywords.each do |word| %>
