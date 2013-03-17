@@ -17,14 +17,16 @@ class TestOptions < Test::Unit::TestCase
 		landscape: 			"./test/data/landscape-big-enough-2895x1930.jpg",
 		portrait: 			"./test/data/portrait-big-enough-3840x5760.jpg",
 		notbigenough: 	"./test/data/not-big-enough-1333x2000.jpg",
-	  needstrip:      "./test/data/2013-01-19 at 10-54-54.jpg" 
+	  needstrip:      "./test/data/2013-01-19 at 10-54-54.jpg",
+	  scan:   				"./test/data/2013 02 11 20 24 33 jasmine 1.jpg" 
 	}
 
 	TestResultImages= {
 		landscape: 			"/2013/2013-01-15/landscape-big-enough-2895x1930",
 		portrait: 			"/2013/2013-01-11/portrait-big-enough-3840x5760",
 		notbigenough: 	"/2006/2006-12-29/not-big-enough-1333x2000",
-	  needstrip:      "/2013/2013-01-19/2013-01-19-at-10-54-54"
+	  needstrip:      "/2013/2013-01-19/2013-01-19-at-10-54-54",
+	  scan: 			  	"./test/data/2013 02 11 20 24 33 jasmine 1.jpg" 
 	}
 
   # To see what is in all the EXIF data for an image: 
