@@ -44,8 +44,8 @@ module ImagePrep
 
 		def initialize(imageFileName)
 			image = MiniMagick::Image.open(imageFileName)
-			@dateTimeOriginal = DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S')
-			@keywords = image[IPTC_KEYWORD].split(/;/)		# Aperture semicolon delimits keywords.     
+			@dateTimeOriginal = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(imageFileName).to_datetime )
+			@keywords = image[IPTC_KEYWORD].split(/;/) if image[IPTC_KEYWORD]		# Aperture semicolon delimits keywords.     
 			@copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{dateTimeOriginal.year} Andrew Eick, all rights reserved."
 			@headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
 			@caption = image[IPTC_CAPTION]
