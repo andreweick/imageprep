@@ -154,7 +154,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, meta.focalLength)
     assert_equal(nil, meta.iso)
     assert_equal("", meta.camera)
-    assert_equal(nil, meta.keywords)
+    assert_equal([], meta.keywords)
     assert_equal(2199, meta.width)
     assert_equal(1699, meta.height)
 
@@ -234,6 +234,26 @@ class TestOptions < Test::Unit::TestCase
       camera: Canon EOS 5D Mark III
     LANDSCAPE_YAML
 
+    scan_yaml = <<-SCAN_YAML.gsub(/^ {6}/, '')
+      name: 2013 02 11 20 24 33 jasmine 1.jpg
+      fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
+      height: 1699
+      width: 2199
+      dateTimeOriginal: 2013-03-17T17:52:55-04:00
+      categories:
+      copyright: © 2013 Andrew Eick, all rights reserved.
+      headline: 
+      caption: 
+      city: 
+      state: 
+      country: 
+      countryISO: 
+      exposureTime: 
+      focalLength: 
+      iso: 
+      camera: 
+    SCAN_YAML
+
     meta = ImagePrep::MetaData.new(TestImages[:portrait])
     assert_equal(portraitOctopressYaml, meta.to_octopress)
 
@@ -242,5 +262,8 @@ class TestOptions < Test::Unit::TestCase
 
     meta = ImagePrep::MetaData.new(TestImages[:landscape])
     assert_equal(landscapeYaml, meta.to_octopress)
+
+    meta = ImagePrep::MetaData.new(TestImages[:scan])
+    assert_equal(scan_yaml, meta.to_octopress)
   end
 end
