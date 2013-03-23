@@ -66,7 +66,7 @@ module ImagePrep
       destYamlName = File.join(path_original_dir, @metadata.stripSpaceExtension + ".yaml")
       FileUtils.mkpath(path_original_dir)
       File.open(destYamlName, 'w'){ |f| 
-        f.write("path: #{originalDir}/#{@metadata.stripSpace}")
+        f.write("path: #{originalDir}/#{@metadata.stripSpace}\n")
         f.write(@metadata.to_octopress) 
       }
 

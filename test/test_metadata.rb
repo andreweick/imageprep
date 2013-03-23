@@ -237,13 +237,14 @@ class TestOptions < Test::Unit::TestCase
       camera: Canon EOS 5D Mark III
     LANDSCAPE_YAML
 
+# touch -mt 201303231644 test/data/2013\ 02\ 11\ 20\ 24\ 33\ jasmine\ 1.jpg
     scan_yaml = <<-SCAN_YAML.gsub(/^ {6}/, '')
       name: 2013-02-11-20-24-33-jasmine-1.jpg
       original_name: 2013 02 11 20 24 33 jasmine 1.jpg
       fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199
-      dateTimeOriginal: 2013-03-23T15:56:37-04:00
+      dateTimeOriginal: 2013-03-23T16:44:16-04:00
       categories:
       copyright: © 2013 Andrew Eick, all rights reserved.
       headline: 
