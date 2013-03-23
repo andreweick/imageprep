@@ -168,6 +168,7 @@ class TestOptions < Test::Unit::TestCase
     # the gsub statement is to [format the HEREDOC statement](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
     portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
       name: portrait-big-enough-3840x5760.jpg
+      original_name: portrait-big-enough-3840x5760.jpg
       fileName: ./test/data/portrait-big-enough-3840x5760.jpg
       height: 5760
       width: 3840
@@ -192,6 +193,7 @@ class TestOptions < Test::Unit::TestCase
 
     notbigenoughYaml = <<-NOTBIGENOUGH_YAML.gsub(/^ {6}/, '')
       name: not-big-enough-1333x2000.jpg
+      original_name: not-big-enough-1333x2000.jpg
       fileName: ./test/data/not-big-enough-1333x2000.jpg
       height: 2000
       width: 1333
@@ -213,6 +215,7 @@ class TestOptions < Test::Unit::TestCase
 
     landscapeYaml = <<-LANDSCAPE_YAML.gsub(/^ {6}/, '')
       name: landscape-big-enough-2895x1930.jpg
+      original_name: landscape-big-enough-2895x1930.jpg
       fileName: ./test/data/landscape-big-enough-2895x1930.jpg
       height: 1930
       width: 2895
@@ -235,7 +238,8 @@ class TestOptions < Test::Unit::TestCase
     LANDSCAPE_YAML
 
     scan_yaml = <<-SCAN_YAML.gsub(/^ {6}/, '')
-      name: 2013 02 11 20 24 33 jasmine 1.jpg
+      name: 2013-02-11-20-24-33-jasmine-1.jpg
+      original_name: 2013 02 11 20 24 33 jasmine 1.jpg
       fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199

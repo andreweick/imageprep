@@ -65,7 +65,10 @@ module ImagePrep
     def generateYamlMeta
       destYamlName = File.join(path_original_dir, @metadata.stripSpaceExtension + ".yaml")
       FileUtils.mkpath(path_original_dir)
-      File.open(destYamlName, 'w'){ |f| f.write(@metadata.to_octopress) }
+      File.open(destYamlName, 'w'){ |f| 
+        f.write("path: #{originalDir}/#{@metadata.stripSpace}")
+        f.write(@metadata.to_octopress) 
+      }
 
       destYamlName
     end

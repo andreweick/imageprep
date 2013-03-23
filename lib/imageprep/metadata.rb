@@ -82,7 +82,8 @@ module ImagePrep
       # if I don't put it on the same line then the spacing is wrong in the string
       # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
       s = ERB.new(<<-OCTOYAML.gsub(/^ {8}/, '')).result(binding)
-        name: #{name}
+        name: #{stripSpace}
+        original_name: #{name}
         fileName: #{fileName}
         height: #{height}
         width: #{width}
