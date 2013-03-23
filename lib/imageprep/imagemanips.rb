@@ -18,7 +18,7 @@ module ImagePrep
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
     JPEG_COMPESSION_QUALITY = "75"    # Need to pass as a string
 
-    attr_reader :destRoot, :metadata, :emitedImages
+    attr_reader :destRoot, :metadata, :emitedImages, :originalDir
 
     def initialize(imageFileName, destRoot)
       @metadata = ImagePrep::MetaData.new(imageFileName)

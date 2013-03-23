@@ -2,20 +2,26 @@
 
 require 'rubygems'
 require 'bundler/setup'
+require 'yaml'
+require 'pp'
 
 require_relative '../lib/imageprep/imagemanips'
 require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
 
-imgs = Array.new
+imgs_yaml = Array.new
 
 opts.images_to_load.each { |imageFileName|
 	puts "Processing #{imageFileName}"
 	im = ImagePrep::ImageManips.new(imageFileName, opts.outDir)
 	im.copyOriginal
-	im.generateYamlMeta
 	im.generateSized
 
-	imgs.insert("http://media.eick.us/#{im.metadata.stripSpace}")
+	imgs_yaml.push(im.generateYamlMeta)
+}
+
+imgs_yaml.each { |yaml|
+	metadata = YAML.load_file(yaml)
+	puts "{% photo2 http://media.eick.us/#{metadata["path"]} \"#{metadata["headline"]}\" %}"
 }
