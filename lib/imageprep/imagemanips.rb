@@ -25,9 +25,15 @@ module ImagePrep
       @destRoot = destRoot
     end
 
+    def path_original_dir
+      File.join(
+                  @destRoot,
+                  originalDir
+               )
+    end
+
     def originalDir
       File.join(  
-                  @destRoot, 
                   "original", 
                   "#{@metadata.dateTimeOriginal.year}", 
                   @metadata.dateTimeOriginal.strftime('%Y-%m-%d')
@@ -49,16 +55,16 @@ module ImagePrep
     end
 
     def copyOriginal
-      dest = File.join(originalDir,@metadata.stripSpace)
-      FileUtils.mkpath(originalDir)
+      dest = File.join(path_original_dir,@metadata.stripSpace)
+      FileUtils.mkpath(path_original_dir)
       FileUtils.cp(@metadata.fileName, dest)
       
       dest
     end
 
     def generateYamlMeta
-      destYamlName = File.join(originalDir, @metadata.stripSpaceExtension + ".yaml")
-      FileUtils.mkpath(originalDir)
+      destYamlName = File.join(path_original_dir, @metadata.stripSpaceExtension + ".yaml")
+      FileUtils.mkpath(path_original_dir)
       File.open(destYamlName, 'w'){ |f| f.write(@metadata.to_octopress) }
 
       destYamlName

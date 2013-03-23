@@ -146,7 +146,7 @@ class TestOptions < Test::Unit::TestCase
   def test_scan
     meta = ImagePrep::MetaData.new(TestImages[:scan])
 
-    dto = DateTime.new(2013,03,17)
+    dto = DateTime.new(2013,03,23)
     assert_equal(dto.year, meta.dateTimeOriginal.year)
     assert_equal(dto.month, meta.dateTimeOriginal.month)
     assert_equal(dto.day, meta.dateTimeOriginal.day)
@@ -239,7 +239,7 @@ class TestOptions < Test::Unit::TestCase
       fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199
-      dateTimeOriginal: 2013-03-17T17:52:55-04:00
+      dateTimeOriginal: 2013-03-23T15:56:37-04:00
       categories:
       copyright: © 2013 Andrew Eick, all rights reserved.
       headline: 
