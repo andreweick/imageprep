@@ -78,11 +78,16 @@ module ImagePrep
       destYamlName
     end
 
+    def regenerate_images
+      @emitedImages = Hash.new
+      # figure out what directory
+      Pathname.new(@metadata.fileName).ascend {|v|
+        
+      }
+    end
+
     def generateSized
       @emitedImages = Hash.new
-
-      # Save source image 
-      imageOriginal = MiniMagick::Image.open(@metadata.fileName)
 
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
