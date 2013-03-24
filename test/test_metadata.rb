@@ -42,6 +42,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("\u00A9 2013 Andrew Eick, all rights reserved.", meta.copyright)  # '\u00A9' is copyright symbol (c)
     assert_equal(nil, meta.caption)
     assert_equal("Lazy Saturday", meta.headline)
+    assert_equal("landscape-big-enough-2895x1930.jpg", meta.name)
     assert_equal("McLean", meta.city)
     assert_equal("VA", meta.state)
     assert_equal("USA", meta.country)
@@ -73,7 +74,6 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, meta.city)
     assert_equal(nil, meta.state)
     assert_equal(nil, meta.country)
-    assert_equal("not-big-enough-1333x2000.jpg", meta.name)
     assert_equal("not-big-enough-1333x2000", meta.stripExtension)
     assert_equal("not-big-enough-1333x2000", meta.stripSpaceExtension)
 
@@ -244,7 +244,7 @@ class TestOptions < Test::Unit::TestCase
       fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199
-      dateTimeOriginal: 2013-03-23T16:44:16-04:00
+      dateTimeOriginal: 2013-03-23T16:48:24-04:00
       categories:
       copyright: © 2013 Andrew Eick, all rights reserved.
       headline: 

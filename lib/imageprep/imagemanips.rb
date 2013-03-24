@@ -18,7 +18,7 @@ module ImagePrep
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
     JPEG_COMPESSION_QUALITY = "75"    # Need to pass as a string
 
-    attr_reader :destRoot, :metadata, :emitedImages, :originalDir
+    attr_reader :destRoot, :metadata, :emitedImages
 
     def initialize(imageFileName, destRoot)
       @metadata = ImagePrep::MetaData.new(imageFileName)
@@ -33,11 +33,16 @@ module ImagePrep
     end
 
     def originalDir
+      @originalDir ||
       File.join(  
                   "original", 
                   "#{@metadata.dateTimeOriginal.year}", 
                   @metadata.dateTimeOriginal.strftime('%Y-%m-%d')
                 )
+    end
+
+    def originalDir=( new_value )
+      @originalDir = new_value
     end
 
     def generatedDir

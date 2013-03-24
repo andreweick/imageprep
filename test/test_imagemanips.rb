@@ -61,4 +61,23 @@ class TestOptions < Test::Unit::TestCase
     } #delete temporary directory
   end
 
+  def test_regen
+    Dir.mktmpdir {|dir|
+      dir_12 = File.join(dir, "original", "2013", "2013-01-12")
+      FileUtils.mkpath(dir_12)
+      FileUtils.cp("./test/data/test-regen/lazy-saturday-2013-01-15-at-20-05-50.jpg", dir_12)
+      image_12 = File.join(dir_12, "lazy-saturday-2013-01-15-at-20-05-50.jpg")
+      assert_equal(true, File.exists?(image_12))
+
+      im = ImagePrep::ImageManips.new(image_12, File.join(dir, "generated"))
+
+      dir_13 = File.join(dir, "original", "2013", "2013-01-13")
+      FileUtils.mkpath(dir_13)
+      FileUtils.cp("./test/data/test-regen/lazy-saturday-2013-01-15-at-20-05-35.jpg", dir_13)
+      image_13 = File.join(dir_13, "lazy-saturday-2013-01-15-at-20-05-35.jpg")
+      assert_equal(true, File.exists?(image_13))
+
+    } # delete temporary directory
+  end
+
 end
