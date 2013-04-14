@@ -45,7 +45,7 @@ imgs_yaml.each { |yaml|
 	puts "  aperture: #{metadata["aperture"]}"
 	puts "  iso: #{metadata["iso"]}"
 	puts "  camera: #{metadata["camera"]}"
-	puts "  markdown: [\"#{metadata["headline"]}\"](http://media.eick.us/#{metadata["path"]})"
+	puts "  markdown: ![\"#{metadata["headline"]}\"](http://media.eick.us/#{metadata["path"]})"
 }
 puts "---"
 
