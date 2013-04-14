@@ -8,11 +8,19 @@ require 'date'
 require 'fileutils'
 require 'erb'
 
+class String
+  def to_frac
+    numerator, denominator = split('/').map(&:to_f)
+    denominator ||= 1
+    numerator/denominator
+  end
+end
+
 module ImagePrep
   class MetaData
     attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal
     attr_reader :city, :state, :country, :countryISO
-    attr_reader :exposureTime, :focalLength, :iso, :camera
+    attr_reader :exposureTime, :focalLength, :aperture, :iso, :camera
     attr_reader :height, :width, :name, :fileName
 
     #[IPTC code chart](http://www.imagemagick.org/script/escape.php)
@@ -28,6 +36,7 @@ module ImagePrep
     EXIF_FOCAL_LENGTH = "EXIF:FocalLength"
     EXIF_ISO = "EXIF:ISOSpeedRatings"
     EXIF_CAMERA = "EXIF:Model"
+    EXIF_APERTURE = "EXIF:FNumber"
 
     IPTC_KEYWORD = "%[IPTC:2:25]"
     IPTC_COPYRIGHT = "%[IPTC:2:116]"
@@ -54,7 +63,8 @@ module ImagePrep
       @country = image[IPTC_COUNTRY]
       @countryISO = image[IPTC_COUNTRY_ISO]
       @exposureTime = image[EXIF_EXPOSURE_TIME]
-      @focalLength = eval(image[EXIF_FOCAL_LENGTH])     # This is stored as 40/1
+      @focalLength = eval(image[EXIF_FOCAL_LENGTH])       # This is stored as 40/1
+      @aperture = image[EXIF_APERTURE].to_frac            # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
       @camera = image[EXIF_CAMERA]
       
@@ -97,6 +107,7 @@ module ImagePrep
         state: #{state}
         country: #{country}
         countryISO: #{countryISO}
+        aperture: #{aperture}
         exposureTime: #{exposureTime}
         focalLength: #{focalLength}
         iso: #{iso}
