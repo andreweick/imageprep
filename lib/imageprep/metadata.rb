@@ -18,10 +18,10 @@ end
 
 module ImagePrep
   class MetaData
-    attr_reader :keywords, :copyright, :caption, :headline, :dateTimeOriginal
+    attr_reader :keywords, :copyright, :caption, :headline, :date_time_original
     attr_reader :city, :state, :country, :countryISO
-    attr_reader :exposureTime, :focalLength, :aperture, :iso, :camera
-    attr_reader :height, :width, :name, :fileName
+    attr_reader :exposureTime, :focal_length, :aperture, :iso, :camera
+    attr_reader :height, :width, :name, :file_name
 
     #[IPTC code chart](http://www.imagemagick.org/script/escape.php)
     
@@ -51,11 +51,11 @@ module ImagePrep
     WIDTH = "%w"
     HEIGHT = "%h"
 
-    def initialize(imageFileName)
-      image = MiniMagick::Image.open(imageFileName)
-      @dateTimeOriginal = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(imageFileName).to_datetime )
+    def initialize(image_file_name)
+      image = MiniMagick::Image.open(image_file_name)
+      @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(imageFileName).to_datetime )
       @keywords = image[IPTC_KEYWORD] ? image[IPTC_KEYWORD].split(/;/) : []     # Aperture semicolon delimits keywords.     
-      @copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{dateTimeOriginal.year} Andrew Eick, all rights reserved."
+      @copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{date_time_original.year} Andrew Eick, all rights reserved."
       @headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
       @caption = image[IPTC_CAPTION]
       @city = image[IPTC_CITY]
@@ -63,7 +63,7 @@ module ImagePrep
       @country = image[IPTC_COUNTRY]
       @countryISO = image[IPTC_COUNTRY_ISO]
       @exposureTime = image[EXIF_EXPOSURE_TIME]
-      @focalLength = eval(image[EXIF_FOCAL_LENGTH])       # This is stored as 40/1
+      @focal_length = eval(image[EXIF_FOCAL_LENGTH])       # This is stored as 40/1
       @aperture = image[EXIF_APERTURE].to_frac            # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
       @camera = image[EXIF_CAMERA]
@@ -71,19 +71,19 @@ module ImagePrep
       @height = image[HEIGHT].to_i                      # This is returend as a string
       @width = image[WIDTH].to_i                        # This is returned as a string
 
-      @name = File.basename(imageFileName)
-      @fileName = imageFileName
+      @name = File.basename(image_file_name)
+      @file_name = image_file_name
     end
 
-    def stripExtension
+    def strip_extension
       File.basename(name,".*")
     end
 
-    def stripSpace
+    def strip_space
       name.gsub(' ', '-')
     end
 
-    def stripSpaceExtension
+    def strip_space_extension
       File.basename(name,".*").gsub(' ', '-')
     end
 
@@ -92,12 +92,12 @@ module ImagePrep
       # if I don't put it on the same line then the spacing is wrong in the string
       # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
       s = ERB.new(<<-OCTOYAML.gsub(/^ {8}/, '')).result(binding)
-        name: #{stripSpace}
+        name: #{strip_space}
         original_name: #{name}
-        fileName: #{fileName}
+        file_name: #{file_name}
         height: #{height}
         width: #{width}
-        dateTimeOriginal: #{dateTimeOriginal}
+        date_time_original: #{date_time_original}
         categories:<% keywords.each do |word| %>
         - <%= word %><% end %>
         copyright: #{copyright}
@@ -109,7 +109,7 @@ module ImagePrep
         countryISO: #{countryISO}
         aperture: #{aperture}
         exposureTime: #{exposureTime}
-        focalLength: #{focalLength}
+        focal_length: #{focal_length}
         iso: #{iso}
         camera: #{camera}
       OCTOYAML

@@ -29,12 +29,12 @@ class TestOptions < Test::Unit::TestCase
   def test_landscape
     meta = ImagePrep::MetaData.new(TestImages[:landscape])
     dto = Date.new(2013,1,15)
-    assert_equal(dto.year, meta.dateTimeOriginal.year)
-    assert_equal(dto.month, meta.dateTimeOriginal.month)
-    assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal(dto.year, meta.date_time_original.year)
+    assert_equal(dto.month, meta.date_time_original.month)
+    assert_equal(dto.day, meta.date_time_original.day)
 
     assert_equal(meta.exposureTime, "1/125")
-    assert_equal(meta.focalLength, 40)
+    assert_equal(meta.focal_length, 40)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
 
@@ -47,23 +47,23 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("VA", meta.state)
     assert_equal("USA", meta.country)
     assert_equal("landscape-big-enough-2895x1930.jpg", meta.name)
-    assert_equal("landscape-big-enough-2895x1930", meta.stripExtension)
+    assert_equal("landscape-big-enough-2895x1930", meta.strip_extension)
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.height)
-    assert_equal(TestImages[:landscape], meta.fileName)
+    assert_equal(TestImages[:landscape], meta.file_name)
     assert_equal(File.basename(TestImages[:landscape]), meta.name)
   end
 
   def test_notbigenough
     meta = ImagePrep::MetaData.new(TestImages[:notbigenough])
     dto = Date.new(2006,12,29)
-    assert_equal(dto.year, meta.dateTimeOriginal.year)
-    assert_equal(dto.month, meta.dateTimeOriginal.month)
-    assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal(dto.year, meta.date_time_original.year)
+    assert_equal(dto.month, meta.date_time_original.month)
+    assert_equal(dto.day, meta.date_time_original.day)
 
     assert_equal(meta.exposureTime, "1/30")
-    assert_equal(meta.focalLength, 52)
+    assert_equal(meta.focal_length, 52)
     assert_equal(800, meta.iso)
     assert_equal("Canon EOS 5D", meta.camera)
 
@@ -74,24 +74,24 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, meta.city)
     assert_equal(nil, meta.state)
     assert_equal(nil, meta.country)
-    assert_equal("not-big-enough-1333x2000", meta.stripExtension)
-    assert_equal("not-big-enough-1333x2000", meta.stripSpaceExtension)
+    assert_equal("not-big-enough-1333x2000", meta.strip_extension)
+    assert_equal("not-big-enough-1333x2000", meta.strip_space_extension)
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.height)
-    assert_equal(TestImages[:notbigenough], meta.fileName)
+    assert_equal(TestImages[:notbigenough], meta.file_name)
     assert_equal(File.basename(TestImages[:notbigenough]), meta.name)
   end
 
   def test_portrait
     meta = ImagePrep::MetaData.new(TestImages[:portrait])
     dto = Date.new(2013,1,11)
-    assert_equal(dto.year, meta.dateTimeOriginal.year)
-    assert_equal(dto.month, meta.dateTimeOriginal.month)
-    assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal(dto.year, meta.date_time_original.year)
+    assert_equal(dto.month, meta.date_time_original.month)
+    assert_equal(dto.day, meta.date_time_original.day)
 
     assert_equal(meta.exposureTime, "1/200")
-    assert_equal(meta.focalLength, 40)
+    assert_equal(meta.focal_length, 40)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
 
@@ -103,12 +103,12 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("VA", meta.state)
     assert_equal("USA", meta.country)
     assert_equal("portrait-big-enough-3840x5760.jpg", meta.name)
-    assert_equal("portrait-big-enough-3840x5760", meta.stripExtension)
-    assert_equal("portrait-big-enough-3840x5760", meta.stripSpaceExtension)
+    assert_equal("portrait-big-enough-3840x5760", meta.strip_extension)
+    assert_equal("portrait-big-enough-3840x5760", meta.strip_space_extension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
-    assert_equal(TestImages[:portrait], meta.fileName)
+    assert_equal(TestImages[:portrait], meta.file_name)
     assert_equal(File.basename(TestImages[:portrait]), meta.name)
   end
 
@@ -116,11 +116,11 @@ class TestOptions < Test::Unit::TestCase
     meta = ImagePrep::MetaData.new(TestImages[:needstrip])
   
     dto = DateTime.new(2013,1,19) 
-    assert_equal(dto.year, meta.dateTimeOriginal.year)
-    assert_equal(dto.month, meta.dateTimeOriginal.month)
-    assert_equal(dto.day, meta.dateTimeOriginal.day)
+    assert_equal(dto.year, meta.date_time_original.year)
+    assert_equal(dto.month, meta.date_time_original.month)
+    assert_equal(dto.day, meta.date_time_original.day)
     assert_equal(meta.exposureTime, "1/125")
-    assert_equal(meta.focalLength, 30)
+    assert_equal(meta.focal_length, 30)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
 
@@ -133,13 +133,13 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("United States of America", meta.country)
     assert_equal("USA", meta.countryISO)
     assert_equal("2013-01-19 at 10-54-54.jpg", meta.name)
-    assert_equal("2013-01-19 at 10-54-54", meta.stripExtension)
-    assert_equal("2013-01-19-at-10-54-54.jpg", meta.stripSpace)
-    assert_equal("2013-01-19-at-10-54-54", meta.stripSpaceExtension)
+    assert_equal("2013-01-19 at 10-54-54", meta.strip_extension)
+    assert_equal("2013-01-19-at-10-54-54.jpg", meta.strip_space)
+    assert_equal("2013-01-19-at-10-54-54", meta.strip_space_extension)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
-    assert_equal(TestImages[:needstrip], meta.fileName)
+    assert_equal(TestImages[:needstrip], meta.file_name)
     assert_equal(File.basename(TestImages[:needstrip]), meta.name)
   end
 
@@ -147,11 +147,11 @@ class TestOptions < Test::Unit::TestCase
   #   meta = ImagePrep::MetaData.new(TestImages[:scan])
 
   #   dto = DateTime.new(2013,03,23)
-  #   assert_equal(dto.year, meta.dateTimeOriginal.year)
-  #   assert_equal(dto.month, meta.dateTimeOriginal.month)
-  #   assert_equal(dto.day, meta.dateTimeOriginal.day)
+  #   assert_equal(dto.year, meta.date_time_original.year)
+  #   assert_equal(dto.month, meta.date_time_original.month)
+  #   assert_equal(dto.day, meta.date_time_original.day)
   #   assert_equal("", meta.exposureTime)
-  #   assert_equal(nil, meta.focalLength)
+  #   assert_equal(nil, meta.focal_length)
   #   assert_equal(nil, meta.iso)
   #   assert_equal("", meta.camera)
   #   assert_equal([], meta.keywords)
@@ -159,9 +159,9 @@ class TestOptions < Test::Unit::TestCase
   #   assert_equal(1699, meta.height)
 
   #   assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
-  #   assert_equal("2013 02 11 20 24 33 jasmine 1", meta.stripExtension)
-  #   assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.stripSpace)
-  #   assert_equal("2013-02-11-20-24-33-jasmine-1", meta.stripSpaceExtension)
+  #   assert_equal("2013 02 11 20 24 33 jasmine 1", meta.strip_extension)
+  #   assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.strip_space)
+  #   assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_space_extension)
   # end
 
   def test_yaml
@@ -169,10 +169,10 @@ class TestOptions < Test::Unit::TestCase
     portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
       name: portrait-big-enough-3840x5760.jpg
       original_name: portrait-big-enough-3840x5760.jpg
-      fileName: ./test/data/portrait-big-enough-3840x5760.jpg
+      file_name: ./test/data/portrait-big-enough-3840x5760.jpg
       height: 5760
       width: 3840
-      dateTimeOriginal: 2013-01-11T18:04:00+00:00
+      date_time_original: 2013-01-11T18:04:00+00:00
       categories:
       - Libby Eick
       - aedc
@@ -187,7 +187,7 @@ class TestOptions < Test::Unit::TestCase
       countryISO: 
       aperture: 5.6
       exposureTime: 1/200
-      focalLength: 40
+      focal_length: 40
       iso: 100
       camera: Canon EOS 5D Mark III
     PORTRAIT_METADATA_YAML
@@ -195,10 +195,10 @@ class TestOptions < Test::Unit::TestCase
     notbigenoughYaml = <<-NOTBIGENOUGH_YAML.gsub(/^ {6}/, '')
       name: not-big-enough-1333x2000.jpg
       original_name: not-big-enough-1333x2000.jpg
-      fileName: ./test/data/not-big-enough-1333x2000.jpg
+      file_name: ./test/data/not-big-enough-1333x2000.jpg
       height: 2000
       width: 1333
-      dateTimeOriginal: 2006-12-29T18:38:08+00:00
+      date_time_original: 2006-12-29T18:38:08+00:00
       categories:
       - christmas libby present
       copyright: © 2006 Andrew Eick, all rights reserved.
@@ -210,7 +210,7 @@ class TestOptions < Test::Unit::TestCase
       countryISO: 
       aperture: 2.8
       exposureTime: 1/30
-      focalLength: 52
+      focal_length: 52
       iso: 800
       camera: Canon EOS 5D
     NOTBIGENOUGH_YAML
@@ -218,10 +218,10 @@ class TestOptions < Test::Unit::TestCase
     landscapeYaml = <<-LANDSCAPE_YAML.gsub(/^ {6}/, '')
       name: landscape-big-enough-2895x1930.jpg
       original_name: landscape-big-enough-2895x1930.jpg
-      fileName: ./test/data/landscape-big-enough-2895x1930.jpg
+      file_name: ./test/data/landscape-big-enough-2895x1930.jpg
       height: 1930
       width: 2895
-      dateTimeOriginal: 2013-01-15T20:01:55+00:00
+      date_time_original: 2013-01-15T20:01:55+00:00
       categories:
       - Libby Eick
       - libby
@@ -235,7 +235,7 @@ class TestOptions < Test::Unit::TestCase
       countryISO: 
       aperture: 5.6
       exposureTime: 1/125
-      focalLength: 40
+      focal_length: 40
       iso: 100
       camera: Canon EOS 5D Mark III
     LANDSCAPE_YAML
@@ -244,10 +244,10 @@ class TestOptions < Test::Unit::TestCase
     scan_yaml = <<-SCAN_YAML.gsub(/^ {6}/, '')
       name: 2013-02-11-20-24-33-jasmine-1.jpg
       original_name: 2013 02 11 20 24 33 jasmine 1.jpg
-      fileName: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
+      file_name: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199
-      dateTimeOriginal: 2013-03-23T16:44:16-04:00
+      date_time_original: 2013-03-23T16:44:16-04:00
       categories:
       copyright: © 2013 Andrew Eick, all rights reserved.
       headline: ""
@@ -258,7 +258,7 @@ class TestOptions < Test::Unit::TestCase
       countryISO: 
       aperture: 
       exposureTime: 
-      focalLength: 
+      focal_length: 
       iso: 
       camera: 
     SCAN_YAML
