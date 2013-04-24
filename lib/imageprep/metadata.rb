@@ -10,9 +10,11 @@ require 'erb'
 
 class String
   def to_frac
-    numerator, denominator = split('/').map(&:to_f)
-    denominator ||= 1
-    numerator/denominator
+    unless self.empty?
+      numerator, denominator = split('/').map(&:to_f)
+      denominator ||= 1
+      numerator/denominator
+    end
   end
 end
 
@@ -53,7 +55,7 @@ module ImagePrep
 
     def initialize(image_file_name)
       image = MiniMagick::Image.open(image_file_name)
-      @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(imageFileName).to_datetime )
+      @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(image_file_name).to_datetime )
       @keywords = image[IPTC_KEYWORD] ? image[IPTC_KEYWORD].split(/;/) : []     # Aperture semicolon delimits keywords.     
       @copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{date_time_original.year} Andrew Eick, all rights reserved."
       @headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
@@ -64,12 +66,12 @@ module ImagePrep
       @countryISO = image[IPTC_COUNTRY_ISO]
       @exposureTime = image[EXIF_EXPOSURE_TIME]
       @focal_length = eval(image[EXIF_FOCAL_LENGTH])       # This is stored as 40/1
-      @aperture = image[EXIF_APERTURE].to_frac            # this is returned as 28/10 for f2.8
+      @aperture = image[EXIF_APERTURE].to_frac             # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
       @camera = image[EXIF_CAMERA]
       
-      @height = image[HEIGHT].to_i                      # This is returend as a string
-      @width = image[WIDTH].to_i                        # This is returned as a string
+      @height = image[HEIGHT].to_i                          # This is returend as a string
+      @width = image[WIDTH].to_i                            # This is returned as a string
 
       @name = File.basename(image_file_name)
       @file_name = image_file_name

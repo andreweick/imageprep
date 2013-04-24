@@ -16,12 +16,12 @@ module ImagePrep
     # picturefill [retina](http://duncandavidson.com/blog/2012/08/retina_ready/)
     
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
-    JPEG_COMPESSION_QUALITY = "75"    # Need to pass as a string
+    JPEG_COMPRESSION_QUALITY = "75"    # Need to pass as a string
 
     attr_reader :destRoot, :metadata, :emitedImages
 
-    def initialize(imageFileName, destRoot)
-      @metadata = ImagePrep::MetaData.new(imageFileName)
+    def initialize(image_file_name, destRoot)
+      @metadata = ImagePrep::MetaData.new(image_file_name)
       @destRoot = destRoot
     end
 
@@ -36,8 +36,8 @@ module ImagePrep
       @originalDir ||
       File.join(  
                   "original", 
-                  "#{@metadata.dateTimeOriginal.year}", 
-                  @metadata.dateTimeOriginal.strftime('%Y-%m-%d')
+                  "#{@metadata.date_time_original.year}", 
+                  @metadata.date_time_original.strftime('%Y-%m-%d')
                 )
     end
 
@@ -50,8 +50,8 @@ module ImagePrep
       File.join(
                   @destRoot, 
                   "generated", 
-                  "#{@metadata.dateTimeOriginal.year}", 
-                  @metadata.dateTimeOriginal.strftime('%Y-%m-%d')
+                  "#{@metadata.date_time_original.year}", 
+                  @metadata.date_time_original.strftime('%Y-%m-%d')
                 )
     end
 
@@ -60,18 +60,18 @@ module ImagePrep
     end
 
     def copyOriginal
-      dest = File.join(path_original_dir,@metadata.stripSpace)
+      dest = File.join(path_original_dir,@metadata.strip_space)
       FileUtils.mkpath(path_original_dir)
-      FileUtils.cp(@metadata.fileName, dest)
+      FileUtils.cp(@metadata.file_name, dest)
       
       dest
     end
 
     def generateYamlMeta
-      destYamlName = File.join(path_original_dir, @metadata.stripSpaceExtension + ".yaml")
+      destYamlName = File.join(path_original_dir, @metadata.strip_space_extension + ".yaml")
       FileUtils.mkpath(path_original_dir)
       File.open(destYamlName, 'w'){ |f| 
-        f.write("path: #{originalDir}/#{@metadata.stripSpace}\n")
+        f.write("path: #{originalDir}/#{@metadata.strip_space}\n")
         f.write(@metadata.to_octopress) 
       }
 
@@ -81,7 +81,7 @@ module ImagePrep
     def regenerate_images
       @emitedImages = Hash.new
       # figure out what directory
-      Pathname.new(@metadata.fileName).ascend {|v|
+      Pathname.new(@metadata.file_name).ascend {|v|
         
       }
     end
@@ -91,12 +91,12 @@ module ImagePrep
 
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
-        image = MiniMagick::Image.open(@metadata.fileName)
+        image = MiniMagick::Image.open(@metadata.file_name)
         
         image.resize("#{width}")         # need to pass "width" as a string to the mini_magick resize gem
-        image.quality(JPEG_COMPESSION_QUALITY)
+        image.quality(JPEG_COMPRESSION_QUALITY)
 
-        sizedImageName = File.join(generatedDir, "#{width}", @metadata.stripSpace)
+        sizedImageName = File.join(generatedDir, "#{width}", @metadata.strip_space)
         FileUtils.mkpath(File.dirname(sizedImageName))
 
         image.write(sizedImageName)

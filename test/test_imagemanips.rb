@@ -31,6 +31,7 @@ class TestOptions < Test::Unit::TestCase
 
   # To see what is in all the EXIF data for an image: 
   # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
+
   def test_imagesExists
     TestImages.each do |nature, filename|
       assert_equal(File::exists?(filename), true)
@@ -40,6 +41,7 @@ class TestOptions < Test::Unit::TestCase
   def test_copy_source
     Dir.mktmpdir {|tmploc|
       TestImages.each { |image_type, image_name|
+        puts "testing: #{image_name}"
         im = ImagePrep::ImageManips.new(image_name, tmploc)
         cfn = File.join(tmploc,"original", TestResultImages[image_type] + ".jpg")  
         assert_equal(im.copyOriginal, cfn)

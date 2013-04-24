@@ -143,26 +143,34 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(File.basename(TestImages[:needstrip]), meta.name)
   end
 
-  # def test_scan
-  #   meta = ImagePrep::MetaData.new(TestImages[:scan])
+  def test_scan
+    meta = ImagePrep::MetaData.new(TestImages[:scan])
 
-  #   dto = DateTime.new(2013,03,23)
-  #   assert_equal(dto.year, meta.date_time_original.year)
-  #   assert_equal(dto.month, meta.date_time_original.month)
-  #   assert_equal(dto.day, meta.date_time_original.day)
-  #   assert_equal("", meta.exposureTime)
-  #   assert_equal(nil, meta.focal_length)
-  #   assert_equal(nil, meta.iso)
-  #   assert_equal("", meta.camera)
-  #   assert_equal([], meta.keywords)
-  #   assert_equal(2199, meta.width)
-  #   assert_equal(1699, meta.height)
+    dto = DateTime.new(2013,04,23)
+    assert_equal(dto.year, meta.date_time_original.year)
+    assert_equal(dto.month, meta.date_time_original.month)
+    assert_equal(dto.day, meta.date_time_original.day)
+    assert_equal("", meta.exposureTime)
+    assert_equal(nil, meta.focal_length)
+    assert_equal(nil, meta.iso)
+    assert_equal("", meta.camera)
+    assert_equal([], meta.keywords)
+    assert_equal(2199, meta.width)
+    assert_equal(1699, meta.height)
 
-  #   assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
-  #   assert_equal("2013 02 11 20 24 33 jasmine 1", meta.strip_extension)
-  #   assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.strip_space)
-  #   assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_space_extension)
-  # end
+    assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
+    assert_equal("2013 02 11 20 24 33 jasmine 1", meta.strip_extension)
+    assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.strip_space)
+    assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_space_extension)
+  end
+
+  def test_to_frac
+    assert_equal(2.8, "28/10".to_frac)
+    assert_equal(2, "2/1".to_frac)
+    assert_equal(2, "2".to_frac)
+    assert_equal(0, "0".to_frac)
+    assert_equal(nil, "".to_frac)
+  end
 
   def test_yaml
     # the gsub statement is to [format the HEREDOC statement](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
