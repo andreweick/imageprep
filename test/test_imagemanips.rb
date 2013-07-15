@@ -41,7 +41,6 @@ class TestOptions < Test::Unit::TestCase
   def test_copy_source
     Dir.mktmpdir {|tmploc|
       TestImages.each { |image_type, image_name|
-        puts "testing: #{image_name}"
         im = ImagePrep::ImageManips.new(image_name, tmploc)
         cfn = File.join(tmploc,"original", TestResultImages[image_type] + ".jpg")  
         assert_equal(im.copyOriginal, cfn)
@@ -61,32 +60,6 @@ class TestOptions < Test::Unit::TestCase
         }
       }
     } #delete temporary directory
-  end
-
-  def test_regen
-    Dir.mktmpdir {|dir|
-      dir_12 = File.join(dir, "original", "2013", "2013-01-12")
-      FileUtils.mkpath(dir_12)
-      FileUtils.cp("./test/data/test-regen/lazy-saturday-2013-01-15-at-20-05-50.jpg", dir_12)
-      image_12 = File.join(dir_12, "lazy-saturday-2013-01-15-at-20-05-50.jpg")
-      assert_equal(true, File.exists?(image_12))
-
-      dir_13 = File.join(dir, "original", "2013", "2013-01-13")
-      FileUtils.mkpath(dir_13)
-      FileUtils.cp("./test/data/test-regen/lazy-saturday-2013-01-15-at-20-05-35.jpg", dir_13)
-      image_13 = File.join(dir_13, "lazy-saturday-2013-01-15-at-20-05-35.jpg")
-      assert_equal(true, File.exists?(image_13))
-
-      Dir.glob(File.join(dir,"**/*.jpg")) do |jpg_file|
-        Pathname.new(jpg_file).ascend { |v|
-          break if v.to_s == dir
-          puts "in iterator: #{v} is not #{dir}"
-        }
-        puts "file name: #{jpg_file}"
-        # im = ImagePrep::ImageManips.new(jpg_file, File.join(dir,"original"))
-      end
-
-    } # delete temporary directory
   end
 
 end
