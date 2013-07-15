@@ -27,7 +27,7 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def test_landscape
-    meta = ImagePrep::MetaData.new(TestImages[:landscape])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:landscape])
     dto = Date.new(2013,1,15)
     assert_equal(dto.year, meta.date_time_original.year)
     assert_equal(dto.month, meta.date_time_original.month)
@@ -51,12 +51,12 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.height)
-    assert_equal(TestImages[:landscape], meta.file_name)
-    assert_equal(File.basename(TestImages[:landscape]), meta.name)
+    assert_equal(MetadataTestImages[:landscape], meta.file_name)
+    assert_equal(File.basename(MetadataTestImages[:landscape]), meta.name)
   end
 
   def test_notbigenough
-    meta = ImagePrep::MetaData.new(TestImages[:notbigenough])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:notbigenough])
     dto = Date.new(2006,12,29)
     assert_equal(dto.year, meta.date_time_original.year)
     assert_equal(dto.month, meta.date_time_original.month)
@@ -79,12 +79,12 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.height)
-    assert_equal(TestImages[:notbigenough], meta.file_name)
-    assert_equal(File.basename(TestImages[:notbigenough]), meta.name)
+    assert_equal(MetadataTestImages[:notbigenough], meta.file_name)
+    assert_equal(File.basename(MetadataTestImages[:notbigenough]), meta.name)
   end
 
   def test_portrait
-    meta = ImagePrep::MetaData.new(TestImages[:portrait])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:portrait])
     dto = Date.new(2013,1,11)
     assert_equal(dto.year, meta.date_time_original.year)
     assert_equal(dto.month, meta.date_time_original.month)
@@ -108,12 +108,12 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
-    assert_equal(TestImages[:portrait], meta.file_name)
-    assert_equal(File.basename(TestImages[:portrait]), meta.name)
+    assert_equal(MetadataTestImages[:portrait], meta.file_name)
+    assert_equal(File.basename(MetadataTestImages[:portrait]), meta.name)
   end
 
   def test_strip
-    meta = ImagePrep::MetaData.new(TestImages[:needstrip])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:needstrip])
   
     dto = DateTime.new(2013,1,19) 
     assert_equal(dto.year, meta.date_time_original.year)
@@ -139,12 +139,12 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
-    assert_equal(TestImages[:needstrip], meta.file_name)
-    assert_equal(File.basename(TestImages[:needstrip]), meta.name)
+    assert_equal(MetadataTestImages[:needstrip], meta.file_name)
+    assert_equal(File.basename(MetadataTestImages[:needstrip]), meta.name)
   end
 
   def test_scan
-    meta = ImagePrep::MetaData.new(TestImages[:scan])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:scan])
 
     dto = DateTime.new(2013,04,23)
     assert_equal(dto.year, meta.date_time_original.year)
@@ -271,16 +271,16 @@ class TestOptions < Test::Unit::TestCase
       camera: 
     SCAN_YAML
 
-    meta = ImagePrep::MetaData.new(TestImages[:portrait])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:portrait])
     assert_equal(portraitOctopressYaml, meta.to_octopress)
 
-    meta = ImagePrep::MetaData.new(TestImages[:notbigenough])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:notbigenough])
     assert_equal(notbigenoughYaml, meta.to_octopress)
 
-    meta = ImagePrep::MetaData.new(TestImages[:landscape])
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:landscape])
     assert_equal(landscapeYaml, meta.to_octopress)
 
-    # meta = ImagePrep::MetaData.new(TestImages[:scan])
+    # meta = ImagePrep::MetaData.new(MetadataTestImages[:scan])
     # assert_equal(scan_yaml, meta.to_octopress)
   end
 end
