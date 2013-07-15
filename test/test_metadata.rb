@@ -12,7 +12,7 @@ require_relative '../lib/imageprep/metadata'
 
 class TestOptions < Test::Unit::TestCase
   # Image constant names
-  TestImages = {  
+  MetadataTestImages = {  
     landscape:      "./test/data/landscape-big-enough-2895x1930.jpg",
     portrait:       "./test/data/portrait-big-enough-3840x5760.jpg",
     notbigenough:   "./test/data/not-big-enough-1333x2000.jpg",
@@ -21,7 +21,7 @@ class TestOptions < Test::Unit::TestCase
   }
 
   def test_imagesExists
-    TestImages.each do |nature, filename|
+    MetadataTestImages.each do |nature, filename|
       assert_equal File::exists?(filename), true
     end
   end

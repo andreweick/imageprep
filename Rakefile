@@ -21,3 +21,8 @@ desc "Test commandline options"
 task :test_commandline do
 	ruby "test/test_options.rb"
 end
+
+desc "Test image resize"
+task :test_resize do
+	ruby "test/test_resize.rb"
+end
