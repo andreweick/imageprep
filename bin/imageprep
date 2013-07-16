@@ -11,55 +11,58 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require 'yaml'
-require 'pp'
 
-require_relative '../lib/imageprep/imagemanips'
+require_relative '../lib/imageprep/resize'
 require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
 
-imgs_yaml = Array.new
-
 opts.images_to_load.each { |imageFileName|
 	puts "Processing #{imageFileName}"
-	im = ImagePrep::ImageManips.new(imageFileName, opts.outDir)
-	im.copyOriginal
-	im.generateSized
+	
+	# create the images
+	rz = ImagePrep::Resize.new(imageFileName, opts.outDir)
+	rz.do_work
 
-	imgs_yaml.push(im.generateYamlMeta)
+	md = ImagePrep::MetaData.new(imageFileName)
+	destYamlName = File.join(rz.path_original_dir, md.strip_space_extension + ".yaml")
+  File.open(destYamlName, 'w'){ |f| 
+    f.write("path: #{rz.path_original_dir}/#{md.strip_space}\n")
+    f.write(md.to_octopress) 
+  }
+
 }
 
-# Emit the octo-yaml
-puts "---"
-puts "layout: post"
-puts "title: "
-puts "date:"
-puts "comments: false"
-puts "categories:" 
-puts "photographs:"
+# # Emit the octo-yaml
+# puts "---"
+# puts "layout: post"
+# puts "title: "
+# puts "date:"
+# puts "comments: false"
+# puts "categories:" 
+# puts "photographs:"
 
-imgs_yaml.each { |yaml|
-	metadata = YAML.load_file(yaml)
-	puts "- url: http://media.eick.us/#{metadata["path"]}"
-	puts "  headline: \"#{metadata["headline"]}\""
-	puts "  caption: \"#{metadata["caption"]}\""
-	puts "  date_time_original: #{metadata["dateTimeOriginal"]}"
-	puts "  copyright: #{metadata["copyright"]}"
-	puts "  city: #{metadata["city"]}"
-	puts "  state: #{metadata["state"]}"
-	puts "  country: #{metadata["country"]}"
-	puts "  exposure_time: #{metadata["exposureTime"]}"
-	puts "  focal_length: #{metadata["focalLength"]}"
-	puts "  aperture: #{metadata["aperture"]}"
-	puts "  iso: #{metadata["iso"]}"
-	puts "  camera: #{metadata["camera"]}"
-	puts "  markdown: ![#{metadata["headline"]}](http://media.eick.us/images/#{metadata["path"]})"
-}
-puts "---"
+# imgs_yaml.each { |yaml|
+# 	metadata = YAML.load_file(yaml)
+# 	puts "- url: http://media.eick.us/#{metadata["path"]}"
+# 	puts "  headline: \"#{metadata["headline"]}\""
+# 	puts "  caption: \"#{metadata["caption"]}\""
+# 	puts "  date_time_original: #{metadata["dateTimeOriginal"]}"
+# 	puts "  copyright: #{metadata["copyright"]}"
+# 	puts "  city: #{metadata["city"]}"
+# 	puts "  state: #{metadata["state"]}"
+# 	puts "  country: #{metadata["country"]}"
+# 	puts "  exposure_time: #{metadata["exposureTime"]}"
+# 	puts "  focal_length: #{metadata["focalLength"]}"
+# 	puts "  aperture: #{metadata["aperture"]}"
+# 	puts "  iso: #{metadata["iso"]}"
+# 	puts "  camera: #{metadata["camera"]}"
+# 	puts "  markdown: ![#{metadata["headline"]}](http://media.eick.us/images/#{metadata["path"]})"
+# }
+# puts "---"
 
-imgs_yaml.each { |yaml|
-	metadata = YAML.load_file(yaml)
-	puts "{% photo2 http://media.eick.us/images/#{metadata["path"]} \"#{metadata["headline"]}\" %}"
-	puts
-}
+# imgs_yaml.each { |yaml|
+# 	metadata = YAML.load_file(yaml)
+# 	puts "{% photo2 http://media.eick.us/images/#{metadata["path"]} \"#{metadata["headline"]}\" %}"
+# 	puts
+# }
