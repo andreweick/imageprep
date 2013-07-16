@@ -174,7 +174,7 @@ class TestOptions < Test::Unit::TestCase
 
   def test_yaml
     # the gsub statement is to [format the HEREDOC statement](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
-    portraitOctopressYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
+    portraitPYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
       name: portrait-big-enough-3840x5760.jpg
       original_name: portrait-big-enough-3840x5760.jpg
       file_name: ./test/data/portrait-big-enough-3840x5760.jpg
@@ -272,15 +272,15 @@ class TestOptions < Test::Unit::TestCase
     SCAN_YAML
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:portrait])
-    assert_equal(portraitOctopressYaml, meta.to_octopress)
+    assert_equal(portraitPYaml, meta.to_pyaml)
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:notbigenough])
-    assert_equal(notbigenoughYaml, meta.to_octopress)
+    assert_equal(notbigenoughYaml, meta.to_pyaml)
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:landscape])
-    assert_equal(landscapeYaml, meta.to_octopress)
+    assert_equal(landscapeYaml, meta.to_pyaml)
 
     # meta = ImagePrep::MetaData.new(MetadataTestImages[:scan])
-    # assert_equal(scan_yaml, meta.to_octopress)
+    # assert_equal(scan_yaml, meta.to_pyaml)
   end
 end

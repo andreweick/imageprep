@@ -89,7 +89,7 @@ module ImagePrep
       File.basename(name,".*").gsub(' ', '-')
     end
 
-    def to_octopress
+    def to_pyaml
       # Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
       # if I don't put it on the same line then the spacing is wrong in the string
       # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
