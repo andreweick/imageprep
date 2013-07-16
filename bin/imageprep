@@ -21,16 +21,10 @@ opts.images_to_load.each { |imageFileName|
 	puts "Processing #{imageFileName}"
 	
 	# create the images
-	rz = ImagePrep::Resize.new(imageFileName, opts.outDir)
-	rz.do_work
+	rz = ImagePrep::Resize.new(imageFileName, opts.outDir).do_work
 
-	md = ImagePrep::MetaData.new(imageFileName)
-	destYamlName = File.join(rz.path_original_dir, md.strip_space_extension + ".yaml")
-  File.open(destYamlName, 'w'){ |f| 
-    f.write("path: #{rz.path_original_dir}/#{md.strip_space}\n")
-    f.write(md.to_octopress) 
-  }
-
+	# Write out YAML file describing image
+	md = ImagePrep::MetaData.new(imageFileName).write_pyaml(rz.path_original_dir)
 }
 
 # # Emit the octo-yaml

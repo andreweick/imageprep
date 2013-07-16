@@ -93,7 +93,7 @@ module ImagePrep
       # Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
       # if I don't put it on the same line then the spacing is wrong in the string
       # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
-      s = ERB.new(<<-OCTOYAML.gsub(/^ {8}/, '')).result(binding)
+      s = ERB.new(<<-PYAML.gsub(/^ {8}/, '')).result(binding)
         name: #{strip_space}
         original_name: #{name}
         file_name: #{file_name}
@@ -114,7 +114,16 @@ module ImagePrep
         focal_length: #{focal_length}
         iso: #{iso}
         camera: #{camera}
-      OCTOYAML
+      PYAML
+    end
+
+    def write_pyaml(directory)
+      dest_pyaml = File.join(directory, strip_space_extension + ".yaml")
+      File.open(dest_pyaml, 'w'){ |f| 
+        f.write("path: #{directory}/#{strip_space}\n")
+        f.write(to_pyaml) 
+      }
+      dest_pyaml
     end
   end
 end

@@ -22,7 +22,7 @@ class TestOptions < Test::Unit::TestCase
 
   def test_imagesExists
     MetadataTestImages.each do |nature, filename|
-      assert_equal File::exists?(filename), true
+      assert(File::exists?(filename))
     end
   end
 
@@ -170,6 +170,16 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(2, "2".to_frac)
     assert_equal(0, "0".to_frac)
     assert_equal(nil, "".to_frac)
+  end
+
+  def test_write_pyaml
+    Dir.mktmpdir {|dir|
+      MetadataTestImages.each { |image_type, image_name|
+        md = ImagePrep::MetaData.new(image_name)
+        filename = md.write_pyaml(dir)
+        assert(File::exists?(filename), "Yaml file #{filename} does not exist")
+      }
+    } #delete temporary directory
   end
 
   def test_yaml
