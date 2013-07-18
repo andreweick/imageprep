@@ -187,7 +187,7 @@ class TestOptions < Test::Unit::TestCase
     portraitPYaml = <<-PORTRAIT_METADATA_YAML.gsub(/^ {6}/, '')
       name: portrait-big-enough-3840x5760.jpg
       original_name: portrait-big-enough-3840x5760.jpg
-      file_name: ./test/data/portrait-big-enough-3840x5760.jpg
+      path: original/2013/2013-01-11/portrait-big-enough-3840x5760.jpg
       height: 5760
       width: 3840
       date_time_original: 2013-01-11T18:04:00+00:00
@@ -213,7 +213,7 @@ class TestOptions < Test::Unit::TestCase
     notbigenoughYaml = <<-NOTBIGENOUGH_YAML.gsub(/^ {6}/, '')
       name: not-big-enough-1333x2000.jpg
       original_name: not-big-enough-1333x2000.jpg
-      file_name: ./test/data/not-big-enough-1333x2000.jpg
+      path: original/2006/2006-12-29/not-big-enough-1333x2000.jpg
       height: 2000
       width: 1333
       date_time_original: 2006-12-29T18:38:08+00:00
@@ -236,7 +236,7 @@ class TestOptions < Test::Unit::TestCase
     landscapeYaml = <<-LANDSCAPE_YAML.gsub(/^ {6}/, '')
       name: landscape-big-enough-2895x1930.jpg
       original_name: landscape-big-enough-2895x1930.jpg
-      file_name: ./test/data/landscape-big-enough-2895x1930.jpg
+      path: original/2013/2013-01-15/landscape-big-enough-2895x1930.jpg
       height: 1930
       width: 2895
       date_time_original: 2013-01-15T20:01:55+00:00
@@ -262,7 +262,7 @@ class TestOptions < Test::Unit::TestCase
     scan_yaml = <<-SCAN_YAML.gsub(/^ {6}/, '')
       name: 2013-02-11-20-24-33-jasmine-1.jpg
       original_name: 2013 02 11 20 24 33 jasmine 1.jpg
-      file_name: ./test/data/2013 02 11 20 24 33 jasmine 1.jpg
+      path: original/2013/2013-02-11/2013 02 11 20 24 33 jasmine 1.jpg
       height: 1699
       width: 2199
       date_time_original: 2013-03-23T16:44:16-04:00

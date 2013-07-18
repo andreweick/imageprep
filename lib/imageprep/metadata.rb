@@ -96,7 +96,7 @@ module ImagePrep
       s = ERB.new(<<-PYAML.gsub(/^ {8}/, '')).result(binding)
         name: #{strip_space}
         original_name: #{name}
-        file_name: #{file_name}
+        path: original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{name}
         height: #{height}
         width: #{width}
         date_time_original: #{date_time_original}
