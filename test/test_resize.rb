@@ -57,4 +57,17 @@ class TestOptions < Test::Unit::TestCase
     } #delete temporary directory
   end
 
+  def test_do_work
+    image_processed = Array.new
+    Dir.mktmpdir { |dir|
+      ResizeTestImages.each { |image_type, image_name|
+        image_processed.push(ImagePrep::Resize.new(image_name, "#{dir}").do_work)
+      }
+ 
+      image_processed.each { |filename|  
+        assert(File::exists?(filename), "File #{filename} does not exists and should have been created by do_work")
+      }
+    }
+  end
+
 end

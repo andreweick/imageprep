@@ -69,8 +69,8 @@ module ImagePrep
 
     # This function generates the images in the correct place
     def do_work
-      original_image
       generated_images
+      original_image        # Copy the file last so that the return value is the original name
     end
 
   end
