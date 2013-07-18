@@ -282,15 +282,15 @@ class TestOptions < Test::Unit::TestCase
     SCAN_YAML
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:portrait])
-    assert_equal(portraitPYaml, meta.to_pyaml)
+    assert_equal(portraitPYaml, meta.to_yaml)
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:notbigenough])
-    assert_equal(notbigenoughYaml, meta.to_pyaml)
+    assert_equal(notbigenoughYaml, meta.to_yaml)
 
     meta = ImagePrep::MetaData.new(MetadataTestImages[:landscape])
-    assert_equal(landscapeYaml, meta.to_pyaml)
+    assert_equal(landscapeYaml, meta.to_yaml)
 
     # meta = ImagePrep::MetaData.new(MetadataTestImages[:scan])
-    # assert_equal(scan_yaml, meta.to_pyaml)
+    # assert_equal(scan_yaml, meta.to_yaml)
   end
 end

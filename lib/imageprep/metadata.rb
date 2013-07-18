@@ -89,7 +89,7 @@ module ImagePrep
       File.basename(name,".*").gsub(' ', '-')
     end
 
-    def to_pyaml
+    def to_yaml
       # Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
       # if I don't put it on the same line then the spacing is wrong in the string
       # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
@@ -121,7 +121,7 @@ module ImagePrep
       dest_pyaml = File.join(directory, strip_space_extension + ".yaml")
       File.open(dest_pyaml, 'w'){ |f| 
         f.write("path: #{directory}/#{strip_space}\n")
-        f.write(to_pyaml) 
+        f.write(to_yaml) 
       }
       dest_pyaml
     end
