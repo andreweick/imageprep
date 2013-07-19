@@ -61,6 +61,7 @@ class TestOptions < Test::Unit::TestCase
 
     assert_equal(2895, meta.width)
     assert_equal(1930, meta.height)
+    assert_equal("original/2013/2013-01-15/landscape-big-enough-2895x1930.jpg", meta.path)
     assert_equal(MetadataTestImages[:landscape], meta.file_name)
     assert_equal(File.basename(MetadataTestImages[:landscape]), meta.name)
   end
@@ -86,6 +87,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, meta.country)
     assert_equal("not-big-enough-1333x2000", meta.strip_extension)
     assert_equal("not-big-enough-1333x2000", meta.strip_space_extension)
+    assert_equal("original/2006/2006-12-29/not-big-enough-1333x2000.jpg", meta.path)
 
     assert_equal(1333, meta.width)
     assert_equal(2000, meta.height)
@@ -115,6 +117,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("portrait-big-enough-3840x5760.jpg", meta.name)
     assert_equal("portrait-big-enough-3840x5760", meta.strip_extension)
     assert_equal("portrait-big-enough-3840x5760", meta.strip_space_extension)
+    assert_equal("original/2013/2013-01-11/portrait-big-enough-3840x5760.jpg", meta.path)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
@@ -146,6 +149,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("2013-01-19 at 10-54-54", meta.strip_extension)
     assert_equal("2013-01-19-at-10-54-54.jpg", meta.strip_space)
     assert_equal("2013-01-19-at-10-54-54", meta.strip_space_extension)
+    assert_equal("original/2013/2013-01-19/2013-01-19-at-10-54-54.jpg", meta.path)
 
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
@@ -172,6 +176,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("2013 02 11 20 24 33 jasmine 1", meta.strip_extension)
     assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.strip_space)
     assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_space_extension)
+    assert_equal("original/2013/2013-04-23/2013-02-11-20-24-33-jasmine-1.jpg", meta.path)
   end
 
   def test_to_frac

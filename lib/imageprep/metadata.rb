@@ -76,7 +76,7 @@ module ImagePrep
 
       @name = File.basename(image_file_name)
       @file_name = image_file_name
-      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{name}"
+      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{strip_space}"
     end
 
     def strip_extension
