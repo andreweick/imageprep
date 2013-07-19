@@ -35,7 +35,7 @@ class TestOcto < Test::Unit::TestCase
         rz.do_work
 
         # Write out YAML file describing image
-        md = ImagePrep::MetaData.new(filename).write_pyaml(rz.path_original_dir)
+        md = ImagePrep::MetaData.new(filename).write_yaml(rz.path_original_dir)
         image_processed.push(ImagePrep::Resize.new(filename, "#{dir}").do_work)
       end
 

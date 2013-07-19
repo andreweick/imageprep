@@ -172,11 +172,11 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, "".to_frac)
   end
 
-  def test_write_pyaml
+  def test_write_yaml
     Dir.mktmpdir {|dir|
       MetadataTestImages.each { |image_type, image_name|
         md = ImagePrep::MetaData.new(image_name)
-        filename = md.write_pyaml(dir)
+        filename = md.write_yaml(dir)
         assert(File::exists?(filename), "Yaml file #{filename} does not exist")
       }
     } #delete temporary directory

@@ -117,13 +117,12 @@ module ImagePrep
       PYAML
     end
 
-    def write_pyaml(directory)
-      dest_pyaml = File.join(directory, strip_space_extension + ".yaml")
-      File.open(dest_pyaml, 'w'){ |f| 
-        f.write("path: #{directory}/#{strip_space}\n")
+    def write_yaml(directory)
+      dest_yaml = File.join(directory, strip_space_extension + ".yaml")
+      File.open(dest_yaml, 'w'){ |f| 
         f.write(to_yaml) 
       }
-      dest_pyaml
+      dest_yaml
     end
   end
 end
