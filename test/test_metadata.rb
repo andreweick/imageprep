@@ -43,7 +43,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.month, meta.date_time_original.month)
     assert_equal(dto.day, meta.date_time_original.day)
 
-    assert_equal(meta.exposureTime, "1/125")
+    assert_equal(meta.exposure_time, "1/125")
     assert_equal(meta.focal_length, 40)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
@@ -73,7 +73,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.month, meta.date_time_original.month)
     assert_equal(dto.day, meta.date_time_original.day)
 
-    assert_equal(meta.exposureTime, "1/30")
+    assert_equal(meta.exposure_time, "1/30")
     assert_equal(meta.focal_length, 52)
     assert_equal(800, meta.iso)
     assert_equal("Canon EOS 5D", meta.camera)
@@ -102,7 +102,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.month, meta.date_time_original.month)
     assert_equal(dto.day, meta.date_time_original.day)
 
-    assert_equal(meta.exposureTime, "1/200")
+    assert_equal(meta.exposure_time, "1/200")
     assert_equal(meta.focal_length, 40)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
@@ -132,7 +132,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.year, meta.date_time_original.year)
     assert_equal(dto.month, meta.date_time_original.month)
     assert_equal(dto.day, meta.date_time_original.day)
-    assert_equal(meta.exposureTime, "1/125")
+    assert_equal(meta.exposure_time, "1/125")
     assert_equal(meta.focal_length, 30)
     assert_equal(100, meta.iso)
     assert_equal("Canon EOS 5D Mark III", meta.camera)
@@ -164,7 +164,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(dto.year, meta.date_time_original.year)
     assert_equal(dto.month, meta.date_time_original.month)
     assert_equal(dto.day, meta.date_time_original.day)
-    assert_equal("", meta.exposureTime)
+    assert_equal("", meta.exposure_time)
     assert_equal(nil, meta.focal_length)
     assert_equal(nil, meta.iso)
     assert_equal("", meta.camera)
@@ -231,7 +231,7 @@ class TestOptions < Test::Unit::TestCase
       country: USA
       countryISO: 
       aperture: 5.6
-      exposureTime: 1/200
+      exposure_time: 1/200
       focal_length: 40
       iso: 100
       camera: Canon EOS 5D Mark III
@@ -254,7 +254,7 @@ class TestOptions < Test::Unit::TestCase
       country: 
       countryISO: 
       aperture: 2.8
-      exposureTime: 1/30
+      exposure_time: 1/30
       focal_length: 52
       iso: 800
       camera: Canon EOS 5D
@@ -279,7 +279,7 @@ class TestOptions < Test::Unit::TestCase
       country: USA
       countryISO: 
       aperture: 5.6
-      exposureTime: 1/125
+      exposure_time: 1/125
       focal_length: 40
       iso: 100
       camera: Canon EOS 5D Mark III
@@ -302,7 +302,7 @@ class TestOptions < Test::Unit::TestCase
       country: 
       countryISO: 
       aperture: 
-      exposureTime: 
+      exposure_time: 
       focal_length: 
       iso: 
       camera: 

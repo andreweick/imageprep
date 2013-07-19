@@ -22,7 +22,7 @@ module ImagePrep
   class MetaData
     attr_reader :keywords, :copyright, :caption, :headline, :date_time_original
     attr_reader :city, :state, :country, :countryISO
-    attr_reader :exposureTime, :focal_length, :aperture, :iso, :camera
+    attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
     attr_reader :height, :width, :name, :file_name
     attr_reader :path
 
@@ -65,7 +65,7 @@ module ImagePrep
       @state = image[IPTC_STATE]
       @country = image[IPTC_COUNTRY]
       @countryISO = image[IPTC_COUNTRY_ISO]
-      @exposureTime = image[EXIF_EXPOSURE_TIME]
+      @exposure_time = image[EXIF_EXPOSURE_TIME]
       @focal_length = eval(image[EXIF_FOCAL_LENGTH])       # This is stored as 40/1
       @aperture = image[EXIF_APERTURE].to_frac             # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
@@ -112,7 +112,7 @@ module ImagePrep
         country: #{country}
         countryISO: #{countryISO}
         aperture: #{aperture}
-        exposureTime: #{exposureTime}
+        exposure_time: #{exposure_time}
         focal_length: #{focal_length}
         iso: #{iso}
         camera: #{camera}
