@@ -7,10 +7,20 @@ require 'bundler/setup'
 require 'test/unit'
 require 'date'
 require 'fileutils'
+require 'yaml'
 
 require_relative '../lib/imageprep/metadata'
 
 class TestOptions < Test::Unit::TestCase
+
+  # helper function to detect valid
+  def valid_yaml_string?(yaml)
+    !!YAML.load(yaml)
+  rescue Exception => e
+    STDERR.puts e.message
+    return false
+  end
+
   # Image constant names
   MetadataTestImages = {  
     landscape:      "./test/data/landscape-big-enough-2895x1930.jpg",
@@ -180,6 +190,18 @@ class TestOptions < Test::Unit::TestCase
         assert(File::exists?(filename), "Yaml file #{filename} does not exist")
       }
     } #delete temporary directory
+  end
+
+  def test_valid_yaml
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:portrait])
+    assert(valid_yaml_string?(meta.to_yaml))
+
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:notbigenough])
+    assert(valid_yaml_string?(meta.to_yaml))
+
+    meta = ImagePrep::MetaData.new(MetadataTestImages[:landscape])
+    assert(valid_yaml_string?(meta.to_yaml))
+
   end
 
   def test_yaml
