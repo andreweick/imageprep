@@ -20,11 +20,11 @@ opts = ImagePrep::Options.new(ARGV)
 opts.images_to_load.each { |image_file_name|
 	puts "Processing #{image_file_name}"
 	
-	# create the images
+	# create the images in the correct directory
 	rz = ImagePrep::Resize.new(image_file_name, opts.outDir)
 	rz.do_work
 
-	# Write out YAML file describing image
+	# Write out YAML file describing the metadata of each imageimage
 	md = ImagePrep::MetaData.new(image_file_name)
 	md.write_yaml(rz.path_original_dir)
 }
