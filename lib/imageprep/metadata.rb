@@ -24,6 +24,7 @@ module ImagePrep
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposureTime, :focal_length, :aperture, :iso, :camera
     attr_reader :height, :width, :name, :file_name
+    attr_reader :path
 
     #[IPTC code chart](http://www.imagemagick.org/script/escape.php)
     
@@ -75,6 +76,7 @@ module ImagePrep
 
       @name = File.basename(image_file_name)
       @file_name = image_file_name
+      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{name}"
     end
 
     def strip_extension
@@ -96,7 +98,7 @@ module ImagePrep
       s = ERB.new(<<-PYAML.gsub(/^ {8}/, '')).result(binding)
         name: #{strip_space}
         original_name: #{name}
-        path: original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{name}
+        path: #{path}
         height: #{height}
         width: #{width}
         date_time_original: #{date_time_original}
