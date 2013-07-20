@@ -54,6 +54,7 @@ module ImagePrep
 		end
 
 		def write_octopress(out_directory)
+			FileUtils.mkpath(out_directory)
 			dest_octo = File.join(out_directory, Time.now.strftime("%Y-%m-%d-%H-%M.markdown"))
  	    File.open(dest_octo, 'w'){ |f| 
         f.write(to_octopress) 
