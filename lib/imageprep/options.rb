@@ -6,7 +6,8 @@ module ImagePrep
     attr_reader :images_to_load
     attr_reader :quiet
     attr_reader :verbose
-    attr_reader :outDir
+    attr_reader :out_dir_images
+    attr_reader :out_dir_draft
     attr_reader :logfile
 
     def initialize(argv)
@@ -29,9 +30,14 @@ module ImagePrep
           @quiet = true
         end
 
-        @outDir = nil
-        opts.on('-o', '--outDir directory', 'Output directory') do|output_directory|
-          @outDir = output_directory
+        @out_dir_images = nil
+        opts.on('-o', '--out_dir_images directory', 'Output directory for images') do|output_directory|
+          @out_dir_images = output_directory
+        end
+
+        @out_dir_draft = nil
+        opts.on('-d', '--out_dir_draft directory', 'Output directory for octopress draft blog post') do|output_directory|
+          @out_dir_draft = output_directory
         end
 
         @logfile = nil
