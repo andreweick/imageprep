@@ -14,54 +14,23 @@ require 'bundler/setup'
 
 require_relative '../lib/imageprep/resize'
 require_relative '../lib/imageprep/options'
+require_relative '../lib/imageprep/octo'
 
 opts = ImagePrep::Options.new(ARGV)
+
+emitted_images = Array.new
 
 opts.images_to_load.each { |image_file_name|
 	puts "Processing #{image_file_name}"
 	
 	# create the images in the correct directory
-	rz = ImagePrep::Resize.new(image_file_name, opts.outDir)
-	rz.do_work
+	rz = ImagePrep::Resize.new(image_file_name, opts.out_dir_images)
+	emitted_images.push rz.do_work
 
 	# Write out YAML file describing the metadata of each imageimage
 	md = ImagePrep::MetaData.new(image_file_name)
 	md.write_yaml(rz.path_original_dir)
 }
 
-# Emit the octo-yaml
-puts "---"
-puts "layout: post"
-puts "title: "
-puts "date: "
-puts "comments: false"
-puts "published: false"
-puts "categories: " 
-puts "photographs: "
 
-opts.images_to_load.each { |image_file_name|
-	yaml_file = File.join(File.dirname(image_file_name), File.basename(image_file_name, ".*") + ".yaml")
-	metadata = YAML.load_file(yaml_file)
-	puts "- url: http://media.eick.us/#{metadata["path"]}"
-	puts "  headline: \"#{metadata["headline"]}\""
-	puts "  caption: \"#{metadata["caption"]}\""
-	puts "  date_time_original: #{metadata["dateTimeOriginal"]}"
-	puts "  copyright: #{metadata["copyright"]}"
-	puts "  city: #{metadata["city"]}"
-	puts "  state: #{metadata["state"]}"
-	puts "  country: #{metadata["country"]}"
-	puts "  exposure_time: #{metadata["exposureTime"]}"
-	puts "  focal_length: #{metadata["focalLength"]}"
-	puts "  aperture: #{metadata["aperture"]}"
-	puts "  iso: #{metadata["iso"]}"
-	puts "  camera: #{metadata["camera"]}"
-	puts "  markdown: ![#{metadata["headline"]}](http://media.eick.us/images/#{metadata["path"]})"
-}
-puts "---"
-
-# and now write out each image in the body 
-imgs_yaml.each { |yaml|
-	metadata = YAML.load_file(yaml)
-	puts "{% photo2 http://media.eick.us/images/#{metadata["path"]} \"#{metadata["headline"]}\" %}"
-	puts
-}
+ImagePrep::Octo.new(emitted_images).write_octopress(opts.out_dir_draft)
