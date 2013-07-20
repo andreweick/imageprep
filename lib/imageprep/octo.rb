@@ -7,51 +7,59 @@ require_relative 'metadata'
 
 module ImagePrep
   class Octo
-  	attr_reader :image_list, :out_directory
+  	attr_reader :image_list
 
-  	def initialize(image_list, out_directory)
+  	def initialize(image_list)
   		@image_list = image_list
-  		@out_directory = out_directory
   	end
 
   	def to_octopress
   		metadata_list = Array.new
-  		# Emit the octo-yaml
-			puts "---"
-			puts "layout: post"
-			puts "title: "
-			puts "date: "
-			puts "comments: false"
-			puts "published: false"
-			puts "categories: " 
-			puts "photographs: "
+			s = "---\n"
+			s += "layout: post\n"
+			s += "title:\n"
+			s += "date:\n"
+			s += "comments: false\n"
+			s += "published: false\n"
+			s += "categories:\n" 
+			s += "photographs:\n"
 
 			image_list.each { |image|
 				metadata = ImagePrep::MetaData.new(image)
 				metadata_list.push(metadata)				# save the metadata
 
-				puts "- url: http://media.eick.us/#{metadata.path}"
-				puts "  headline: \"#{metadata.headline}\""
-				puts "  caption: \"#{metadata.caption}\""
-				puts "  date_time_original: #{metadata.date_time_original}"
-				puts "  copyright: #{metadata.copyright}"
-				puts "  city: #{metadata.city}"
-				puts "  state: #{metadata.state}"
-				puts "  country: #{metadata.country}"
-				puts "  exposure_time: #{metadata.exposure_time}"
-				puts "  focal_length: #{metadata.focal_length}"
-				puts "  aperture: #{metadata.aperture}"
-				puts "  iso: #{metadata.iso}"
-				puts "  camera: #{metadata.camera}"
-				puts "  markdown: ![#{metadata.headline}](http://media.eick.us/images/#{metadata.path})"
+				s += "- url: http://media.eick.us/#{metadata.path}\n"
+				s += "  headline: \"#{metadata.headline}\"\n"
+				s += "  caption: \"#{metadata.caption}\"\n"
+				s += "  date_time_original: #{metadata.date_time_original}\n"
+				s += "  copyright: #{metadata.copyright}\n"
+				s += "  city: #{metadata.city}\n"
+				s += "  state: #{metadata.state}\n"
+				s += "  country: #{metadata.country}\n"
+				s += "  exposure_time: #{metadata.exposure_time}\n"
+				s += "  focal_length: #{metadata.focal_length}\n"
+				s += "  aperture: #{metadata.aperture}\n"
+				s += "  iso: #{metadata.iso}\n"
+				s += "  camera: #{metadata.camera}\n"
+				s += "  markdown: ![#{metadata.headline}](http://media.eick.us/images/#{metadata.path})\n"
 			}
-			puts "---"
+			s += "---\n"
 
 			# and now write out each image in the body 
 			metadata_list.each { |md|
-				puts "{% photo2 http://media.eick.us/images/#{md.path} \"#{md.headline}\" %}"
-				puts
+				s += "\n{% photo2 http://media.eick.us/images/#{md.path} \"#{md.headline}\" %}\n"
 			}
+
+			s #return the string as the result
 		end
+
+		def write_octopress(out_directory)
+			dest_octo = File.join(out_directory, Time.now.strftime("%Y-%m-%d-%H-%M.markdown"))
+ 	    File.open(dest_octo, 'w'){ |f| 
+        f.write(to_octopress) 
+      }
+
+      dest_octo
+ 		end
   end
 end

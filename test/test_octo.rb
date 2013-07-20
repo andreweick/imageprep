@@ -22,14 +22,29 @@ class TestOcto < Test::Unit::TestCase
 
   def test_images_exists
     OctoTestImages.each do |filename|
-      assert(File::exists?(filename))
+      assert(File::exists?(filename), "#{filename} does not exist")
     end
   end
 
+  def test_to_octo
+    assert(File::exists?("./test/data/octo_test_1.md"), "./test/data/octo_test_1.md does not exist")
+    test1 = File.open("./test/data/octo_test_1.md", "r") {|f| f.read }
+    assert(!test1.empty?, "nothing in file")
+
+    s = ImagePrep::Octo.new(OctoTestImages).to_octopress
+
+    assert_equal(s, test1)
+  end
+
   def test_generate_octo
-    # Dir.mktmpdir {|dir|
-      ImagePrep::Octo.new(OctoTestImages, "/tmp").to_octopress
-    # }
+    assert(File::exists?("./test/data/octo_test_1.md"), "./test/data/octo_test_1.md does not exist")
+    test1 = File.open("./test/data/octo_test_1.md", "r") {|f| f.read }
+    assert(!test1.empty?, "nothing in file")
+    Dir.mktmpdir {|dir|
+      written_file = ImagePrep::Octo.new(OctoTestImages).write_octopress(dir)
+      assert(File::exists?(written_file), "Did not create file #{written_file}")
+      assert(FileUtils::compare_file(written_file,"./test/data/octo_test_1.md"), "File generated does not match test data")
+    }
   end
 
 end
