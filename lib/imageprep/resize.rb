@@ -19,7 +19,7 @@ module ImagePrep
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
     JPEG_COMPRESSION_QUALITY = "75"    # Need to pass the compression quality as a string to mini_magic, hence the quotes
 
-    attr_reader :destRoot, :metadata, :emitedImages
+    attr_reader :dest_root, :metadata
 
     def initialize(image_file_name, dest_root)
       @metadata = ImagePrep::MetaData.new(image_file_name)
