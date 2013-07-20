@@ -224,8 +224,8 @@ class TestOptions < Test::Unit::TestCase
       - libby
       - studio
       copyright: © 2013 Andrew Eick, all rights reserved.
-      headline: "Libby reading a book"
-      caption: "Libby reading her book"
+      headline: Libby reading a book
+      caption: Libby reading her book
       city: McLean
       state: VA
       country: USA
@@ -247,8 +247,8 @@ class TestOptions < Test::Unit::TestCase
       categories:
       - christmas libby present
       copyright: © 2006 Andrew Eick, all rights reserved.
-      headline: "Libby opens a present"
-      caption: ""
+      headline: Libby opens a present
+      caption: 
       city: 
       state: 
       country: 
@@ -272,8 +272,8 @@ class TestOptions < Test::Unit::TestCase
       - libby
       - studio
       copyright: © 2013 Andrew Eick, all rights reserved.
-      headline: "Lazy Saturday"
-      caption: ""
+      headline: Lazy Saturday
+      caption: 
       city: McLean
       state: VA
       country: USA
@@ -295,8 +295,8 @@ class TestOptions < Test::Unit::TestCase
       date_time_original: 2013-03-23T16:44:16-04:00
       categories:
       copyright: © 2013 Andrew Eick, all rights reserved.
-      headline: ""
-      caption: ""
+      headline: 
+      caption: 
       city: 
       state: 
       country: 

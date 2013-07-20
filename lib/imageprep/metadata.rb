@@ -105,8 +105,8 @@ module ImagePrep
         categories:<% keywords.each do |word| %>
         - <%= word %><% end %>
         copyright: #{copyright}
-        headline: "#{headline}"
-        caption: "#{caption}"
+        headline: #{headline}
+        caption: #{caption}
         city: #{city}
         state: #{state}
         country: #{country}
