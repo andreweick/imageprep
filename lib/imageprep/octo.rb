@@ -28,7 +28,7 @@ module ImagePrep
 				metadata = ImagePrep::MetaData.new(image)
 				metadata_list.push(metadata)				# save the metadata
 
-				s += "- url: http://media.eick.us/#{metadata.path}\n"
+				s += "- url: http://media.eick.us/images/#{metadata.path}\n"
 				s += "  headline: #{metadata.headline}\n"
 				s += "  caption: #{metadata.caption}\n"
 				s += "  date_time_original: #{metadata.date_time_original}\n"
