@@ -11,17 +11,12 @@ require 'fileutils'
 require_relative '../lib/imageprep/octo'
 
 class TestOcto < Test::Unit::TestCase
-  # Image constant names
-  OctoTestImages = [  
-    "./test/data/landscape-big-enough-2895x1930.jpg",
-    "./test/data/portrait-big-enough-3840x5760.jpg",
-    "./test/data/not-big-enough-1333x2000.jpg",
-    "./test/data/2013-01-19 at 10-54-54.jpg",
-    "./test/data/2013 02 11 20 24 33 jasmine 1.jpg" 
-  ]
+  def setup
+    @test_images ||= YAML.load_file('./test/data/test_images.yaml')
+  end
 
   def test_images_exists
-    OctoTestImages.each do |filename|
+    @test_images.each do |nature,filename|
       assert(File::exists?(filename), "#{filename} does not exist")
     end
   end
@@ -31,7 +26,7 @@ class TestOcto < Test::Unit::TestCase
     test1 = File.open("./test/data/octo_test_1.md", "r") {|f| f.read }
     assert(!test1.empty?, "nothing in file")
 
-    s = ImagePrep::Octo.new(OctoTestImages).to_octopress
+    s = ImagePrep::Octo.new(@test_images.values).to_octopress
 
     assert_equal(s, test1)
   end
@@ -41,7 +36,7 @@ class TestOcto < Test::Unit::TestCase
     test1 = File.open("./test/data/octo_test_1.md", "r") {|f| f.read }
     assert(!test1.empty?, "nothing in file")
     Dir.mktmpdir {|dir|
-      written_file = ImagePrep::Octo.new(OctoTestImages).write_octopress(dir)
+      written_file = ImagePrep::Octo.new(@test_images.values).write_octopress(dir)
       assert(File::exists?(written_file), "Did not create file #{written_file}")
       assert(FileUtils::compare_file(written_file,"./test/data/octo_test_1.md"), "File generated does not match test data")
     }

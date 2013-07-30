@@ -25,15 +25,19 @@ class TestOptions < Test::Unit::TestCase
   # To see what is in all the EXIF data for an image: 
   # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
 
+  def setup
+    @test_images ||= YAML.load_file('./test/data/test_images.yaml')
+  end
+
   def test_source_images_exists
-    ResizeTestImages.each do |image_type, filename|
+    @test_images.each do |image_type, filename|
       assert(File::exists?(filename), "Image #{filename} does not exist")
     end
   end
 
   def test_original_image_copy
     Dir.mktmpdir {|dir|
-      ResizeTestImages.each { |image_type, image_name|
+      @test_images.each { |image_type, image_name|
         rz = ImagePrep::Resize.new(image_name, "#{dir}")
         dest = rz.original_image
         assert(FileUtils.compare_file(image_name, dest), "Image(s) were not copied to orginial directory")
@@ -43,7 +47,7 @@ class TestOptions < Test::Unit::TestCase
 
   def test_resize
     Dir.mktmpdir {|dir|
-      ResizeTestImages.each { |image_type, image_name|
+      @test_images.each { |image_type, image_name|
         rz = ImagePrep::Resize.new(image_name, "#{dir}")
         rz.generated_images
 
@@ -60,7 +64,7 @@ class TestOptions < Test::Unit::TestCase
   def test_do_work
     image_processed = Array.new
     Dir.mktmpdir { |dir|
-      ResizeTestImages.each { |image_type, image_name|
+      @test_images.each { |image_type, image_name|
         image_processed.push(ImagePrep::Resize.new(image_name, "#{dir}").do_work)
       }
  
