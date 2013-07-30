@@ -121,9 +121,7 @@ module ImagePrep
 
     def write_yaml(directory)
       dest_yaml = File.join(directory, strip_space_extension + ".yaml")
-      File.open(dest_yaml, 'w'){ |f| 
-        f.write(to_yaml) 
-      }
+      File.open(dest_yaml, 'w'){ |f|  f.write(to_yaml) }
       dest_yaml
     end
   end
