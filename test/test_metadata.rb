@@ -140,8 +140,6 @@ class TestOptions < Test::Unit::TestCase
     assert_equal("VA", meta.state)
     assert_equal("United States of America", meta.country)
     assert_equal("USA", meta.countryISO)
-    assert_equal("2013-01-19 at 10-54-54.jpg", meta.name)
-    assert_equal("2013-01-19 at 10-54-54", meta.strip_extension)
     assert_equal("2013-01-19-at-10-54-54.jpg", meta.strip_space)
     assert_equal("2013-01-19-at-10-54-54", meta.strip_space_extension)
     assert_equal("original/2013/2013-01-19/2013-01-19-at-10-54-54.jpg", meta.path)
@@ -149,7 +147,6 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(3840, meta.width)
     assert_equal(5760, meta.height)
     assert_equal(@test_images[:needstrip], meta.file_name)
-    assert_equal(File.basename(@test_images[:needstrip]), meta.name)
   end
 
   def test_scan
@@ -167,8 +164,8 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(2199, meta.width)
     assert_equal(1699, meta.height)
 
-    assert_equal("2013 02 11 20 24 33 jasmine 1.jpg", meta.name)
-    assert_equal("2013 02 11 20 24 33 jasmine 1", meta.strip_extension)
+    assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.name)
+    assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_extension)
     assert_equal("2013-02-11-20-24-33-jasmine-1.jpg", meta.strip_space)
     assert_equal("2013-02-11-20-24-33-jasmine-1", meta.strip_space_extension)
     assert_equal("original/2013/2013-04-23/2013-02-11-20-24-33-jasmine-1.jpg", meta.path)
