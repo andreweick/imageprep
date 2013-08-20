@@ -7,6 +7,7 @@ require 'mini_magick'
 require 'date'
 require 'fileutils'
 require 'erb'
+require 'stringex'
 
 class String
   def to_frac
@@ -74,7 +75,7 @@ module ImagePrep
       @height = image[HEIGHT].to_i                          # This is returend as a string
       @width = image[WIDTH].to_i                            # This is returned as a string
 
-      @name = File.basename(image_file_name).downcase
+      @name = (File.basename(image_file_name, ".*") + File.extname(image_file_name)).downcase
       @file_name = image_file_name
       @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{strip_space}"
     end
