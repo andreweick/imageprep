@@ -92,38 +92,5 @@ module ImagePrep
       File.basename(name,".*").gsub(' ', '-')
     end
 
-    def to_yaml
-      # Not crazy about the syntax in the heredoc around the looping of 'keyword', but 
-      # if I don't put it on the same line then the spacing is wrong in the string
-      # The following statement -- delete the first four tabs in the HEREDOC to [format](http://rubyquicktips.com/post/4438542511/heredoc-and-indent)
-      s = ERB.new(<<-PYAML.gsub(/^ {8}/, '')).result(binding)
-        name: #{strip_space}
-        original_name: #{name}
-        path: #{path}
-        height: #{height}
-        width: #{width}
-        date_time_original: #{date_time_original}
-        categories:<% keywords.each do |word| %>
-        - <%= word %><% end %>
-        copyright: #{copyright}
-        headline: #{headline}
-        caption: #{caption}
-        city: #{city}
-        state: #{state}
-        country: #{country}
-        countryISO: #{countryISO}
-        aperture: #{aperture}
-        exposure_time: #{exposure_time}
-        focal_length: #{focal_length}
-        iso: #{iso}
-        camera: #{camera}
-      PYAML
-    end
-
-    def write_yaml(directory)
-      dest_yaml = File.join(directory, strip_space_extension + ".yaml")
-      File.open(dest_yaml, 'w'){ |f|  f.write(to_yaml) }
-      dest_yaml
-    end
   end
 end

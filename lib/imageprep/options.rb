@@ -7,6 +7,7 @@ module ImagePrep
     attr_reader :quiet
     attr_reader :verbose
     attr_reader :out_dir_images
+    attr_reader :in_dir_images
     attr_reader :out_dir_draft
     attr_reader :logfile
 
@@ -33,6 +34,11 @@ module ImagePrep
         @out_dir_images = nil
         opts.on('-o', '--out_dir_images directory', 'Output directory for images') do|output_directory|
           @out_dir_images = output_directory
+        end
+
+        @in_dir_images = nil
+        opts.on('-i', '--in_dir_images directory', 'Input directory for images') do|input_directory|
+          @in_dir_images = input_directory
         end
 
         @out_dir_draft = nil

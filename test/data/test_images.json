@@ -1,0 +1,16 @@
+{
+	"images": [
+		{
+			"name":"Portrait",
+			"file":"./test/data/Jasmine\ Setting\ up\ Lights\ 2013-12-14\ at\ 13-54-46.jpg"
+		},
+		{
+			"name":"Landscape",
+			"file":"./test/data/Lazy\ Saturday\ 2013-01-15\ at\ 20-03-37\ -\ 2013-01-15\ at\ 20-03-37.jpg"
+		},
+		{
+			"name":"NoMetaData",
+			"file":"./test/data/No\ EXIF\ Metadata\ 2013-05-18\ Libby\ Ballet-2013-05-18-at-11-16-56\ -\ 2013-05-18\ at\ 11-16-56.jpg"
+		}
+	]
+}

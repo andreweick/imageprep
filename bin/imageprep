@@ -17,19 +17,13 @@ require_relative '../lib/imageprep/options'
 
 opts = ImagePrep::Options.new(ARGV)
 
-emitted_images = Array.new
-
 opts.images_to_load.each { |image_file_name|
 	puts "Processing #{image_file_name}"
 	
 	# create the images in the correct directory
 	rz = ImagePrep::Resize.new(image_file_name, opts.out_dir_images)
-	emitted_images.push rz.do_work
 
 	# Write out YAML file describing the metadata of each imageimage
 	md = ImagePrep::MetaData.new(image_file_name)
 	md.write_yaml(rz.path_original_dir)
 }
-
-
-ImagePrep::Octo.new(emitted_images).write_octopress(opts.out_dir_draft)

@@ -6,7 +6,6 @@ require 'bundler/setup'
 require 'mini_magick'
 require 'fileutils'
 require 'date'
-require 'erb'
 
 require_relative 'metadata'     # Need to get the EXIF date so I can put the file in the correct directory
 
