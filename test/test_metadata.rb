@@ -17,9 +17,15 @@ class TestOptions < Test::Unit::TestCase
     @test_images ||= JSON.parse(File.read('./test/data/test_images.json'))
   end
 
-  def test_imagesExists
+  def test_images_exists
     @test_images["images"].each do |ti|
       assert(File::exists?(ti['file']))
+    end
+  end
+
+  def test_image_metadata
+    @test_images["images"].each do |ti|
+      md = ImagePrep::MetaData.new(ti['file'])
     end
   end
 
