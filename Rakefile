@@ -22,11 +22,6 @@ task :test_resize do
 	ruby "test/test_resize.rb"
 end
 
-desc "Test octopress post generator"
-task :test_octo do
-	ruby "test/test_octo.rb"
-end
-
 desc "Test full process"
 task :test_full do
 	ruby "test/test_full.rb"
