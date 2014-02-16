@@ -26,6 +26,9 @@ class TestOptions < Test::Unit::TestCase
   def test_image_metadata
     @test_images["images"].each do |ti|
       md = ImagePrep::MetaData.new(ti['file'])
+      ti["EXIF"][0].each { |attrib|
+        puts "attrib is #{attrib}"
+      } unless ti["EXIF"].nil?
     end
   end
 
