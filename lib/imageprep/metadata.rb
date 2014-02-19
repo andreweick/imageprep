@@ -9,6 +9,8 @@ require 'fileutils'
 require 'erb'
 require 'stringex'
 
+require_relative 'JSONable'
+
 class String
   def to_frac
     unless self.empty?
@@ -20,7 +22,7 @@ class String
 end
 
 module ImagePrep
-  class MetaData
+  class MetaData < JSONable
     attr_reader :keywords, :copyright, :caption, :headline, :date_time_original
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
