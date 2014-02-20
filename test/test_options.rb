@@ -16,6 +16,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(false, opts.quiet)
     assert_equal(false, opts.verbose)
     assert_equal(nil, opts.logfile)
+    assert_equal(false, opts.generate_json)
   end
 
   def test_outputdirectory
@@ -25,6 +26,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(false, opts.quiet)
   	assert_equal(false, opts.verbose)
   	assert_equal(nil, opts.logfile)
+    assert_equal(false, opts.generate_json)
   end
 
   def test_quiet
@@ -33,6 +35,7 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(false, opts.verbose)
     assert_equal(["image1"], opts.images_to_load)
   	assert_equal(nil, opts.logfile)
+    assert_equal(false, opts.generate_json)
   end
 
   def test_verbose
@@ -40,6 +43,7 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(true, opts.verbose)
     assert_equal(["image1"], opts.images_to_load)
   	assert_equal(nil, opts.logfile)
+    assert_equal(false, opts.generate_json)
   end
 
   def test_logfile
@@ -48,5 +52,16 @@ class TestOptions < Test::Unit::TestCase
   	assert_equal(false, opts.verbose)
     assert_equal(["image1"], opts.images_to_load)
   	assert_equal("logfileName", opts.logfile)
+    assert_equal(false, opts.generate_json)
   end
+
+  def test_generate_json
+    opts = ImagePrep::Options.new(["-j", "image1"])
+    assert_equal(false, opts.quiet)
+    assert_equal(false, opts.verbose)
+    assert_equal(["image1"], opts.images_to_load)
+    assert_equal(nil, opts.logfile)
+    assert_equal(true, opts.generate_json)
+  end
+
 end
