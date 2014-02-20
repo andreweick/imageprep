@@ -40,7 +40,7 @@ class TestOptions < Test::Unit::TestCase
     assert_equal(nil, "".to_frac)
   end
 
-  def test_to_frac
+  def test_to_slug
     assert_equal("this-is-a-test", "this is a test".to_slug)
     assert_equal("this-is-a-test", "This Is A Test".to_slug)
     assert_equal("this-is-a-test", "This Is A Test   ".to_slug)
