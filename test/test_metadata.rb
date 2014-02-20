@@ -18,18 +18,25 @@ class TestOptions < Test::Unit::TestCase
   end
 
   def test_images_exists
-    @test_images["images"].each do |ti|
+    @test_images["images"].each { |ti|
       assert(File::exists?(ti['file']))
-    end
+    }
   end
 
   def test_image_metadata
-    @test_images["images"].each do |ti|
+    @test_images["images"].each { |ti|
       md = ImagePrep::MetaData.new(ti['file'])
       ti["EXIF"][0].each { |attrib|
         puts "attrib is #{attrib}"
       } unless ti["EXIF"].nil?
-    end
+    }
+  end
+
+  def test_write_json
+    @test_images["images"].each { |ti|  
+      md = ImagePrep::MetaData.new(ti['file'])
+      md.write_json(ti['file'])
+    }
   end
 
   def test_to_frac
