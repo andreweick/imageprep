@@ -6,8 +6,7 @@ require 'bundler/setup'
 require 'mini_magick'
 require 'date'
 require 'fileutils'
-require 'erb'
-require 'stringex'
+require 'json'
 
 require_relative 'JSONable'
 
@@ -18,6 +17,16 @@ class String
       denominator ||= 1
       numerator/denominator
     end
+  end
+
+  def to_slug
+    value = self.gsub(/[^\x00-\x7F]/n, '').to_s
+    value.gsub!(/[']+/, '')
+    value.gsub!(/\W+/, ' ')
+    value.strip!
+    value.downcase!
+    value.gsub!(' ', '-')
+    value
   end
 end
 
@@ -77,21 +86,15 @@ module ImagePrep
       @height = image[HEIGHT].to_i                          # This is returend as a string
       @width = image[WIDTH].to_i                            # This is returned as a string
 
-      @name = (File.basename(image_file_name, ".*").to_url + File.extname(image_file_name)).downcase
       @file_name = image_file_name
-      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{strip_space}"
+      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{image_file_name.to_slug}"
     end
 
-    def strip_extension
-      File.basename(name,".*")
-    end
-
-    def strip_space
-      name.gsub(' ', '-')
-    end
-
-    def strip_space_extension
-      File.basename(name,".*").gsub(' ', '-')
+    # Write the JSON file to the same directory as the image with the .json extension
+    def write_json(json_file_name)
+      File.open("#{File.dirname(json_file_name)}/#{File.basename(json_file_name,'.*')}.json",'w'){ |file| 
+        file.write(to_json) 
+      }
     end
 
   end
