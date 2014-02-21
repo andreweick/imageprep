@@ -86,8 +86,7 @@ module ImagePrep
       @height = image[HEIGHT].to_i                          # This is returend as a string
       @width = image[WIDTH].to_i                            # This is returned as a string
 
-      @source_file_name = image_file_name
-      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{image_file_name.to_slug}"
+      @name = File.basename(image_file_name)
     end
 
     # Write the JSON file to the same directory as the image with the .json extension 
