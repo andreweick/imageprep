@@ -4,6 +4,7 @@ module ImagePrep
   class Options
 
     attr_reader :images_to_load
+    attr_reader :generate_json
     attr_reader :quiet
     attr_reader :verbose
     attr_reader :out_dir_images
@@ -49,6 +50,11 @@ module ImagePrep
         @logfile = nil
         opts.on('-l', '--logfile FILE', 'Write log to FILE') do|file|
           @logfile = file
+        end
+
+        @generate_json = false
+        opts.on('-j', '--generate_json', 'Generate JSON files') do
+          @generate_json = true
         end
 
         opts.on( '-h', '--help', 'Display this screen') do

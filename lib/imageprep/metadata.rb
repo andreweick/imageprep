@@ -6,8 +6,9 @@ require 'bundler/setup'
 require 'mini_magick'
 require 'date'
 require 'fileutils'
-require 'erb'
-require 'stringex'
+require 'json'
+
+require_relative 'JSONable'
 
 class String
   def to_frac
@@ -17,15 +18,25 @@ class String
       numerator/denominator
     end
   end
+
+  def to_slug
+    value = self.gsub(/[^\x00-\x7F]/n, '').to_s
+    value.gsub!(/[']+/, '')
+    value.gsub!(/\W+/, ' ')
+    value.strip!
+    value.downcase!
+    value.gsub!(' ', '-')
+    value
+  end
 end
 
 module ImagePrep
-  class MetaData
+  class MetaData < JSONable
     attr_reader :keywords, :copyright, :caption, :headline, :date_time_original
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
-    attr_reader :height, :width, :name, :file_name
-    attr_reader :path
+    attr_reader :height, :width, :name, :source_file_name
+    attr_reader :path   # ./original/YYYY/YYYY-MM-DD/
 
     #[IPTC code chart](http://www.imagemagick.org/script/escape.php)
     
@@ -67,29 +78,25 @@ module ImagePrep
       @country = image[IPTC_COUNTRY]
       @countryISO = image[IPTC_COUNTRY_ISO]
       @exposure_time = image[EXIF_EXPOSURE_TIME]
-      @focal_length = image[EXIF_FOCAL_LENGTH].chomp('/')  # This is stored as 40/1
-      @aperture = image[EXIF_APERTURE].to_frac             # this is returned as 28/10 for f2.8
+      @focal_length = "#{image[EXIF_FOCAL_LENGTH].chomp('/1')}mm" unless image[EXIF_FOCAL_LENGTH].empty?  # This is stored as 40/1
+      @aperture = "f/#{image[EXIF_APERTURE].to_frac}" unless image[EXIF_APERTURE].empty?               # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
       @camera = image[EXIF_CAMERA]
       
       @height = image[HEIGHT].to_i                          # This is returend as a string
       @width = image[WIDTH].to_i                            # This is returned as a string
 
-      @name = (File.basename(image_file_name, ".*").to_url + File.extname(image_file_name)).downcase
-      @file_name = image_file_name
-      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{strip_space}"
+      @source_file_name = image_file_name
+      @path = "original/#{date_time_original.year}/#{date_time_original.strftime('%Y-%m-%d')}/#{image_file_name.to_slug}"
     end
 
-    def strip_extension
-      File.basename(name,".*")
-    end
-
-    def strip_space
-      name.gsub(' ', '-')
-    end
-
-    def strip_space_extension
-      File.basename(name,".*").gsub(' ', '-')
+    # Write the JSON file to the same directory as the image with the .json extension 
+    def write_json(image_file_name)
+      json_file_name = "#{File.dirname(image_file_name)}/#{File.basename(image_file_name,'.*')}.json"
+      File.open(json_file_name,'w'){ |file| 
+        file.write(to_json) 
+      }
+      json_file_name
     end
 
   end
