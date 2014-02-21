@@ -29,8 +29,7 @@ class TestOptions < Test::Unit::TestCase
       json_file_name = "#{File.dirname(ti['file'])}/#{File.basename(ti['file'],'.*')}.json"
       jf = JSON.parse(File.read(json_file_name))
       jf.each { |attrib|  
-        assert_equal(md.send(attrib[0]), attrib[1])
-        puts "attrib[1] value is #{attrib[1]}"
+        assert_equal(md.send(attrib[0]), attrib[1],"#{attrib[0]} value for image #{ti['file']}")
       }
     }
   end
