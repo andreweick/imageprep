@@ -37,9 +37,10 @@ class TestOptions < Test::Unit::TestCase
   def test_write_json
     Dir.mktmpdir {|dir|
       @test_images["images"].each { |ti|  
-        # md = ImagePrep::MetaData.new(File.join(dir, ti['file']))
-        # json_file = md.write_json(ti['file'])
-        # assert(File.exists?(json_file, "Did not create #{json_file}"))
+        md = ImagePrep::MetaData.new(ti['file'])
+        # Write JSON file to temporary directory
+        json_file = md.write_json(File.join(dir,File.basename(ti['file'])))
+        assert(File.exists?(json_file), "Did not create #{json_file}")
       }
     } # delete temporary directory
   end
