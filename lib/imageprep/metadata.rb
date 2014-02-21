@@ -36,7 +36,7 @@ module ImagePrep
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
     attr_reader :height, :width, :name, :source_file_name
-    attr_reader :slug_name
+    attr_reader :slug_name, :root, :ext
 
     #[IPTC code chart](http://www.imagemagick.org/script/escape.php)
     
@@ -87,7 +87,9 @@ module ImagePrep
       @width = image[WIDTH].to_i                            # This is returned as a string
 
       @name = File.basename(image_file_name)
-      @slug_name = File.basename(image_file_name, ".*").to_slug + File.extname(image_file_name)
+      @root = File.join("#{@date_time_original.year}",@date_time_original.strftime('%Y-%m-%d'))
+      @ext = File.extname(image_file_name)
+      @slug_name = File.basename(image_file_name, ".*").to_slug
     end
 
     # Write the JSON file to the same directory as the image with the .json extension 

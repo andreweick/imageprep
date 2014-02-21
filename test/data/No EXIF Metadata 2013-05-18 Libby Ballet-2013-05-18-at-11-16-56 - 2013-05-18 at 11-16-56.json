@@ -16,5 +16,7 @@
   "height": 3505,
   "width": 2804,
   "name": "No EXIF Metadata 2013-05-18 Libby Ballet-2013-05-18-at-11-16-56 - 2013-05-18 at 11-16-56.jpg",
-  "slug_name": "no-exif-metadata-2013-05-18-libby-ballet-2013-05-18-at-11-16-56-2013-05-18-at-11-16-56.jpg"
+  "root": "2014/2014-02-13",  //Remember, without defined EXIF data this is the date the file was made
+  "ext": ".jpg",
+  "slug_name": "no-exif-metadata-2013-05-18-libby-ballet-2013-05-18-at-11-16-56-2013-05-18-at-11-16-56"
 }
