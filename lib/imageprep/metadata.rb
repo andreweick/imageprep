@@ -78,8 +78,8 @@ module ImagePrep
       @country = image[IPTC_COUNTRY]
       @countryISO = image[IPTC_COUNTRY_ISO]
       @exposure_time = image[EXIF_EXPOSURE_TIME]
-      @focal_length = "#{image[EXIF_FOCAL_LENGTH].chomp('/1')}mm"  # This is stored as 40/1
-      @aperture = "f/#{image[EXIF_APERTURE].to_frac}"               # this is returned as 28/10 for f2.8
+      @focal_length = "#{image[EXIF_FOCAL_LENGTH].chomp('/1')}mm" unless image[EXIF_FOCAL_LENGTH].empty?  # This is stored as 40/1
+      @aperture = "f/#{image[EXIF_APERTURE].to_frac}" unless image[EXIF_APERTURE].empty?               # this is returned as 28/10 for f2.8
       @iso = eval(image[EXIF_ISO])
       @camera = image[EXIF_CAMERA]
       
