@@ -26,17 +26,23 @@ class TestOptions < Test::Unit::TestCase
   def test_image_metadata
     @test_images["images"].each { |ti|
       md = ImagePrep::MetaData.new(ti['file'])
-      ti["EXIF"][0].each { |attrib|
-        puts "attrib is #{attrib}"
-      } unless ti["EXIF"].nil?
+      json_file_name = "#{File.dirname(ti['file'])}/#{File.basename(ti['file'],'.*')}.json"
+      jf = JSON.parse(File.read(json_file_name))
+      jf.each { |attrib|  
+        assert_equal(md.send(attrib[0]), attrib[1])
+        puts "attrib[1] value is #{attrib[1]}"
+      }
     }
   end
 
   def test_write_json
-    @test_images["images"].each { |ti|  
-      md = ImagePrep::MetaData.new(ti['file'])
-      md.write_json(ti['file'])
-    }
+    Dir.mktmpdir {|dir|
+      @test_images["images"].each { |ti|  
+        # md = ImagePrep::MetaData.new(File.join(dir, ti['file']))
+        # json_file = md.write_json(ti['file'])
+        # assert(File.exists?(json_file, "Did not create #{json_file}"))
+      }
+    } # delete temporary directory
   end
 
   def test_to_frac
