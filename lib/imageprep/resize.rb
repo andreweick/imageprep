@@ -51,7 +51,7 @@ module ImagePrep
         FileUtils.mkpath(File.dirname(sized_image_name))
 
         image.write(sized_image_name)
-        generated_image_names.push(sized_image_name)
+        generated_image_names << sized_image_name
       end
 
       generated_image_names
