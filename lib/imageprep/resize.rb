@@ -51,23 +51,28 @@ module ImagePrep
       FileUtils.cp(@image_file_name, path)
       
       @metadata.write_json(path)
-      
+
       path
     end
 
     def generated_images
+      generated_image_names = Array.new
+      generated_image_path_partial = File.join(@dest_root, "generated", @metadata.root, @metadata.slug_name)
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
-        image = MiniMagick::Image.open(@metadata.file_name)
+        image = MiniMagick::Image.open(image_file_name)
         
         image.resize("#{width}")         # need to pass "width" as a string to the mini_magick resize gem
         image.quality(JPEG_COMPRESSION_QUALITY)
 
-        sized_image_name = File.join(path_generated_dir, "#{width}", @metadata.to_slug)
+        sized_image_name = generated_image_path_partial + "-#{width}x#{width}" + @metadata.ext
         FileUtils.mkpath(File.dirname(sized_image_name))
 
         image.write(sized_image_name)
+        generated_image_names.push(sized_image_name)
       end
+
+      generated_image_names
     end
 
     # This function generates the images in the correct place

@@ -37,21 +37,20 @@ class TestOptions < Test::Unit::TestCase
     } #delete temporary directory
   end
 
-  # def test_resize
-  #   Dir.mktmpdir {|dir|
-  #     @test_images.each { |image_type, image_name|
-  #       rz = ImagePrep::Resize.new(image_name, "#{dir}")
-  #       rz.generated_images
+  def test_resize
+    Dir.mktmpdir {|dir|
+      @test_images["images"].each { |ti|
+        rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
+        names = rz.generated_images
 
-  #       ImagePrep::Resize::WIDTHS.each { |width| 
-  #         md = ImagePrep::MetaData.new(image_name)
-  #         filename = File.join(dir,"generated", "#{md.date_time_original.year}","#{md.date_time_original.strftime('%Y-%m-%d')}", "#{width}", md.strip_space)
-  #         assert(File::exists?(filename), "Image #{filename} does not exist")
-  #         assert_equal(width, MiniMagick::Image.open(filename)[:width])
-  #       }
-  #     }
-  #   } #delete temporary directory
-  # end
+        names.each { |name| 
+          assert(File::exists?(name), "Image #{name} does not exist")
+          File.basename(name,'.*') =~ /-([0-9]*)x[0-9]*$/
+          assert_equal($1, MiniMagick::Image.open(name)[:width].to_s, "#{name} is not width #{$1} it is #{ MiniMagick::Image.open(name)[:width]}")
+        }
+      }
+    } #delete temporary directory
+  end
 
   # def test_do_work
   #   image_processed = Array.new
