@@ -21,6 +21,8 @@
   "camera": "Canon EOS 5D Mark III",
   "height": 3071,
   "width": 3840,
-  "source_file_name": "./test/data/Lazy Saturday 2013-01-15 at 20-03-37 - 2013-01-15 at 20-03-37.jpg",
-  "path": "original/2013/2013-01-15/test-data-lazy-saturday-2013-01-15-at-20-03-37-2013-01-15-at-20-03-37-jpg"
+  "name": "Lazy Saturday 2013-01-15 at 20-03-37 - 2013-01-15 at 20-03-37.jpg",
+  "root": "2013/2013-01-15",
+  "ext": ".jpg",
+  "slug_name": "lazy-saturday-2013-01-15-at-20-03-37-2013-01-15-at-20-03-37"
 }

@@ -17,52 +17,52 @@ class TestOptions < Test::Unit::TestCase
   # identify -format "%[exif:*]" not-big-enough-1333x2000.jpg
 
   def setup
-    @test_images ||= YAML.load_file('./test/data/test_images.yaml')
+    @test_images ||= JSON.parse(File.read('./test/data/test_images.json'))
   end
 
-  def test_source_images_exists
-    @test_images.each do |image_type, filename|
-      assert(File::exists?(filename), "Image #{filename} does not exist")
-    end
+  def test_images_exists
+    @test_images["images"].each { |ti|
+      assert(File::exists?(ti['file']))
+    }
   end
 
   def test_original_image_copy
     Dir.mktmpdir {|dir|
-      @test_images.each { |image_type, image_name|
-        rz = ImagePrep::Resize.new(image_name, "#{dir}")
+      @test_images["images"].each { |ti|
+        rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
         dest = rz.original_image
-        assert(FileUtils.compare_file(image_name, dest), "Image(s) were not copied to orginial directory")
+        assert(File::exists?(dest), "Image #{ti['file']} was not copied to orginial directory")
+        assert(File::exists?("#{File.dirname(dest)}/#{File.basename(dest, ".*")}.json"), "JSON file for Image #{ti['file']} was not created to orginial directory #{dest}")
       }
     } #delete temporary directory
   end
 
   def test_resize
     Dir.mktmpdir {|dir|
-      @test_images.each { |image_type, image_name|
-        rz = ImagePrep::Resize.new(image_name, "#{dir}")
-        rz.generated_images
+      @test_images["images"].each { |ti|
+        rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
+        names = rz.generated_images
 
-        ImagePrep::Resize::WIDTHS.each { |width| 
-          md = ImagePrep::MetaData.new(image_name)
-          filename = File.join(dir,"generated", "#{md.date_time_original.year}","#{md.date_time_original.strftime('%Y-%m-%d')}", "#{width}", md.strip_space)
-          assert(File::exists?(filename), "Image #{filename} does not exist")
-          assert_equal(width, MiniMagick::Image.open(filename)[:width])
+        names.each { |name| 
+          assert(File::exists?(name), "Image #{name} does not exist")
+          File.basename(name,'.*') =~ /-([0-9]*)x[0-9]*$/
+          assert_equal($1, MiniMagick::Image.open(name)[:width].to_s, "#{name} is not width #{$1} it is #{ MiniMagick::Image.open(name)[:width]}")
         }
       }
     } #delete temporary directory
   end
 
-  def test_do_work
-    image_processed = Array.new
-    Dir.mktmpdir { |dir|
-      @test_images.each { |image_type, image_name|
-        image_processed.push(ImagePrep::Resize.new(image_name, "#{dir}").do_work)
-      }
+  # def test_do_work
+  #   image_processed = Array.new
+  #   Dir.mktmpdir { |dir|
+  #     @test_images.each { |image_type, image_name|
+  #       image_processed.push(ImagePrep::Resize.new(image_name, "#{dir}").do_work)
+  #     }
  
-      image_processed.each { |filename|  
-        assert(File::exists?(filename), "File #{filename} does not exists and should have been created by do_work")
-      }
-    }
-  end
+  #     image_processed.each { |filename|  
+  #       assert(File::exists?(filename), "File #{filename} does not exists and should have been created by do_work")
+  #     }
+  #   }
+  # end
 
 end

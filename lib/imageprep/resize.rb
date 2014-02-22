@@ -18,58 +18,49 @@ module ImagePrep
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
     JPEG_COMPRESSION_QUALITY = "75"    # Need to pass the compression quality as a string to mini_magic, hence the quotes
 
-    attr_reader :dest_root, :metadata
+    attr_reader :dest_root, :metadata, :image_file_name
 
     def initialize(image_file_name, dest_root)
       @metadata = ImagePrep::MetaData.new(image_file_name)
       @dest_root = dest_root
-    end
-
-    def path_original_dir
-      File.join(
-                  @dest_root,
-                  "original", 
-                  "#{@metadata.date_time_original.year}", 
-                  @metadata.date_time_original.strftime('%Y-%m-%d')
-               )
-    end
-
-    def path_generated_dir
-      File.join(
-                  @dest_root, 
-                  "generated", 
-                  "#{@metadata.date_time_original.year}", 
-                  @metadata.date_time_original.strftime('%Y-%m-%d')
-                )
+      @image_file_name = image_file_name
     end
 
     def original_image
-      dest = File.join(path_original_dir,@metadata.strip_space)
-      FileUtils.mkpath(path_original_dir)
-      FileUtils.cp(@metadata.file_name, dest)
+      path = File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
+
+      FileUtils.mkpath(File.dirname(path))    # create directory path in case doesn't exist
+      FileUtils.cp(@image_file_name, path)
       
-      dest
+      @metadata.write_json(path)
+
+      path
     end
 
     def generated_images
+      generated_image_names = Array.new
+      generated_image_path_partial = File.join(@dest_root, "generated", @metadata.root, @metadata.slug_name)
       WIDTHS.each do |width|
         # Need to keep reloading image because we are resizing it
-        image = MiniMagick::Image.open(@metadata.file_name)
+        image = MiniMagick::Image.open(image_file_name)
         
         image.resize("#{width}")         # need to pass "width" as a string to the mini_magick resize gem
         image.quality(JPEG_COMPRESSION_QUALITY)
 
-        sized_image_name = File.join(path_generated_dir, "#{width}", @metadata.strip_space)
+        sized_image_name = generated_image_path_partial + "-#{width}x#{width}" + @metadata.ext
         FileUtils.mkpath(File.dirname(sized_image_name))
 
         image.write(sized_image_name)
+        generated_image_names.push(sized_image_name)
       end
+
+      generated_image_names
     end
 
     # This function generates the images in the correct place
     def do_work
-      generated_images
-      original_image        # Copy the file last so that the return value is the original name
+      # generated_images
+      copy_original        # Copy the file last so that the return value is the original name
     end
 
   end
