@@ -26,24 +26,6 @@ module ImagePrep
       @image_file_name = image_file_name
     end
 
-    def path_original_dir
-      File.join(
-                  @dest_root,
-                  "original", 
-                  "#{@metadata.date_time_original.year}", 
-                  @metadata.date_time_original.strftime('%Y-%m-%d')
-               )
-    end
-
-    def path_generated_dir
-      File.join(
-                  @dest_root, 
-                  "generated", 
-                  "#{@metadata.date_time_original.year}", 
-                  @metadata.date_time_original.strftime('%Y-%m-%d')
-                )
-    end
-
     def original_image
       path = File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
 
