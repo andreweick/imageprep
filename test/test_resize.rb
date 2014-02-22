@@ -31,7 +31,8 @@ class TestOptions < Test::Unit::TestCase
       @test_images["images"].each { |ti|
         rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
         dest = rz.original_image
-        assert(FileUtils.compare_file(ti['file'], dest), "Image #{ti['file']} was not copied to orginial directory")
+        assert(File::exists?(dest), "Image #{ti['file']} was not copied to orginial directory")
+        assert(File::exists?("#{File.dirname(dest)}/#{File.basename(dest, ".*")}.json"), "JSON file for Image #{ti['file']} was not created to orginial directory #{dest}")
       }
     } #delete temporary directory
   end

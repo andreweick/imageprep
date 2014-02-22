@@ -47,8 +47,10 @@ module ImagePrep
     def original_image
       path = File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
 
-      FileUtils.mkpath(File.dirname(path))
+      FileUtils.mkpath(File.dirname(path))    # create directory path in case doesn't exist
       FileUtils.cp(@image_file_name, path)
+      
+      @metadata.write_json(path)
       
       path
     end
