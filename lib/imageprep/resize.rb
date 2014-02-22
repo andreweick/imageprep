@@ -18,11 +18,12 @@ module ImagePrep
     WIDTHS = [ 320, 480, 768, 900, 640, 960, 1536, 500, 1800 ]
     JPEG_COMPRESSION_QUALITY = "75"    # Need to pass the compression quality as a string to mini_magic, hence the quotes
 
-    attr_reader :dest_root, :metadata
+    attr_reader :dest_root, :metadata, :image_file_name
 
     def initialize(image_file_name, dest_root)
       @metadata = ImagePrep::MetaData.new(image_file_name)
       @dest_root = dest_root
+      @image_file_name = image_file_name
     end
 
     def path_original_dir
@@ -44,11 +45,12 @@ module ImagePrep
     end
 
     def original_image
-      dest = File.join(path_original_dir,@metadata.strip_space)
-      FileUtils.mkpath(path_original_dir)
-      FileUtils.cp(@metadata.file_name, dest)
+      path = File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
+
+      FileUtils.mkpath(File.dirname(path))
+      FileUtils.cp(@image_file_name, path)
       
-      dest
+      path
     end
 
     def generated_images
@@ -59,7 +61,7 @@ module ImagePrep
         image.resize("#{width}")         # need to pass "width" as a string to the mini_magick resize gem
         image.quality(JPEG_COMPRESSION_QUALITY)
 
-        sized_image_name = File.join(path_generated_dir, "#{width}", @metadata.strip_space)
+        sized_image_name = File.join(path_generated_dir, "#{width}", @metadata.to_slug)
         FileUtils.mkpath(File.dirname(sized_image_name))
 
         image.write(sized_image_name)
@@ -68,8 +70,8 @@ module ImagePrep
 
     # This function generates the images in the correct place
     def do_work
-      generated_images
-      original_image        # Copy the file last so that the return value is the original name
+      # generated_images
+      copy_original        # Copy the file last so that the return value is the original name
     end
 
   end
