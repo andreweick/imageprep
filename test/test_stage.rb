@@ -18,9 +18,7 @@ class TestOptions < Test::Unit::TestCase
 
   def setup
     @test_images ||= JSON.parse(File.read('./test/data/test_images.json'))
-  end
 
-  def test_images_exists
     @test_images["images"].each { |ti|
       assert(File::exists?(ti['file']))
     }
