@@ -22,6 +22,11 @@ task :test_resize do
 	ruby "test/test_resize.rb"
 end
 
+desc "Test image resize log"
+task :test_resize_long do
+	ruby "test/test_resize_long.rb"
+end
+
 desc "Test image stage"
 task :test_stage do
 	ruby "test/test_stage.rb"
