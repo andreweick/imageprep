@@ -20,28 +20,17 @@ class TestOptions < Test::Unit::TestCase
     @test_images ||= JSON.parse(File.read('./test/data/test_images.json'))
   end
 
-  def test_images_exists
+  def test_resize_images_exists
     @test_images["images"].each { |ti|
       assert(File::exists?(ti['file']))
     }
-  end
-
-  def test_original_image_copy
-    Dir.mktmpdir {|dir|
-      @test_images["images"].each { |ti|
-        rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
-        dest = rz.original_image
-        assert(File::exists?(dest), "Image #{ti['file']} was not copied to orginial directory")
-        assert(File::exists?("#{File.dirname(dest)}/#{File.basename(dest, ".*")}.json"), "JSON file for Image #{ti['file']} was not created to orginial directory #{dest}")
-      }
-    } #delete temporary directory
   end
 
   def test_resize
     Dir.mktmpdir {|dir|
       @test_images["images"].each { |ti|
         rz = ImagePrep::Resize.new(ti['file'], "#{dir}")
-        names = rz.generated_images
+        names = rz.resize_images
 
         names.each { |name| 
           assert(File::exists?(name), "Image #{name} does not exist")
@@ -52,17 +41,5 @@ class TestOptions < Test::Unit::TestCase
     } #delete temporary directory
   end
 
-  # def test_do_work
-  #   image_processed = Array.new
-  #   Dir.mktmpdir { |dir|
-  #     @test_images.each { |image_type, image_name|
-  #       image_processed.push(ImagePrep::Resize.new(image_name, "#{dir}").do_work)
-  #     }
- 
-  #     image_processed.each { |filename|  
-  #       assert(File::exists?(filename), "File #{filename} does not exists and should have been created by do_work")
-  #     }
-  #   }
-  # end
 
 end
