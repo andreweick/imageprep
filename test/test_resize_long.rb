@@ -34,11 +34,12 @@ class TestOptions < Test::Unit::TestCase
     FileUtils.remove_entry @temp_dir
   end
 
-  def test_resize_existing
-    ipr = ImagePrep::Resize.new('./test/data/test_dont_regenerate/')
+  def test_resize_long
+    ipr = ImagePrep::Resize.new(@temp_dir)
     ipr.resized_names.each { |name| 
       assert(File::exists?(name), "Image #{name} does not exist")
-      assert_equal("1", MiniMagick::Image.open(name)[:width].to_s, "#{name} did in fact get recreated.")
+      File.basename(name,'.*') =~ /-([0-9]*)x[0-9]*$/
+      assert_equal($1, MiniMagick::Image.open(name)[:width].to_s, "#{name} is not width #{$1} it is #{ MiniMagick::Image.open(name)[:width]}")
     }
   end
 
