@@ -22,7 +22,7 @@ task :test_resize do
 	ruby "test/test_resize.rb"
 end
 
-desc "Test full process"
-task :test_full do
-	ruby "test/test_full.rb"
+desc "Test image stage"
+task :test_stage do
+	ruby "test/test_stage.rb"
 end
