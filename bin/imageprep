@@ -22,8 +22,7 @@ opts.images_to_load.each { |image_file_name|
 	
 	# create the images in the correct directory
 	rz = ImagePrep::Resize.new(image_file_name, opts.out_dir_images)
-
-	# Write out YAML file describing the metadata of each imageimage
-	md = ImagePrep::MetaData.new(image_file_name)
-	md.write_yaml(rz.path_original_dir)
+	rz.generated_images
+	md = ImagePrep::MetaData.new(rz.original_image)
+	md.write_json(rz.original_image)
 }
