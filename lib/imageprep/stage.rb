@@ -19,19 +19,21 @@ module ImagePrep
       @image_file_name = image_file_name
     end
 
+    def path
+      @path ||= File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
+    end
+
     def stage_orignal
-      @path = File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
-
-      FileUtils.mkpath(File.dirname(@path))    # create directory path in case doesn't exist
-      FileUtils.cp(@image_file_name, @path)
+      FileUtils.mkpath(File.dirname(path))    # create directory path in case doesn't exist
+      FileUtils.cp(@image_file_name, path)
       
-      @metadata.write_json(@path)
+      @metadata.write_json(path)
 
-      @path
+      path
     end
 
     def write_json
-      json_file_name = "#{File.dirname(@path)}/#{File.basename(@path,'.*')}.json"
+      json_file_name = "#{File.dirname(path)}/#{File.basename(path,'.*')}.json"
       File.open(json_file_name,'w'){ |file| 
         file.write(@metadata.to_json) 
       }
