@@ -23,7 +23,7 @@ module ImagePrep
       @path ||= File.join(@dest_root, "original", @metadata.root, @metadata.slug_name + @metadata.ext)
     end
 
-    def stage_orignal
+    def stage_original
       FileUtils.mkpath(File.dirname(path))    # create directory path in case doesn't exist
       FileUtils.cp(@image_file_name, path)
       

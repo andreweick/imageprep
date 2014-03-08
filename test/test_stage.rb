@@ -28,7 +28,7 @@ class TestOptions < Test::Unit::TestCase
     Dir.mktmpdir {|dir|
       @test_images["images"].each { |ti|
         stage = ImagePrep::Stage.new(ti['file'], "#{dir}")
-        dest = stage.stage_orignal
+        dest = stage.stage_original
         
         # Test that file got copied
         assert(File::exists?(dest), "Image #{ti['file']} was not copied to orginial directory")
