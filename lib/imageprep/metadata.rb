@@ -92,9 +92,12 @@ module ImagePrep
       @slug_name = File.basename(image_file_name, ".*").to_slug
     end
 
+    def json_file_name
+      "#{File.dirname(image_file_name)}/#{File.basename(image_file_name,'.*')}.json"
+    end
+    
     # Write the JSON file to the same directory as the image with the .json extension 
     def write_json(image_file_name)
-      json_file_name = "#{File.dirname(image_file_name)}/#{File.basename(image_file_name,'.*')}.json"
       File.open(json_file_name,'w'){ |file| 
         file.write(to_json) 
       }
