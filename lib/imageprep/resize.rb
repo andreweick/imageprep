@@ -24,7 +24,7 @@ module ImagePrep
       @resized_names = Array.new
       @root = root
 
-      Dir.glob("#{@root}/original/*.jpg") do |jpg_file|
+      Dir.glob("#{@root}/original/**/*.jpg") do |jpg_file|
         resize_image jpg_file
       end
     end

@@ -27,12 +27,13 @@ class TestOptions < Test::Unit::TestCase
   def test_stage_orignal
     Dir.mktmpdir {|dir|
       @test_images["images"].each { |ti|
-        rz = ImagePrep::Stage.new(ti['file'], "#{dir}")
-        dest = rz.stage_orignal
+        stage = ImagePrep::Stage.new(ti['file'], "#{dir}")
+        dest = stage.stage_original
         
         # Test that file got copied
         assert(File::exists?(dest), "Image #{ti['file']} was not copied to orginial directory")
         
+        stage.write_json
         # Test JSON file got created
         assert(File::exists?("#{File.dirname(dest)}/#{File.basename(dest, ".*")}.json"), "JSON file for Image #{ti['file']} was not created to orginial directory #{dest}")
       }

@@ -14,15 +14,16 @@ require 'bundler/setup'
 
 require_relative '../lib/imageprep/resize'
 require_relative '../lib/imageprep/options'
+require_relative '../lib/imageprep/stage'
 
 opts = ImagePrep::Options.new(ARGV)
+image_tags = Array.new
 
 opts.images_to_load.each { |image_file_name|
-	puts "Processing #{image_file_name}"
-	
 	# create the images in the correct directory
-	rz = ImagePrep::Resize.new(image_file_name, opts.out_dir_images)
-	rz.generated_images
-	md = ImagePrep::MetaData.new(rz.original_image)
-	md.write_json(rz.original_image)
+	stage = ImagePrep::Stage.new(image_file_name, opts.out_dir_images)
+	puts "{% photo3 #{stage.stage_original} %}"
 }
+
+#Resize images
+ImagePrep::Resize.new(opts.out_dir_images)

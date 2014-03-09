@@ -21,6 +21,10 @@ class TestOptions < Test::Unit::TestCase
     }
   end
 
+  def teardown
+    # clean up from tests
+  end
+
   def test_image_metadata
     @test_images["images"].each { |ti|
       md = ImagePrep::MetaData.new(ti['file'])
