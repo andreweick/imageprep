@@ -17,13 +17,12 @@ require_relative '../lib/imageprep/options'
 require_relative '../lib/imageprep/stage'
 
 opts = ImagePrep::Options.new(ARGV)
+image_tags = Array.new
 
 opts.images_to_load.each { |image_file_name|
-	puts "Processing #{image_file_name} to #{opts.out_dir_images}"
-	
 	# create the images in the correct directory
 	stage = ImagePrep::Stage.new(image_file_name, opts.out_dir_images)
-	stage.stage_original
+	puts "{% photo3 #{stage.stage_original} %}"
 }
 
 #Resize images
