@@ -33,8 +33,8 @@ end
 module ImagePrep
   class MetaData < JSONable
     # If there is no EXIF data in the original, the create time will be current time
-    # and derived_date will be true
-    attr_reader :date_time_original, :derived_date
+    # and declared_date will be false
+    attr_reader :date_time_original, :declared_date
     attr_reader :keywords, :copyright, :caption, :headline
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
@@ -71,7 +71,7 @@ module ImagePrep
 
     def initialize(image_file_name)
       image = MiniMagick::Image.open(image_file_name)
-      @derived_date = image[EXIF_DATE_TIME_ORIGINAL].empty?
+      @declared_date = !image[EXIF_DATE_TIME_ORIGINAL].empty?
       @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : DateTime.now)
       @keywords = image[IPTC_KEYWORD] ? image[IPTC_KEYWORD].split(/;/) : []     # Aperture semicolon delimits keywords.     
       @copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{date_time_original.year} Andrew Eick, all rights reserved."

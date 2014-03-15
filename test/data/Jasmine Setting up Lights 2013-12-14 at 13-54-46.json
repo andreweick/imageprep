@@ -20,6 +20,6 @@
   "name": "Jasmine Setting up Lights 2013-12-14 at 13-54-46.jpg",
   "root": "2013/2013-12-14",
   "ext": ".jpg",
-  "derived_date": false,
+  "declared_date": true,
   "slug_name": "jasmine-setting-up-lights-2013-12-14-at-13-54-46"
 }
