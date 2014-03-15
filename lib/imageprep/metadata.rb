@@ -32,7 +32,10 @@ end
 
 module ImagePrep
   class MetaData < JSONable
-    attr_reader :keywords, :copyright, :caption, :headline, :date_time_original
+    # If there is no EXIF data in the original, the create time will be current time
+    # and declared_date will be false
+    attr_reader :date_time_original, :declared_date
+    attr_reader :keywords, :copyright, :caption, :headline
     attr_reader :city, :state, :country, :countryISO
     attr_reader :exposure_time, :focal_length, :aperture, :iso, :camera
     attr_reader :height, :width, :name, :source_file_name
@@ -68,7 +71,8 @@ module ImagePrep
 
     def initialize(image_file_name)
       image = MiniMagick::Image.open(image_file_name)
-      @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : File.ctime(image_file_name).to_datetime )
+      @declared_date = !image[EXIF_DATE_TIME_ORIGINAL].empty?
+      @date_time_original = (!image[EXIF_DATE_TIME_ORIGINAL].empty? ? DateTime.strptime(image[EXIF_DATE_TIME_ORIGINAL], '%Y:%m:%d %H:%M:%S') : DateTime.now)
       @keywords = image[IPTC_KEYWORD] ? image[IPTC_KEYWORD].split(/;/) : []     # Aperture semicolon delimits keywords.     
       @copyright = image[IPTC_COPYRIGHT] || "\u00A9 #{date_time_original.year} Andrew Eick, all rights reserved."
       @headline = image[IPTC_HEADLINE] || image[IPTC_TITLE]
